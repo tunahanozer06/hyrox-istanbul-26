@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>HYROX Istanbul 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;
+  transition:background-color .25s,border-color .25s,color .25s;}
+
+:root{
+  --bg:#0c0c0c;--card:#141414;--card2:#181818;
+  --line:#222;--line2:#2a2a2a;
+  --text:#f2f0eb;--t2:#666;--t3:#333;
+  --gold:#c9a84c;--gold-bg:rgba(201,168,76,.08);--gold-line:rgba(201,168,76,.2);
+  --body-bg:#060606;--shell:#1a1a1a;--notch-bg:#060606;--shadow:rgba(0,0,0,.9);
+  --f:'Geist',sans-serif;--fm:'Geist Mono',monospace;
+}
+:root.light{
+  --bg:#f6f5f1;--card:#ffffff;--card2:#eceae6;
+  --line:#e2dfd9;--line2:#d5d2cc;
+  --text:#111110;--t2:#999;--t3:#ccc;
+  --gold:#9a6f1e;--gold-bg:rgba(154,111,30,.07);--gold-line:rgba(154,111,30,.18);
+  --body-bg:#e5e2dc;--shell:#d5d2cc;--notch-bg:#e5e2dc;--shadow:rgba(0,0,0,.18);
+}
+
+body{background:var(--body-bg);font-family:var(--f);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px 0;}
+
+.phone{width:390px;height:844px;background:var(--bg);border-radius:52px;border:1px solid var(--shell);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(0,0,0,.12),0 40px 100px var(--shadow);position:relative;}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:124px;height:36px;background:var(--notch-bg);border-radius:0 0 22px 22px;z-index:100;}
+
+.sb{padding:16px 22px 6px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;position:relative;z-index:101;}
+.sb-t{font-family:var(--fm);font-size:12px;color:var(--t2);font-weight:300;}
+.sb-mid{display:flex;align-items:center;gap:8px;}
+.lang-sw{display:flex;border:1px solid var(--line2);border-radius:100px;overflow:hidden;}
+.lb{font-family:var(--fm);font-size:9px;padding:4px 11px;color:var(--t2);cursor:pointer;letter-spacing:.8px;user-select:none;}
+.lb.on{background:var(--text);color:var(--bg);font-weight:500;}
+.theme-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.theme-btn svg{width:13px;height:13px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+.screen{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.screen.active{display:flex;}
+.scroll{flex:1;overflow-y:auto;scrollbar-width:none;}
+.scroll::-webkit-scrollbar{display:none;}
+
+.nav{background:var(--bg);border-top:1px solid var(--line);display:flex;padding:12px 0 28px;flex-shrink:0;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;font-family:var(--fm);font-size:8px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);cursor:pointer;user-select:none;}
+.ni.on{color:var(--text);}
+.ni svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5;}
+.ni-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);}
+
+.eyebrow{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:2px;text-transform:uppercase;}
+.h1{font-size:48px;font-weight:600;color:var(--text);line-height:.95;letter-spacing:-1.5px;}
+.h1 em{color:var(--gold);font-style:normal;}
+.block{background:var(--card);border-radius:16px;border:1px solid var(--line);margin:0 16px 10px;}
+.block-p{padding:18px;}
+.kv{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);}
+.kv:last-child{border-bottom:none;}
+.kv-k{font-size:12px;color:var(--t2);}
+.kv-v{font-family:var(--fm);font-size:11px;color:var(--text);}
+
+/* SCREEN 1 */
+.hero{padding:16px 20px 0;}
+.hero-date{font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:10px;letter-spacing:1px;}
+.cd-block{margin:14px 16px 0;background:var(--card);border-radius:16px;border:1px solid var(--line);padding:24px 20px;}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.cd-cell{text-align:center;}
+.cd-n{font-family:var(--fm);font-size:44px;font-weight:500;color:var(--text);line-height:1;letter-spacing:-1px;}
+.cd-l{font-family:var(--fm);font-size:8px;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;margin-top:6px;}
+
+.g-inputs{display:flex;align-items:flex-end;gap:4px;margin:14px 0 12px;}
+.g-grp{display:flex;flex-direction:column;gap:5px;flex:1;}
+.g-lbl{font-family:var(--fm);font-size:8px;color:var(--t2);letter-spacing:1px;text-transform:uppercase;}
+.g-in{width:100%;background:var(--card2);border:1px solid var(--line2);border-radius:10px;padding:11px 8px;font-size:24px;font-family:var(--fm);font-weight:500;color:var(--text);outline:none;text-align:center;letter-spacing:-1px;}
+.g-in:focus{border-color:var(--gold);}
+.g-sep{font-family:var(--fm);font-size:24px;color:var(--t3);padding-bottom:11px;font-weight:300;}
+.goal-out{font-family:var(--fm);font-size:11px;color:var(--t2);line-height:2;background:var(--card2);border-radius:10px;padding:14px;border-left:2px solid var(--gold);white-space:pre;}
+.goal-out .hi{color:var(--gold);}
+
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;border-radius:16px;}
+.tog{width:40px;height:22px;border-radius:11px;background:var(--line2);position:relative;flex-shrink:0;}
+.tog.on{background:var(--gold);}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--bg);}
+.tog.on::after{transform:translateX(18px);}
+
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:0 16px 10px;}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 14px;}
+.stat-n{font-family:var(--fm);font-size:28px;font-weight:500;color:var(--text);letter-spacing:-1px;line-height:1;}
+.stat-l{font-family:var(--fm);font-size:8px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;}
+
+/* SCREEN 2 */
+.tabs{display:flex;gap:6px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;background:transparent;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-family:var(--fm);font-size:9px;color:var(--t2);cursor:pointer;user-select:none;letter-spacing:.8px;}
+.tab.on{background:var(--text);color:var(--bg);border-color:var(--text);}
+
+.tr-card{margin:0 16px 10px;background:var(--card);border-radius:16px;border:1px solid var(--line);overflow:hidden;}
+.tr-head{padding:18px 18px 16px;border-bottom:1px solid var(--line);}
+.tr-tag{font-family:var(--fm);font-size:8px;letter-spacing:1.5px;color:var(--gold);margin-bottom:8px;text-transform:uppercase;display:block;}
+.tr-title{font-size:22px;font-weight:600;color:var(--text);letter-spacing:-.5px;line-height:1.2;}
+.tr-desc{font-size:12px;color:var(--t2);margin-top:6px;line-height:1.6;font-weight:300;}
+.ex-r{display:flex;align-items:flex-start;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);}
+.ex-r:last-child{border-bottom:none;}
+.ex-i{font-family:var(--fm);font-size:9px;color:var(--t3);width:16px;margin-top:2px;flex-shrink:0;}
+.ex-body{flex:1;}
+.ex-name{font-size:13px;color:var(--text);line-height:1.3;}
+.ex-sub{font-family:var(--fm);font-size:9px;color:var(--t2);margin-top:3px;}
+.ex-v{font-family:var(--fm);font-size:10px;color:var(--gold);white-space:nowrap;flex-shrink:0;margin-top:2px;}
+
+.tip-b{margin:0 16px 10px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;display:flex;gap:10px;align-items:flex-start;}
+.tip-ico{font-family:var(--fm);font-size:10px;color:var(--t2);flex-shrink:0;margin-top:1px;}
+.tip-txt{font-size:12px;color:var(--t2);line-height:1.65;font-weight:300;}
+.yt-b{margin:0 16px 16px;display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:1px solid var(--line);border-radius:14px;text-decoration:none;}
+.yt-l{display:flex;align-items:center;gap:10px;}
+.yt-icon{width:30px;height:30px;border-radius:8px;background:#ff0000;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.yt-title{font-size:12px;color:var(--text);}
+.yt-sub{font-family:var(--fm);font-size:9px;color:var(--t2);margin-top:2px;}
+.yt-arr{font-family:var(--fm);font-size:12px;color:var(--t3);}
+
+/* SCREEN 3 */
+/* goal input */
+.ca-goal{margin:0 16px 14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;}
+.ca-goal-row{display:flex;align-items:flex-end;gap:4px;margin:12px 0 0;}
+.ca-g{display:flex;flex-direction:column;gap:5px;flex:1;}
+.ca-gl{font-family:var(--fm);font-size:8px;color:var(--t2);letter-spacing:1px;text-transform:uppercase;}
+.ca-in{width:100%;background:var(--card2);border:1px solid var(--line2);border-radius:10px;padding:10px 8px;font-size:24px;font-family:var(--fm);font-weight:500;color:var(--text);outline:none;text-align:center;letter-spacing:-1px;}
+.ca-in:focus{border-color:var(--gold);}
+.ca-sep{font-family:var(--fm);font-size:24px;color:var(--t3);padding-bottom:10px;font-weight:300;}
+
+/* result summary */
+.ca-summary{margin:0 16px 10px;border:1px solid var(--gold-line);border-radius:16px;background:var(--gold-bg);padding:18px;}
+.ca-sum-time{font-family:var(--fm);font-size:48px;font-weight:500;color:var(--text);letter-spacing:-2px;line-height:1;}
+.ca-sum-label{font-family:var(--fm);font-size:8px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.ca-sum-sub{font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:6px;}
+.ca-sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px;padding-top:14px;border-top:1px solid var(--gold-line);}
+.ca-sc{background:rgba(0,0,0,.08);border-radius:10px;padding:9px 10px;}
+:root.light .ca-sc{background:rgba(0,0,0,.04);}
+.ca-sc-v{font-family:var(--fm);font-size:15px;font-weight:500;color:var(--text);letter-spacing:-.5px;line-height:1;}
+.ca-sc-l{font-family:var(--fm);font-size:7px;color:var(--t2);letter-spacing:.8px;text-transform:uppercase;margin-top:3px;}
+
+/* station list */
+.sta-item{margin:0 16px 6px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+.sta-head{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;}
+.sta-item.open{border-color:var(--gold-line);}
+.sta-idx{font-family:var(--fm);font-size:9px;color:var(--t3);width:18px;flex-shrink:0;text-align:right;}
+.sta-info{flex:1;}
+.sta-name{font-size:13px;color:var(--text);}
+.sta-desc{font-family:var(--fm);font-size:9px;color:var(--t2);margin-top:2px;}
+.sta-alloc{font-family:var(--fm);font-size:9px;color:var(--gold);margin-top:2px;}
+.sta-chev{width:22px;height:22px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:11px;color:var(--t2);}
+.sta-item.open .sta-chev{border-color:var(--gold-line);color:var(--gold);transform:rotate(90deg);}
+
+.sta-body{display:none;border-top:1px solid var(--line);padding:16px;}
+.sta-item.open .sta-body{display:block;}
+
+/* slider */
+.sl-wrap{margin-bottom:14px;}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.sl-lbl{font-family:var(--fm);font-size:8px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;}
+.sl-val{font-family:var(--fm);font-size:18px;font-weight:500;color:var(--gold);letter-spacing:-.5px;}
+input[type=range]{
+  -webkit-appearance:none;width:100%;height:4px;
+  border-radius:2px;background:var(--line2);outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--text);border:2px solid var(--bg);cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--text);border:2px solid var(--bg);cursor:pointer;}
+
+.sta-metric{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--card2);border-radius:10px;border:1px solid var(--line);margin-bottom:10px;}
+.sta-m-l{font-family:var(--fm);font-size:8px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;}
+.sta-m-v{font-family:var(--fm);font-size:22px;font-weight:500;color:var(--text);letter-spacing:-.5px;}
+.sta-tip{font-family:var(--fm);font-size:10px;color:var(--t2);line-height:1.7;margin-bottom:10px;font-weight:300;}
+.vid-a{display:inline-flex;align-items:center;gap:6px;font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:.5px;text-decoration:none;padding:7px 12px;border:1px solid var(--line2);border-radius:8px;}
+.sec-lbl{padding:4px 20px 8px;font-family:var(--fm);font-size:8px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="notch"></div>
+
+  <div class="sb">
+    <span class="sb-t" id="clock">9:41</span>
+    <div class="sb-mid">
+      <div class="lang-sw">
+        <div class="lb on" onclick="setLang('tr')">TR</div>
+        <div class="lb" onclick="setLang('en')">EN</div>
+      </div>
+      <div class="theme-btn" onclick="toggleTheme()">
+        <svg id="theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </div>
+    </div>
+    <span class="sb-t">●●●</span>
+  </div>
+
+  <!-- EKRAN 1 — SAYAÇ -->
+  <div class="screen active" id="scr-cd">
+    <div class="scroll">
+      <div class="hero">
+        <div class="eyebrow" style="margin-bottom:10px;" data-tr="HYROX İstanbul 2026" data-en="HYROX Istanbul 2026">HYROX İstanbul 2026</div>
+        <div class="h1" data-tr="Yarışa<br>Ne Kadar<br><em>Kaldı?</em>" data-en="How Long<br>Until<br><em>Race Day?</em>">Yarışa<br>Ne Kadar<br><em>Kaldı?</em></div>
+        <div class="hero-date" data-tr="01–02 Ağustos 2026 · İstanbul" data-en="August 01–02, 2026 · Istanbul">01–02 Ağustos 2026 · İstanbul</div>
+      </div>
+      <div class="cd-block">
+        <div class="cd-grid">
+          <div class="cd-cell"><div class="cd-n" id="cd-d">---</div><div class="cd-l" data-tr="gün" data-en="days">gün</div></div>
+          <div class="cd-cell"><div class="cd-n" id="cd-h">--</div><div class="cd-l" data-tr="saat" data-en="hrs">saat</div></div>
+          <div class="cd-cell"><div class="cd-n" id="cd-m">--</div><div class="cd-l" data-tr="dk" data-en="min">dk</div></div>
+          <div class="cd-cell"><div class="cd-n" id="cd-s">--</div><div class="cd-l" data-tr="sn" data-en="sec">sn</div></div>
+        </div>
+      </div>
+      <div style="height:10px"></div>
+      <div class="block">
+        <div class="block-p">
+          <div class="eyebrow" data-tr="Hedef Süre" data-en="Target Time">Hedef Süre</div>
+          <div class="g-inputs">
+            <div class="g-grp"><div class="g-lbl" data-tr="Saat" data-en="Hours">Saat</div><input class="g-in" id="g-h" type="number" placeholder="1" min="0" max="5" oninput="calcGoal()"></div>
+            <div class="g-sep">:</div>
+            <div class="g-grp"><div class="g-lbl" data-tr="Dakika" data-en="Minutes">Dakika</div><input class="g-in" id="g-m" type="number" placeholder="15" min="0" max="59" oninput="calcGoal()"></div>
+          </div>
+          <div class="goal-out" id="goal-out"></div>
+        </div>
+      </div>
+      <div class="block" style="padding:0">
+        <div class="toggle-row" onclick="toggleNotif()">
+          <div>
+            <div style="font-size:13px;color:var(--text)" data-tr="Antrenman Bildirimi" data-en="Training Reminder">Antrenman Bildirimi</div>
+            <div style="font-family:var(--fm);font-size:9px;color:var(--t2);margin-top:4px" data-tr="Her sabah 08:00" data-en="Every morning at 08:00">Her sabah 08:00</div>
+          </div>
+          <div class="tog" id="ntoggle"></div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat"><div class="stat-n">8</div><div class="stat-l" data-tr="İstasyon" data-en="Stations">İstasyon</div></div>
+        <div class="stat"><div class="stat-n">8km</div><div class="stat-l" data-tr="Toplam Koşu" data-en="Total Run">Toplam Koşu</div></div>
+        <div class="stat"><div class="stat-n">~75'</div><div class="stat-l" data-tr="Ortalama Süre" data-en="Average Time">Ortalama Süre</div></div>
+        <div class="stat"><div class="stat-n">3</div><div class="stat-l" data-tr="Kategori" data-en="Categories">Kategori</div></div>
+      </div>
+      <div class="block">
+        <div class="block-p" style="padding-bottom:0"><div class="eyebrow" style="margin-bottom:4px" data-tr="Yarış Bilgileri" data-en="Race Info">Yarış Bilgileri</div></div>
+        <div style="padding:0 18px">
+          <div class="kv"><div class="kv-k" data-tr="Tarih" data-en="Date">Tarih</div><div class="kv-v">01–02 AĞU 2026</div></div>
+          <div class="kv"><div class="kv-k" data-tr="Şehir" data-en="City">Şehir</div><div class="kv-v" data-tr="İstanbul, Türkiye" data-en="Istanbul, Türkiye">İstanbul, Türkiye</div></div>
+          <div class="kv"><div class="kv-k" data-tr="Format" data-en="Format">Format</div><div class="kv-v" data-tr="8 İstasyon + 8km" data-en="8 Stations + 8km">8 İstasyon + 8km</div></div>
+          <div class="kv"><div class="kv-k" data-tr="Kategoriler" data-en="Categories">Kategoriler</div><div class="kv-v" data-tr="Open · Pro · Takım" data-en="Open · Pro · Team">Open · Pro · Takım</div></div>
+          <div class="kv"><div class="kv-k" data-tr="Yoğunluk" data-en="Intensity">Yoğunluk</div><div class="kv-v" style="color:var(--gold)">■■■■□</div></div>
+        </div>
+      </div>
+      <div style="height:20px"></div>
+    </div>
+    <div class="nav">
+      <div class="ni on" onclick="go('cd')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-tr="Sayaç" data-en="Timer">Sayaç</span><div class="ni-dot"></div></div>
+      <div class="ni" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-tr="Antrenman" data-en="Training">Antrenman</span></div>
+      <div class="ni" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span data-tr="Hesap" data-en="Calc">Hesap</span></div>
+    </div>
+  </div>
+
+  <!-- EKRAN 2 — ANTRENMAN -->
+  <div class="screen" id="scr-tr">
+    <div style="padding:14px 20px 6px;flex-shrink:0">
+      <div class="eyebrow" data-tr="Haftalık Program" data-en="Weekly Schedule">Haftalık Program</div>
+      <div style="font-size:32px;font-weight:600;color:var(--text);letter-spacing:-.8px;line-height:1.1;margin-top:6px" data-tr="Antrenman Planı" data-en="Training Plan">Antrenman Planı</div>
+    </div>
+    <div class="tabs" id="day-tabs"></div>
+    <div class="scroll" id="tr-body"></div>
+    <div class="nav">
+      <div class="ni" onclick="go('cd')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-tr="Sayaç" data-en="Timer">Sayaç</span></div>
+      <div class="ni on" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-tr="Antrenman" data-en="Training">Antrenman</span><div class="ni-dot"></div></div>
+      <div class="ni" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span data-tr="Hesap" data-en="Calc">Hesap</span></div>
+    </div>
+  </div>
+
+  <!-- EKRAN 3 — HESAP -->
+  <div class="screen" id="scr-ca">
+    <div class="scroll">
+      <div style="padding:14px 20px 8px">
+        <div class="eyebrow" data-tr="Yarış Planlaması" data-en="Race Planning">Yarış Planlaması</div>
+        <div style="font-size:32px;font-weight:600;color:var(--text);letter-spacing:-.8px;line-height:1.1;margin-top:6px" data-tr="Süre Dağılımı" data-en="Time Breakdown">Süre Dağılımı</div>
+        <div style="font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:6px" data-tr="Hedef sürenizi girin, her bölüm için yapmanız gereken süreyi görün" data-en="Enter your goal time and see exactly what you need to hit per section">Hedef sürenizi girin, her bölüm için yapmanız gereken süreyi görün</div>
+      </div>
+
+      <!-- GOAL INPUT -->
+      <div class="ca-goal">
+        <div class="eyebrow" data-tr="Hedef Bitiş Süresi" data-en="Goal Finish Time">Hedef Bitiş Süresi</div>
+        <div class="ca-goal-row">
+          <div class="ca-g"><div class="ca-gl" data-tr="Saat" data-en="Hours">Saat</div><input class="ca-in" id="ca-h" type="number" placeholder="1" min="0" max="5" oninput="distributeTime()"></div>
+          <div class="ca-sep">:</div>
+          <div class="ca-g"><div class="ca-gl" data-tr="Dakika" data-en="Minutes">Dakika</div><input class="ca-in" id="ca-m" type="number" placeholder="30" min="0" max="59" oninput="distributeTime()"></div>
+        </div>
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="ca-summary" id="ca-summary" style="display:none">
+        <div class="ca-sum-label" data-tr="Toplam Hedef" data-en="Total Goal">Toplam Hedef</div>
+        <div class="ca-sum-time" id="ca-sum-time">1:30:00</div>
+        <div class="ca-sum-sub" id="ca-sum-sub"></div>
+        <div class="ca-sum-grid">
+          <div class="ca-sc"><div class="ca-sc-v" id="cs-run">--:--</div><div class="ca-sc-l" data-tr="Koşu" data-en="Run">Koşu</div></div>
+          <div class="ca-sc"><div class="ca-sc-v" id="cs-sta">--:--</div><div class="ca-sc-l" data-tr="İstasyon" data-en="Stations">İstasyon</div></div>
+          <div class="ca-sc"><div class="ca-sc-v" id="cs-rox">--:--</div><div class="ca-sc-l">Roxzone</div></div>
+        </div>
+      </div>
+
+      <!-- SECTIONS -->
+      <div class="sec-lbl" id="sec-lbl" style="display:none" data-tr="BÖLÜM BAŞI HEDEFLER" data-en="TARGET PER SECTION">BÖLÜM BAŞI HEDEFLER</div>
+
+      <!-- RUN (fixed) -->
+      <div class="sta-item" id="sti-run" style="display:none">
+        <div class="sta-head" onclick="toggleSta('run')">
+          <div class="sta-idx">🏃</div>
+          <div class="sta-info">
+            <div class="sta-name" data-tr="Koşu (8 × 1km)" data-en="Run (8 × 1km)">Koşu (8 × 1km)</div>
+            <div class="sta-desc" data-tr="İstasyonlar arası" data-en="Between stations">İstasyonlar arası</div>
+            <div class="sta-alloc" id="alloc-run">--</div>
+          </div>
+          <div class="sta-chev">›</div>
+        </div>
+        <div class="sta-body">
+          <div class="sta-metric">
+            <div class="sta-m-l" data-tr="KM BAŞI TEMPO" data-en="PACE PER KM">KM BAŞI TEMPO</div>
+            <div class="sta-m-v" id="met-run">--</div>
+          </div>
+          <div class="sta-tip" data-tr="HYROX koşucuları genellikle 5:00–6:30/km temposuyla koşar. Çok hızlı başlarsan son istasyonlarda çökersin." data-en="HYROX runners typically pace 5:00–6:30/km. Starting too fast means collapsing at the final stations.">HYROX koşucuları genellikle 5:00–6:30/km temposuyla koşar. Çok hızlı başlarsan son istasyonlarda çökersin.</div>
+        </div>
+      </div>
+
+      <!-- ROXZONE (fixed) -->
+      <div class="sta-item" id="sti-rox" style="display:none">
+        <div class="sta-head" onclick="toggleSta('rox')">
+          <div class="sta-idx">⟳</div>
+          <div class="sta-info">
+            <div class="sta-name">Roxzone</div>
+            <div class="sta-desc" data-tr="8 geçiş · koşu parkuru ↔ istasyon" data-en="8 transitions · track ↔ station">8 geçiş · koşu parkuru ↔ istasyon</div>
+            <div class="sta-alloc" id="alloc-rox">--</div>
+          </div>
+          <div class="sta-chev">›</div>
+        </div>
+        <div class="sta-body">
+          <div class="sta-metric">
+            <div class="sta-m-l" data-tr="GEÇİŞ BAŞI" data-en="PER TRANSITION">GEÇİŞ BAŞI</div>
+            <div class="sta-m-v" id="met-rox">--</div>
+          </div>
+          <div class="sta-tip" data-tr="Roxzone koşu parkuru ile istasyonlar arasındaki geçiş bölgesi. Elitler burada 4–5 dk harcar, ortalama atlet 7–9 dk. Tempoyu düşürme — burada zaman kayıpları sinsice birikirken." data-en="The Roxzone is the transition area between the running track and stations. Elites spend 4–5 min here, average athletes 7–9 min. Don't drop pace — time losses here add up quietly.">Roxzone koşu parkuru ile istasyonlar arasındaki geçiş bölgesi. Elitler burada 4–5 dk harcar, ortalama atlet 7–9 dk. Tempoyu düşürme — burada zaman kayıpları sinsice birikirken.</div>
+        </div>
+      </div>
+
+      <div id="ca-stations"></div>
+      <div style="height:20px"></div>
+    </div>
+    <div class="nav">
+      <div class="ni" onclick="go('cd')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span data-tr="Sayaç" data-en="Timer">Sayaç</span></div>
+      <div class="ni" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-tr="Antrenman" data-en="Training">Antrenman</span></div>
+      <div class="ni on" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span data-tr="Hesap" data-en="Calc">Hesap</span><div class="ni-dot"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+let lang='tr',notifOn=false,curDay=0;
+const times={};
+
+function tick(){const n=new Date();document.getElementById('clock').textContent=n.getHours()+':'+String(n.getMinutes()).padStart(2,'0');}
+tick();setInterval(tick,15000);
+
+function cdTick(){
+  const diff=new Date('2026-08-01T08:00:00')-new Date();if(diff<=0)return;
+  document.getElementById('cd-d').textContent=String(Math.floor(diff/86400000)).padStart(3,'0');
+  document.getElementById('cd-h').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(Math.floor(diff%60000/1000)).padStart(2,'0');
+}
+cdTick();setInterval(cdTick,1000);
+
+function calcGoal(){
+  const h=+document.getElementById('g-h').value||0,m=+document.getElementById('g-m').value||0,tot=h*60+m;
+  const el=document.getElementById('goal-out');
+  if(!tot){el.innerHTML='<span style="color:var(--t3)">'+(lang==='tr'?'Hedef sürenizi girin →':'Enter your target time →')+'</span>';return;}
+  const run=Math.round(tot*.45),st=Math.round(tot*.55),pkm=Math.round(run/8),pst=Math.round(st/8);
+  el.innerHTML=lang==='tr'
+    ?`<span class="hi">Toplam       </span>→ ${h}sa ${m}dk\n<span class="hi">Koşu (8×1km) </span>→ ~${pkm} dk/km\n<span class="hi">İstasyon başı</span>→ ~${pst} dk\n<span class="hi">Koşu toplamı </span>→ ~${run} dk\n<span class="hi">İst. toplamı </span>→ ~${st} dk`
+    :`<span class="hi">Total        </span>→ ${h}h ${m}min\n<span class="hi">Run (8×1km)  </span>→ ~${pkm} min/km\n<span class="hi">Per station  </span>→ ~${pst} min\n<span class="hi">Run total    </span>→ ~${run} min\n<span class="hi">Station total</span>→ ~${st} min`;
+}
+calcGoal();
+
+function toggleNotif(){
+  if(!('Notification' in window))return;
+  if(notifOn){notifOn=false;document.getElementById('ntoggle').classList.remove('on');return;}
+  Notification.requestPermission().then(p=>{if(p==='granted'){notifOn=true;document.getElementById('ntoggle').classList.add('on');new Notification('HYROX Istanbul 2026',{body:lang==='tr'?'Hatırlatıcı aktif.':'Reminder active.'});}});
+}
+
+function toggleTheme(){
+  const isLight=document.documentElement.classList.toggle('light');
+  document.getElementById('theme-icon').innerHTML=isLight
+    ?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+    :'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+}
+
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.textContent===l.toUpperCase()));
+  document.querySelectorAll('[data-'+l+']').forEach(el=>el.innerHTML=el.getAttribute('data-'+l));
+  calcGoal();buildTabs();renderDay(curDay);distributeTime();
+}
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('scr-'+id).classList.add('active');
+  const map={cd:0,tr:1,ca:2};
+  document.querySelectorAll('.nav').forEach(nav=>{
+    nav.querySelectorAll('.ni').forEach((ni,i)=>{
+      const on=i===map[id];ni.classList.toggle('on',on);
+      const d=ni.querySelector('.ni-dot');if(d)d.remove();
+      if(on){const dot=document.createElement('div');dot.className='ni-dot';ni.appendChild(dot);}
+    });
+  });
+}
+
+const DAYS=[
+  {tr:{day:'Pazartesi',tag:'Kardiyo',title:'Aerobik Taban',desc:'Düşük yoğunluklu uzun koşu ve makine antrenmanı.',tip:'Zone 2\'de kal — (220–yaş) × 0.65. Konuşabiliyorsan doğru tempodayısın.'},
+   en:{day:'Monday',tag:'Cardio',title:'Aerobic Base',desc:'Low-intensity long run and machine training.',tip:'Stay Zone 2 — (220–age) × 0.65. If you can hold a conversation, you\'re on pace.'},
+   yt:'https://www.youtube.com/results?search_query=hyrox+zone2+training',
+   ex:[{tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'Hafif tempo',en:'Easy pace'},v:'10 dk'},{tr:'Tempo koşu',en:'Tempo run',sub:{tr:'5km, orta tempo',en:'5km moderate'},v:'5 km'},{tr:'SkiErg',en:'SkiErg',sub:{tr:'90sn dinlenme arası',en:'90s rest between'},v:'3×500m'},{tr:'Rowing',en:'Rowing',sub:{tr:'90sn dinlenme arası',en:'90s rest between'},v:'3×500m'},{tr:'Soğuma',en:'Cool-down',sub:{tr:'Tam vücut esneme',en:'Full body stretch'},v:'10 dk'}]},
+  {tr:{day:'Salı',tag:'Güç',title:'Sled & Taşıma',desc:'Sled push/pull ve taşıma egzersizleri. Alt vücut ve fonksiyonel güç.',tip:'Sled push\'ta 45° öne eğil, kısa adımlarla it. Ağırlığı yavaşça artır.'},
+   en:{day:'Tuesday',tag:'Strength',title:'Sled & Carry',desc:'Sled push/pull and carry work. Lower body and functional strength.',tip:'Lean 45° forward on sled push, short quick steps. Increase weight gradually.'},
+   yt:'https://www.youtube.com/results?search_query=hyrox+sled+carry+training',
+   ex:[{tr:'Sled Push',en:'Sled Push',sub:{tr:'%50 vücut ağırlığı',en:'50% body weight'},v:'6×30m'},{tr:'Sled Pull',en:'Sled Pull',sub:{tr:'İp ile, dik duruş',en:'Rope pull, upright'},v:'6×30m'},{tr:'Farmers Carry',en:'Farmers Carry',sub:{tr:'Her elde kettlebell',en:'KB each hand'},v:'4×50m'},{tr:'Sandbag Lunges',en:'Sandbag Lunges',sub:{tr:'Omuzda sandbag',en:'Sandbag on shoulder'},v:'4×20'},{tr:'Plank',en:'Plank',sub:{tr:'Ön + yan',en:'Front + side'},v:'3×60sn'}]},
+  {tr:{day:'Çarşamba',tag:'HIIT',title:'Interval Koşu',desc:'Yüksek yoğunluklu interval antrenmanı. Hız ve dayanıklılık.',tip:'Her 400m\'yi %85–90 eforda koş. İlk setleri çok hızlı koşarsan son setleri bitiremezsin.'},
+   en:{day:'Wednesday',tag:'HIIT',title:'Interval Run',desc:'High-intensity interval training. Speed and endurance.',tip:'Run each 400m at 85–90% effort. Go too fast early and you won\'t finish the last sets.'},
+   yt:'https://www.youtube.com/results?search_query=hyrox+interval+hiit+training',
+   ex:[{tr:'400m koşu',en:'400m run',sub:{tr:'%85–90 efor, 90sn dinlenme',en:'85–90% effort, 90s rest'},v:'8×tekrar'},{tr:'Wall Balls',en:'Wall Balls',sub:{tr:'9kg, 3m hedef',en:'9kg, 3m target'},v:'4×25'},{tr:'Burpee Broad Jump',en:'Burpee Broad Jump',sub:{tr:'Tam atlayış',en:'Full jump'},v:'4×15'},{tr:'Box Jump',en:'Box Jump',sub:{tr:'60cm, patlayıcı',en:'60cm, explosive'},v:'3×12'}]},
+  {tr:{day:'Perşembe',tag:'Simülasyon',title:'HYROX Protokol',desc:'Yarı yarış simülasyonu. Gerçek koşullarda istasyon geçiş pratiği.',tip:'İstasyonlar arası ritim koru — çok hızlı başlamak seni bitirir.'},
+   en:{day:'Thursday',tag:'Simulation',title:'HYROX Protocol',desc:'Half-race simulation. Station transitions under race conditions.',tip:'Maintain rhythm between stations — going out too hard will end your race.'},
+   yt:'https://www.youtube.com/results?search_query=hyrox+race+simulation',
+   ex:[{tr:'1km + SkiErg',en:'1km + SkiErg',sub:{tr:'Tempo: 2:10–2:20/500m',en:'Pace: 2:10–2:20/500m'},v:'1.000m'},{tr:'1km + Sled Push',en:'1km + Sled Push',sub:{tr:'E: 102kg / K: 56kg',en:'M: 102kg / W: 56kg'},v:'2×25m'},{tr:'1km + Burpee BJ',en:'1km + Burpee BJ',sub:{tr:'Sabit ritim',en:'Steady rhythm'},v:'40 tekrar'},{tr:'1km + Rowing',en:'1km + Rowing',sub:{tr:'Tempo: 2:00–2:10/500m',en:'Pace: 2:00–2:10/500m'},v:'1.000m'},{tr:'Hedef süre',en:'Target time',sub:{tr:'Yarı protokol toplamı',en:'Half protocol total'},v:'< 45dk'}]},
+  {tr:{day:'Cuma',tag:'Güç',title:'Ağırlık & Fonksiyonel',desc:'Compound hareketlerle maksimal güç. HYROX\'a özel kas grupları.',tip:'Deadlift\'te sırtı düz tut. Arka zincir sled push ve sandbag için kritik.'},
+   en:{day:'Friday',tag:'Strength',title:'Weights & Functional',desc:'Maximum strength with compound movements. HYROX-specific muscle groups.',tip:'Keep your back flat on deadlifts. The posterior chain is critical for sled and sandbag.'},
+   yt:'https://www.youtube.com/results?search_query=hyrox+strength+training',
+   ex:[{tr:'Deadlift',en:'Deadlift',sub:{tr:'%80 1RM, kontrollü',en:'80% 1RM, controlled'},v:'4×6'},{tr:'Romanian DL',en:'Romanian DL',sub:{tr:'Hamstring odaklı',en:'Hamstring focused'},v:'3×10'},{tr:'Goblet Squat',en:'Goblet Squat',sub:{tr:'Kettlebell, geniş diz',en:'KB, wide knee track'},v:'4×12'},{tr:'KB Swing',en:'KB Swing',sub:{tr:'Patlayıcı kalça',en:'Explosive hip drive'},v:'4×20'},{tr:"Farmer's Walk",en:"Farmer's Walk",sub:{tr:'Maksimum yük',en:'Max load'},v:'3×40m'}]},
+  {tr:{day:'Cumartesi',tag:'Kardiyo',title:'Uzun Koşu',desc:'Uzun mesafe, düşük tempo. Zone 2\'de aerobik motor.',tip:'Nabız (220–yaş) × 0.65\'i aşmamalı. Çok yavaş geliyorsa endişelenme — doğru yapıyorsun.'},
+   en:{day:'Saturday',tag:'Cardio',title:'Long Run',desc:'Long distance, low pace. Zone 2 aerobic engine work.',tip:'HR should not exceed (220–age) × 0.65. If it feels too slow, you\'re doing it right.'},
+   yt:'https://www.youtube.com/results?search_query=zone2+long+run+hyrox',
+   ex:[{tr:'Uzun koşu',en:'Long run',sub:{tr:'Zone 2, konuşma temposu',en:'Zone 2, conversational'},v:'12–15km'},{tr:'Tempo surge',en:'Tempo surge',sub:{tr:'Ortada 2km hız artışı',en:'2km pace surge mid-run'},v:'2km'},{tr:'Mobility',en:'Mobility',sub:{tr:'Kalça + hamstring',en:'Hip + hamstring'},v:'20dk'}]},
+  {tr:{day:'Pazar',tag:'Dinlenme',title:'Aktif Toparlanma',desc:'Hafif hareket ve zihinsel dinlenme.',tip:'Dinlenme antrenmanın bir parçası. Kaslar büyür ve onarılır, zihin sıfırlanır.'},
+   en:{day:'Sunday',tag:'Rest',title:'Active Recovery',desc:'Light movement and mental rest.',tip:'Rest is part of training. Muscles grow and repair; the mind resets.'},
+   yt:'https://www.youtube.com/results?search_query=active+recovery+mobility',
+   ex:[{tr:'Yürüyüş',en:'Walk',sub:{tr:'Hafif tempo, açık hava',en:'Easy pace, outdoors'},v:'30–45dk'},{tr:'Foam Rolling',en:'Foam Rolling',sub:{tr:'Bacak + sırt',en:'Legs + back'},v:'15dk'},{tr:'Esneme',en:'Stretching',sub:{tr:'Statik, tam vücut',en:'Static, full body'},v:'20dk'},{tr:'Nefes',en:'Breathing',sub:{tr:'Box breathing 4-4-4-4',en:'Box breathing 4-4-4-4'},v:'5dk'}]},
+];
+
+function buildTabs(){
+  document.getElementById('day-tabs').innerHTML=DAYS.map((d,i)=>{
+    const lbl=lang==='tr'?d.tr.day.slice(0,3):d.en.day.slice(0,3);
+    return`<div class="tab${i===curDay?' on':''}" onclick="switchDay(${i})">${lbl}</div>`;
+  }).join('');
+}
+function renderDay(i){
+  curDay=i;const d=DAYS[i],t=lang==='tr'?d.tr:d.en;
+  document.getElementById('tr-body').innerHTML=`
+    <div class="tr-card">
+      <div class="tr-head"><span class="tr-tag">${t.tag}</span><div class="tr-title">${t.title}</div><div class="tr-desc">${t.desc}</div></div>
+      <div>${d.ex.map((e,j)=>`<div class="ex-r"><div class="ex-i">${String(j+1).padStart(2,'0')}</div><div class="ex-body"><div class="ex-name">${lang==='tr'?e.tr:e.en}</div><div class="ex-sub">${lang==='tr'?e.sub.tr:e.sub.en}</div></div><div class="ex-v">${e.v}</div></div>`).join('')}</div>
+    </div>
+    <div class="tip-b"><div class="tip-ico">—</div><div class="tip-txt">${t.tip}</div></div>
+    <a class="yt-b" href="${d.yt}" target="_blank" rel="noopener">
+      <div class="yt-l"><div class="yt-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M19.6 3.2C16 3 12 3 12 3s-4 0-7.6.2C2.5 3.4 1.2 4.7 1 6.6.8 8.2.8 12 .8 12s0 3.8.2 5.4c.2 1.9 1.5 3.2 3.4 3.4C7.8 21 12 21 12 21s4 0 7.6-.2c1.9-.2 3.2-1.5 3.4-3.4.2-1.6.2-5.4.2-5.4s0-3.8-.2-5.4c-.2-1.9-1.5-3.2-3.4-3.4zM9.8 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg></div><div><div class="yt-title">${lang==='tr'?'Antrenman Videosu':'Training Video'}</div><div class="yt-sub">YouTube →</div></div></div>
+      <div class="yt-arr">›</div>
+    </a>`;
+}
+function switchDay(i){document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===i));renderDay(i);}
+buildTabs();renderDay(0);
+
+/* ══════════════════════════
+   CALCULATOR — DISTRIBUTE
+══════════════════════════ */
+
+// Station definitions: default % of station budget, slider range, metric type
+const STS=[
+  {id:'ski', tr:{name:'SkiErg',tip:'Kolları tamamen aşağı çek, core sıkı. Her çekişi tamamla — yarım tekrar enerji yakar.'},en:{name:'SkiErg',tip:'Pull arms all the way down, core tight. Complete each pull — half-reps waste energy.'},
+   desc:'1.000m',type:'pace',dist:1000,defPct:11,minS:180,maxS:480,yt:'https://www.youtube.com/results?search_query=hyrox+skierg+technique'},
+  {id:'spsh',tr:{name:'Sled Push',tip:'45° öne eğil, kısa hızlı adımlar. Ayak tabanını tam bas — parmak ucunda güç kaybı olur.'},en:{name:'Sled Push',tip:'Lean 45° forward, short quick steps. Push through the full foot — toe push loses power.'},
+   desc:'50m × 2',type:'speed',dist:100,defPct:9,minS:60,maxS:300,yt:'https://www.youtube.com/results?search_query=hyrox+sled+push+technique'},
+  {id:'spll',tr:{name:'Sled Pull',tip:'Kısa kavrayış, her adımda kalçayı kullan. Dikey dur — arkaya yaslanmak hızı düşürür.'},en:{name:'Sled Pull',tip:'Short grip, use hips each step. Stay vertical — leaning back kills your speed.'},
+   desc:'50m × 2',type:'speed',dist:100,defPct:10,minS:60,maxS:300,yt:'https://www.youtube.com/results?search_query=hyrox+sled+pull+technique'},
+  {id:'brp', tr:{name:'Burpee Broad Jump',tip:'Her sıçrayışta iki ayak sağlam zemine. Ritim hızdan önemli — koşma, say.'},en:{name:'Burpee Broad Jump',tip:'Land both feet firmly each jump. Rhythm matters more than speed — don\'t rush, count.'},
+   desc:'80 tekrar',type:'reps',reps:80,defPct:13,minS:120,maxS:540,yt:'https://www.youtube.com/results?search_query=hyrox+burpee+broad+jump'},
+  {id:'row', tr:{name:'Rowing',tip:'Önce bacakları it, sonra kolları çek. 500m temposunu sabit tut — ilk 200m\'de yanma.'},en:{name:'Rowing',tip:'Push legs first, then pull arms. Keep 500m pace consistent — don\'t burn out in the first 200m.'},
+   desc:'1.000m',type:'pace',dist:1000,defPct:11,minS:180,maxS:480,yt:'https://www.youtube.com/results?search_query=hyrox+rowing+technique'},
+  {id:'frm', tr:{name:'Farmers Carry',tip:'Omuzlar geri ve aşağı, baş dik. Kettlebell\'ler yanda sabit — sallanırsa enerji kaybı.'},en:{name:'Farmers Carry',tip:'Shoulders back and down, head up. KBs steady at sides — swinging wastes energy.'},
+   desc:'200m',type:'speed',dist:200,defPct:9,minS:60,maxS:300,yt:'https://www.youtube.com/results?search_query=hyrox+farmers+carry+technique'},
+  {id:'snd', tr:{name:'Sandbag Lunges',tip:'Sandbag tek omuza. Diz zemine değmemeli — değerse sayılmaz. Öne eğilme.'},en:{name:'Sandbag Lunges',tip:'Sandbag on one shoulder. Knee must not touch the floor — it won\'t count. Don\'t lean forward.'},
+   desc:'100 tekrar',type:'reps',reps:100,defPct:14,minS:180,maxS:600,yt:'https://www.youtube.com/results?search_query=hyrox+sandbag+lunges'},
+  {id:'wbl', tr:{name:'Wall Balls',tip:'Top 3m hedefi geçmeli. Tam squat, fırlatmada parmak ucuna yüksel. Gözler hedefte.'},en:{name:'Wall Balls',tip:'Ball must clear 3m. Full squat, rise on toes for throw. Keep eyes on the target.'},
+   desc:'100 tekrar',type:'reps',reps:100,defPct:23,minS:180,maxS:600,yt:'https://www.youtube.com/results?search_query=hyrox+wall+balls+technique'},
+];
+
+// slider overrides: user can drag to adjust each station
+const sliderOverrides={};
+let lastGoalSec=0;
+
+function p2(n){return String(Math.floor(Math.abs(n))).padStart(2,'0');}
+function fmtHms(s){return Math.floor(s/3600)+':'+p2(s%3600/60)+':'+p2(s%60);}
+function fmtMm(s){return p2(s/60)+':'+p2(s%60);}
+
+function calcMetric(s,secs){
+  if(s.type==='pace'){const p=secs/(s.dist/500);return p2(p/60)+':'+p2(p%60)+' /500m';}
+  if(s.type==='speed'){return(s.dist/secs).toFixed(2)+' m/s';}
+  return(s.reps/secs*60).toFixed(1)+' rep/dk';
+}
+
+function distributeTime(){
+  const h=+document.getElementById('ca-h').value||0;
+  const m=+document.getElementById('ca-m').value||0;
+  const totalSec=(h*60+m)*60;
+  lastGoalSec=totalSec;
+  const sumEl=document.getElementById('ca-summary');
+  const secLbl=document.getElementById('sec-lbl');
+  const runCard=document.getElementById('sti-run');
+  const roxCard=document.getElementById('sti-rox');
+  if(!totalSec){
+    sumEl.style.display='none';secLbl.style.display='none';
+    runCard.style.display='none';roxCard.style.display='none';
+    document.getElementById('ca-stations').innerHTML='';return;
+  }
+
+  const roxSec=Math.round(totalSec*0.05);
+  const runSec=Math.round(totalSec*0.42);
+  const staSec=totalSec-runSec-roxSec;
+
+  // Summary header
+  sumEl.style.display='block';
+  secLbl.style.display='block';
+  runCard.style.display='block';
+  roxCard.style.display='block';
+
+  document.getElementById('ca-sum-time').textContent=fmtHms(totalSec);
+  document.getElementById('ca-sum-sub').textContent=
+    lang==='tr'
+      ?`Km başı koşu: ~${fmtMm(Math.round(runSec/8))} · Roxzone: ~${fmtMm(roxSec)}`
+      :`Run pace: ~${fmtMm(Math.round(runSec/8))}/km · Roxzone: ~${fmtMm(roxSec)}`;
+  document.getElementById('cs-run').textContent=fmtMm(runSec);
+  document.getElementById('cs-sta').textContent=fmtMm(staSec);
+  document.getElementById('cs-rox').textContent=fmtMm(roxSec);
+
+  // Run card
+  const kmPace=Math.round(runSec/8);
+  document.getElementById('alloc-run').textContent=fmtMm(runSec)+' · '+fmtMm(kmPace)+'/km';
+  document.getElementById('met-run').textContent=fmtMm(kmPace)+'/km';
+
+  // Rox card
+  const perRox=Math.round(roxSec/8);
+  document.getElementById('alloc-rox').textContent=fmtMm(roxSec)+' · '+fmtMm(perRox)+'/geçiş';
+  document.getElementById('met-rox').textContent=fmtMm(perRox);
+
+  const totalPct=STS.reduce((a,s)=>a+s.defPct,0);
+  buildStationsCalc(staSec,totalPct);
+}
+
+function buildStationsCalc(staBudget,totalPct){
+  const container=document.getElementById('ca-stations');
+  // first pass: compute raw seconds per station
+  const raw={};
+  STS.forEach(s=>{
+    raw[s.id]=sliderOverrides[s.id]!==undefined
+      ? sliderOverrides[s.id]
+      : Math.round(staBudget*(s.defPct/totalPct));
+  });
+
+  container.innerHTML=STS.map((s,i)=>{
+    const nm=lang==='tr'?s.tr.name:s.en.name;
+    const tip=lang==='tr'?s.tr.tip:s.en.tip;
+    const sec=Math.max(s.minS,Math.min(s.maxS,raw[s.id]));
+    const metric=calcMetric(s,sec);
+    const slVal=sec;
+    const metLbl=s.type==='pace'?'500M TEMPO':s.type==='speed'?(lang==='tr'?'HIZ':'SPEED'):(lang==='tr'?'TEKRAR/DK':'REPS/MIN');
+    return`
+    <div class="sta-item" id="sti-${s.id}">
+      <div class="sta-head" onclick="toggleSta('${s.id}')">
+        <div class="sta-idx">${String(i+1).padStart(2,'0')}</div>
+        <div class="sta-info">
+          <div class="sta-name">${nm}</div>
+          <div class="sta-desc">${s.desc}</div>
+          <div class="sta-alloc" id="alloc-${s.id}">${fmtMm(sec)} · ${metric}</div>
+        </div>
+        <div class="sta-chev">›</div>
+      </div>
+      <div class="sta-body">
+        <div class="sl-wrap">
+          <div class="sl-top">
+            <div class="sl-lbl">${lang==='tr'?'İstasyon Süresi':'Station Time'}</div>
+            <div class="sl-val" id="slv-${s.id}">${fmtMm(sec)}</div>
+          </div>
+          <input type="range" id="sl-${s.id}" min="${s.minS}" max="${s.maxS}" value="${slVal}" step="5"
+            oninput="onSlider('${s.id}',this.value)">
+          <div style="display:flex;justify-content:space-between;margin-top:4px">
+            <span style="font-family:var(--fm);font-size:8px;color:var(--t3)">${fmtMm(s.minS)}</span>
+            <span style="font-family:var(--fm);font-size:8px;color:var(--t3)">${fmtMm(s.maxS)}</span>
+          </div>
+        </div>
+        <div class="sta-metric">
+          <div class="sta-m-l">${metLbl}</div>
+          <div class="sta-m-v" id="met-${s.id}">${metric}</div>
+        </div>
+        <div class="sta-tip">${tip}</div>
+        <a class="vid-a" href="${s.yt}" target="_blank" rel="noopener">▶ ${lang==='tr'?'Teknik videosu':'Technique video'} →</a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function onSlider(id,val){
+  const v=+val,s=STS.find(x=>x.id===id);
+  sliderOverrides[id]=v;
+  document.getElementById('slv-'+id).textContent=fmtMm(v);
+  const metric=calcMetric(s,v);
+  document.getElementById('met-'+id).textContent=metric;
+  document.getElementById('alloc-'+id).textContent=fmtMm(v)+' · '+metric;
+  // recalc summary totals
+  if(lastGoalSec){
+    const roxSec=Math.round(lastGoalSec*0.05);
+    const runSec=Math.round(lastGoalSec*0.42);
+    const staSec=lastGoalSec-runSec-roxSec;
+    const totalPct=STS.reduce((a,s)=>a+s.defPct,0);
+    // update only other station times if overrides shift total — keep simple, just update header
+    let usedSta=0;STS.forEach(s2=>{usedSta+=sliderOverrides[s2.id]!==undefined?sliderOverrides[s2.id]:Math.round(staSec*(s2.defPct/totalPct));});
+    document.getElementById('cs-sta').textContent=fmtMm(usedSta);
+    document.getElementById('ca-sum-time').textContent=fmtHms(runSec+usedSta+roxSec);
+  }
+}
+
+function toggleSta(id){
+  const el=document.getElementById('sti-'+id);
+  const open=el.classList.contains('open');
+  document.querySelectorAll('.sta-item').forEach(x=>x.classList.remove('open'));
+  if(!open)el.classList.add('open');
+}
+
+</script>
+</body>
+</html>
