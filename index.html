@@ -7,663 +7,596 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&display=swap');
-
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#0a0a0a;--card:#141414;--card2:#1c1c1c;--card3:#111;
-  --line:#242424;--line2:#2e2e2e;
+  --bg:#0a0a0a;--card:#141414;--card2:#1c1c1c;--line:#242424;--line2:#2e2e2e;
   --text:#f0ede8;--t2:#888;--t3:#3a3a3a;--t4:#555;
   --gold:#d4a84c;--gold2:#e8c06a;--gold3:#b8902a;
   --gold-bg:rgba(212,168,76,.07);--gold-line:rgba(212,168,76,.2);--gold-glow:rgba(212,168,76,.1);
   --green:#5a9e6f;--red:#c06060;--blue:#5a82b4;
   --body-bg:#050505;--shell:#1e1e1e;--shadow:rgba(0,0,0,.95);
   --f:'Geist',sans-serif;--fm:'Geist Mono',monospace;
-  --pad:18px;--gap:10px;--r:20px;--trans:.2s ease;
+  --pad:18px;--gap:10px;--r:20px;--trans:.2s ease
 }
 :root.light{
-  --bg:#f8f7f4;--card:#fff;--card2:#f0ede8;--card3:#f5f3ef;
-  --line:#e6e3dc;--line2:#dbd8d1;
+  --bg:#f8f7f4;--card:#fff;--card2:#f0ede8;--line:#e6e3dc;--line2:#dbd8d1;
   --text:#111110;--t2:#777;--t3:#ccc;--t4:#aaa;
   --gold:#8a5e10;--gold2:#a07020;--gold3:#6a4808;
   --gold-bg:rgba(138,94,16,.06);--gold-line:rgba(138,94,16,.18);--gold-glow:rgba(138,94,16,.08);
   --green:#3a7e50;--red:#a04040;--blue:#3a62a4;
-  --body-bg:#e8e5de;--shell:#d8d5ce;--shadow:rgba(0,0,0,.12);
+  --body-bg:#e8e5de;--shell:#d8d5ce;--shadow:rgba(0,0,0,.12)
 }
-html,body{height:100%;margin:0;padding:0;overflow:hidden;}
-body{background:var(--bg);font-family:var(--f);color:var(--text);}
-@media(min-width:640px){body{background:var(--body-bg);}}
-.phone{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--bg);max-width:560px;margin:0 auto;}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);font-family:var(--f);color:var(--text)}
+@media(min-width:640px){body{background:var(--body-bg)}}
+.phone{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--bg);max-width:560px;margin:0 auto}
 @media(min-width:640px){
-  .phone{position:absolute;top:28px;bottom:28px;left:50%;transform:translateX(-50%);width:560px;border-radius:28px;border:1px solid var(--shell);box-shadow:0 24px 80px var(--shadow),0 0 0 1px rgba(255,255,255,.03);overflow:hidden;}
+  .phone{position:absolute;top:28px;bottom:28px;left:50%;transform:translateX(-50%);width:560px;
+    border-radius:28px;border:1px solid var(--shell);box-shadow:0 24px 80px var(--shadow);overflow:hidden}
 }
-
-/* ── HEADER ── */
-.sb{flex-shrink:0;padding:0 var(--pad);height:54px;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-bottom:1px solid var(--line);position:relative;z-index:10;}
-.sb::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:40%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent);}
-.logo-wrap{display:flex;align-items:center;gap:10px;}
-.logo{display:flex;align-items:baseline;gap:2px;font-family:var(--fm);font-weight:700;letter-spacing:-1px;}
-.logo .rx{font-size:19px;color:var(--text);}
-.logo .dot{width:5px;height:5px;border-radius:50%;background:var(--gold);margin:0 1px 4px;}
-.logo .yr{font-size:13px;color:var(--gold);}
-.logo-tag{font-family:var(--fm);font-size:8px;color:var(--t2);letter-spacing:2px;text-transform:uppercase;border:1px solid var(--line2);border-radius:4px;padding:2px 6px;}
-.sb-right{display:flex;align-items:center;gap:8px;}
-.lang-sw{display:flex;border:1px solid var(--line2);border-radius:100px;overflow:hidden;}
-.lb{font-family:var(--fm);font-size:9px;padding:4px 10px;color:var(--t2);cursor:pointer;letter-spacing:.8px;user-select:none;transition:background var(--trans),color var(--trans);}
-.lb.on{background:var(--text);color:var(--bg);font-weight:600;}
-.icon-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color var(--trans);}
-.icon-btn svg{width:13px;height:13px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-
-/* ── SCREENS ── */
-.screen{display:none;flex:1;flex-direction:column;min-height:0;}
-.screen.active{display:flex;}
-.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-.scroll::-webkit-scrollbar{display:none;}
-
-/* ── NAV ── */
-.nav{background:var(--bg);border-top:1px solid var(--line);display:flex;padding:10px 0 max(14px,env(safe-area-inset-bottom));flex-shrink:0;}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--fm);font-size:8px;letter-spacing:.6px;text-transform:uppercase;color:var(--t4);cursor:pointer;user-select:none;transition:color var(--trans);}
-.ni.on{color:var(--text);}
-.ni svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.5;}
-.ni-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);margin-top:-1px;}
-
-/* ── SHARED ── */
-.eyebrow{font-family:var(--fm);font-size:10px;color:var(--t2);letter-spacing:2.5px;text-transform:uppercase;font-weight:500;}
-.eyebrow.gold{color:var(--gold);}
-.card{background:var(--card);border-radius:var(--r);border:1px solid var(--line);margin:0 var(--pad) var(--gap);}
-.card-p{padding:18px 20px;}
-.kv{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);}
-.kv:last-child{border-bottom:none;}
-.kv-k{font-size:13px;color:var(--t2);}
-.kv-v{font-family:var(--fm);font-size:12px;color:var(--text);font-weight:500;}
-.divider{height:1px;background:var(--line);margin:0 var(--pad) var(--gap);}
-.sec-head{padding:14px var(--pad) 6px;display:flex;align-items:center;gap:12px;}
-.sec-head::after{content:'';flex:1;height:1px;background:var(--line);}
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;cursor:pointer;}
-.tog{width:42px;height:24px;border-radius:12px;background:var(--line2);position:relative;flex-shrink:0;transition:background .25s;}
-.tog.on{background:var(--gold);}
-.tog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--bg);transition:transform .2s;}
-.tog.on::after{transform:translateX(18px);}
-
-/* ═══════════════════════
-   SCREEN 1 — DASHBOARD
-═══════════════════════ */
-.hero{padding:20px var(--pad) 0;}
-.hero-eye{font-family:var(--fm);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.hero-eye::before{content:'';width:16px;height:1px;background:var(--gold);opacity:.5;}
-.hero-title{font-size:36px;font-weight:800;color:var(--text);line-height:1.05;letter-spacing:-2px;}
-.hero-title em{font-style:normal;background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-sub{font-size:13px;color:var(--t2);margin-top:8px;font-family:var(--fm);}
-
-/* Countdown */
-.cd-block{margin:16px var(--pad) 0;background:var(--card);border-radius:var(--r);border:1px solid var(--line);padding:22px 16px;position:relative;overflow:hidden;}
-.cd-block::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,var(--gold-glow),transparent 70%);pointer-events:none;}
-.cd-block::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent);}
-.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
-.cd-cell{text-align:center;padding:4px 2px;}
-.cd-n{font-family:var(--fm);font-size:40px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-2px;background:linear-gradient(180deg,var(--text) 55%,transparent 130%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.cd-l{font-family:var(--fm);font-size:8px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-top:5px;}
-.cd-sep{display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:24px;color:var(--t3);padding-bottom:12px;font-weight:300;position:relative;top:-2px;}
-
-/* Week rings */
-.week-block{margin:10px var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;}
-.week-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.week-count{font-family:var(--fm);font-size:11px;color:var(--gold);font-weight:600;}
-.week-row{display:flex;justify-content:space-between;}
-.wd{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;cursor:pointer;}
-.wd-ring{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:0;}
-.wd-ring.done{border-color:var(--gold);background:var(--gold-bg);}
-.wd-ring.done::after{content:'✓';font-size:12px;color:var(--gold);font-weight:700;}
-.wd-ring.today:not(.done){border-color:var(--t4);border-style:dashed;}
-.wd-lbl{font-family:var(--fm);font-size:8px;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;}
-.wd.today .wd-lbl{color:var(--t2);}
-
-/* PB block */
-.pb-block{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:0;overflow:hidden;}
-.pb-top{padding:16px 18px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;}
-.pb-top-left{display:flex;flex-direction:column;gap:6px;}
-.pb-scores{display:flex;gap:20px;padding:0 18px 16px;}
-.pb-sc{flex:1;}
-.pb-sc-lbl{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
-.pb-sc-lbl.gold{color:var(--gold);}
-.pb-sc input{font-family:var(--fm);font-size:28px;font-weight:700;color:var(--text);background:transparent;border:none;outline:none;width:100%;letter-spacing:-1px;}
-.pb-sc.goal-sc input{color:var(--gold);}
-.pb-sc input::placeholder{color:var(--t3);}
-.pb-delta{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:3px;min-height:14px;}
-.pb-delta.pos{color:var(--green);}
-.pb-delta.neg{color:var(--red);}
-.pb-improve-btn{border-top:1px solid var(--line);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background var(--trans);}
-.pb-improve-btn:hover{background:var(--card2);}
-.pb-improve-lbl{font-size:13px;color:var(--text);font-weight:500;}
-.pb-improve-sub{font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:2px;}
-.pb-improve-arr{font-size:14px;color:var(--t4);}
-
-/* HYROX info cards */
-.info-scroll{display:flex;gap:10px;padding:0 var(--pad);overflow-x:auto;scrollbar-width:none;margin-bottom:var(--gap);}
-.info-scroll::-webkit-scrollbar{display:none;}
-.info-card{flex-shrink:0;width:200px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;}
-.info-card-icon{font-size:22px;margin-bottom:10px;}
-.info-card-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.3;}
-.info-card-body{font-size:12px;color:var(--t2);line-height:1.6;}
-.info-card-badge{display:inline-block;font-family:var(--fm);font-size:9px;color:var(--gold);border:1px solid var(--gold-line);background:var(--gold-bg);border-radius:5px;padding:2px 7px;margin-top:8px;letter-spacing:.5px;}
-
-/* Checklist */
-.cl-block{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;}
-.cl-head{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
-.cl-head-l{display:flex;align-items:center;gap:10px;}
-.cl-cnt{font-family:var(--fm);font-size:11px;color:var(--gold);font-weight:600;}
-.cl-arr{font-size:14px;color:var(--t2);transition:transform .2s;}
-.cl-open .cl-arr{transform:rotate(90deg);}
-.cl-body{border-top:1px solid var(--line);display:none;}
-.cl-sec{padding:9px 18px 3px;font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:2px;text-transform:uppercase;}
-.cl-item{display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--line);cursor:pointer;}
-.cl-item:last-child{border-bottom:none;}
-.cl-box{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-.cl-item.done .cl-box{background:var(--gold);border-color:var(--gold);}
-.cl-item.done .cl-box::after{content:'✓';font-size:10px;color:#000;font-weight:700;}
-.cl-txt{font-size:13px;color:var(--text);}
-.cl-item.done .cl-txt{color:var(--t2);text-decoration:line-through;text-decoration-color:var(--t3);}
-
-/* PB Improve modal overlay */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;}
-.modal-overlay.open{opacity:1;pointer-events:all;}
-.modal-sheet{width:100%;max-width:560px;margin:0 auto;background:var(--card);border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:none;max-height:85vh;display:flex;flex-direction:column;transform:translateY(30px);transition:transform .25s;}
-.modal-overlay.open .modal-sheet{transform:translateY(0);}
-.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--line2);margin:12px auto 0;}
-.modal-head{padding:16px 20px 10px;border-bottom:1px solid var(--line);}
-.modal-title{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.5px;margin-top:6px;}
-.modal-sub{font-size:13px;color:var(--t2);margin-top:4px;}
-.modal-close{position:absolute;top:14px;right:16px;width:28px;height:28px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--t2);}
-.modal-body{overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:20px;}
-.modal-body::-webkit-scrollbar{display:none;}
-
-/* Improve tips */
-.tip-group{padding:14px 20px 0;}
-.tip-group-lbl{font-family:var(--fm);font-size:9px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:10px;}
-.tip-row{display:flex;gap:10px;margin-bottom:8px;}
-.tip-icon{width:36px;height:36px;border-radius:10px;background:var(--gold-bg);border:1px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.tip-content{flex:1;}
-.tip-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px;}
-.tip-desc{font-size:12px;color:var(--t2);line-height:1.6;}
-.weak-inputs{display:flex;flex-direction:column;gap:6px;padding:10px 20px 0;}
-.weak-input-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--card2);border:1px solid var(--line2);border-radius:12px;}
-.weak-name{font-size:13px;color:var(--text);font-weight:500;}
-.weak-sub{font-family:var(--fm);font-size:10px;color:var(--t2);}
-.weak-tog{display:flex;align-items:center;gap:6px;}
-.weak-tog-btn{width:22px;height:22px;border-radius:6px;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--t2);transition:all .15s;}
-.weak-tog-btn.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold);}
-
-/* ═══════════════════════
-   SCREEN 2 — ANTRENMAN
-═══════════════════════ */
-.scr-head{padding:20px var(--pad) 4px;flex-shrink:0;}
-.scr-title{font-size:28px;font-weight:700;color:var(--text);letter-spacing:-.5px;line-height:1.15;margin-top:6px;}
-.scr-sub{font-size:13px;color:var(--t2);margin-top:5px;}
-.tabs{display:flex;gap:6px;padding:8px var(--pad) 6px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
-.tabs::-webkit-scrollbar{display:none;}
-.tab{flex-shrink:0;background:transparent;border:1px solid var(--line2);border-radius:10px;padding:7px 13px;font-family:var(--fm);font-size:10px;color:var(--t2);cursor:pointer;letter-spacing:.4px;font-weight:500;transition:all var(--trans);}
-.tab.on{background:var(--text);color:var(--bg);border-color:var(--text);}
-.tr-card{margin:0 var(--pad) var(--gap);background:var(--card);border-radius:var(--r);border:1px solid var(--line);overflow:hidden;}
-.tr-head{padding:18px 18px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--card2),var(--card));}
-.tr-tag{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;display:inline-block;font-weight:600;padding:3px 9px;border:1px solid var(--gold-line);border-radius:6px;background:var(--gold-bg);}
-.tr-title{font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.3px;line-height:1.2;margin-top:8px;}
-.tr-desc{font-size:13px;color:var(--t2);margin-top:5px;line-height:1.65;}
-.ex-r{display:flex;align-items:flex-start;gap:13px;padding:13px 18px;border-bottom:1px solid var(--line);}
-.ex-r:last-child{border-bottom:none;}
-.ex-i{font-family:var(--fm);font-size:10px;color:var(--t3);width:20px;margin-top:2px;flex-shrink:0;font-weight:600;}
-.ex-body{flex:1;}
-.ex-name{font-size:14px;color:var(--text);font-weight:500;}
-.ex-sub{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:2px;}
-.ex-v{font-family:var(--fm);font-size:11px;color:var(--gold);white-space:nowrap;flex-shrink:0;margin-top:2px;font-weight:600;padding:2px 8px;border:1px solid var(--gold-line);border-radius:6px;background:var(--gold-bg);}
-.tip-b{margin:0 var(--pad) var(--gap);padding:14px 16px;border:1px solid var(--line);border-radius:var(--r);display:flex;gap:12px;background:var(--card);}
-.tip-ico{font-family:var(--fm);font-size:11px;color:var(--gold);flex-shrink:0;margin-top:1px;}
-.tip-txt{font-size:13px;color:var(--t2);line-height:1.7;}
-.yt-b{margin:0 var(--pad) 20px;display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:1px solid var(--line);border-radius:var(--r);text-decoration:none;background:var(--card);transition:border-color var(--trans);}
-.yt-l{display:flex;align-items:center;gap:12px;}
-.yt-icon{width:32px;height:32px;border-radius:8px;background:#ff0000;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.yt-title{font-size:13px;color:var(--text);font-weight:500;}
-.yt-sub{font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:2px;}
-.yt-arr{font-size:16px;color:var(--t3);}
-
-/* ═══════════════════════
-   SCREEN 3 — HESAP
-═══════════════════════ */
-.ca-goal{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;}
-.ca-goal-row{display:flex;align-items:flex-end;gap:8px;margin:12px 0 0;}
-.ca-g{display:flex;flex-direction:column;gap:6px;flex:1;}
-.ca-gl{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1px;text-transform:uppercase;font-weight:500;}
-.ca-in{width:100%;background:var(--card2);border:1px solid var(--line2);border-radius:12px;padding:12px 8px;font-size:30px;font-family:var(--fm);font-weight:700;color:var(--text);outline:none;text-align:center;letter-spacing:-1px;transition:border-color var(--trans);}
-.ca-in:focus{border-color:var(--gold);}
-.ca-sep{font-family:var(--fm);font-size:30px;color:var(--t3);padding-bottom:12px;font-weight:300;}
-.ca-summary{margin:0 var(--pad) var(--gap);border:1px solid var(--gold-line);border-radius:var(--r);background:var(--card);padding:20px 18px;position:relative;overflow:hidden;}
-.ca-summary::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 80% at 50% 0%,var(--gold-glow),transparent 70%);pointer-events:none;}
-.ca-summary::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:50%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent);}
-.ca-sum-lbl{font-family:var(--fm);font-size:9px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600;}
-.ca-sum-time{font-family:var(--fm);font-size:52px;font-weight:700;color:var(--text);letter-spacing:-2px;line-height:1;background:linear-gradient(135deg,var(--text) 50%,var(--t2) 130%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.ca-sum-sub{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:7px;}
-.ca-sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--gold-line);}
-.ca-sc{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:10px;}
-:root.light .ca-sc{background:rgba(0,0,0,.03);}
-.ca-sc-v{font-family:var(--fm);font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.5px;line-height:1;}
-.ca-sc-l{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:.5px;text-transform:uppercase;margin-top:4px;}
-.sec-lbl{padding:14px var(--pad) 6px;font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:2.5px;text-transform:uppercase;font-weight:500;display:flex;align-items:center;gap:12px;}
-.sec-lbl::after{content:'';flex:1;height:1px;background:var(--line);}
-.sta-item{margin:0 var(--pad) 8px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color var(--trans);}
-.sta-item.open{border-color:var(--gold-line);}
-.sta-head{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;}
-.sta-item.open .sta-head{background:linear-gradient(180deg,var(--gold-bg),transparent);}
-.sta-idx{font-family:var(--fm);font-size:10px;color:var(--t3);width:24px;height:24px;border-radius:6px;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:600;transition:all var(--trans);}
-.sta-item.open .sta-idx{border-color:var(--gold-line);color:var(--gold);}
-.sta-info{flex:1;}
-.sta-name{font-size:15px;color:var(--text);font-weight:600;}
-.sta-desc{font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:2px;}
-.sta-alloc{font-family:var(--fm);font-size:11px;color:var(--gold);margin-top:3px;font-weight:500;}
-.sta-chev{width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--t2);flex-shrink:0;transition:all .2s;}
-.sta-item.open .sta-chev{border-color:var(--gold-line);color:var(--gold);transform:rotate(90deg);}
-.sta-body{display:none;border-top:1px solid var(--line);padding:16px 16px 18px;}
-.sta-item.open .sta-body{display:block;}
-.sl-wrap{margin-bottom:16px;}
-.sl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
-.sl-lbl{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;}
-.sl-val{font-family:var(--fm);font-size:24px;font-weight:700;color:var(--gold);letter-spacing:-.5px;}
-input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--line2);outline:none;cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--text);border:3px solid var(--bg);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4);}
-input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--text);border:3px solid var(--bg);}
-.sl-range-labels{display:flex;justify-content:space-between;margin-top:5px;}
-.sl-range-labels span{font-family:var(--fm);font-size:9px;color:var(--t3);}
-.sta-metric{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--card2);border-radius:12px;border:1px solid var(--line);margin-bottom:12px;}
-.sta-m-l{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;}
-.sta-m-v{font-family:var(--fm);font-size:24px;font-weight:700;color:var(--text);letter-spacing:-.5px;}
-.sta-tip{font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:12px;}
-.vid-a{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);text-decoration:none;padding:8px 13px;border:1px solid var(--line2);border-radius:10px;font-family:var(--fm);font-weight:500;transition:all var(--trans);}
-
-/* ═══════════════════════
-   SCREEN 4 — GEAR
-═══════════════════════ */
-/* Shoe card */
-.shoe-filters{display:flex;gap:6px;padding:8px var(--pad) 6px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
-.shoe-filters::-webkit-scrollbar{display:none;}
-.sf{flex-shrink:0;background:transparent;border:1px solid var(--line2);border-radius:100px;padding:6px 14px;font-family:var(--fm);font-size:10px;color:var(--t2);cursor:pointer;letter-spacing:.4px;font-weight:500;transition:all var(--trans);}
-.sf.on{background:var(--text);color:var(--bg);border-color:var(--text);}
-
-.shoe-card{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color var(--trans);}
-.shoe-card:hover{border-color:var(--gold-line);}
-.shoe-card-top{padding:16px 16px 14px;display:flex;gap:14px;align-items:flex-start;}
-.shoe-rank{font-family:var(--fm);font-size:9px;color:var(--gold);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
-.shoe-name{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.3px;line-height:1.2;}
-.shoe-brand{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:2px;}
-.shoe-img-wrap{width:70px;height:70px;border-radius:12px;background:var(--card2);border:1px solid var(--line2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;}
-.shoe-img-wrap img{width:100%;height:100%;object-fit:cover;}
-.shoe-score-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-.shoe-badge{font-family:var(--fm);font-size:9px;padding:3px 8px;border-radius:5px;font-weight:600;}
-.shoe-badge.speed{background:rgba(90,130,180,.12);color:var(--blue);border:1px solid rgba(90,130,180,.2);}
-.shoe-badge.grip{background:rgba(212,168,76,.08);color:var(--gold);border:1px solid var(--gold-line);}
-.shoe-badge.stable{background:rgba(90,158,111,.1);color:var(--green);border:1px solid rgba(90,158,111,.2);}
-.shoe-badge.budget{background:rgba(90,158,111,.1);color:var(--green);border:1px solid rgba(90,158,111,.2);}
-.shoe-meta{display:flex;gap:0;border-top:1px solid var(--line);}
-.shoe-meta-item{flex:1;padding:10px 12px;text-align:center;border-right:1px solid var(--line);}
-.shoe-meta-item:last-child{border-right:none;}
-.shoe-meta-v{font-family:var(--fm);font-size:14px;font-weight:700;color:var(--text);}
-.shoe-meta-l{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:.5px;text-transform:uppercase;margin-top:3px;}
-.shoe-meta-item.rr{background:var(--gold-bg);}
-.shoe-meta-v.rr{color:var(--gold);}
-.shoe-source{font-family:var(--fm);font-size:8px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;padding:6px 16px;text-align:right;}
-
-/* Community section */
-.comm-empty{padding:24px 20px;text-align:center;}
-.comm-empty-icon{font-size:32px;margin-bottom:10px;}
-.comm-empty-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px;}
-.comm-empty-sub{font-size:13px;color:var(--t2);line-height:1.6;}
-.add-rec-btn{margin:0 var(--pad) var(--gap);background:var(--gold-bg);border:1px solid var(--gold-line);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background var(--trans);}
-.add-rec-btn:hover{background:rgba(212,168,76,.12);}
-.add-rec-l{font-size:14px;font-weight:600;color:var(--gold);}
-.add-rec-sub{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:3px;}
-.rec-card{margin:0 var(--pad) 8px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;position:relative;}
-.rec-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
-.rec-name{font-size:15px;font-weight:700;color:var(--text);}
-.rec-stars{font-size:13px;letter-spacing:1px;}
-.rec-cat{display:inline-block;font-family:var(--fm);font-size:9px;color:var(--t2);border:1px solid var(--line2);border-radius:5px;padding:2px 7px;margin-bottom:8px;letter-spacing:.5px;}
-.rec-text{font-size:13px;color:var(--t2);line-height:1.65;}
-.rec-meta{font-family:var(--fm);font-size:10px;color:var(--t3);margin-top:8px;}
-.rec-delete{position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--t3);}
-
-/* Add recommendation modal form */
-.modal-form{padding:16px 20px;}
-.mf-group{margin-bottom:14px;}
-.mf-lbl{font-family:var(--fm);font-size:10px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;display:block;}
-.mf-input{width:100%;background:var(--card2);border:1px solid var(--line2);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--text);font-family:var(--f);outline:none;transition:border-color var(--trans);}
-.mf-input:focus{border-color:var(--gold);}
-.mf-input::placeholder{color:var(--t3);}
-.mf-textarea{min-height:80px;resize:none;line-height:1.6;}
-.mf-star-row{display:flex;gap:8px;}
-.mf-star{font-size:24px;cursor:pointer;opacity:.3;transition:opacity .15s;}
-.mf-star.on{opacity:1;}
-.mf-cat-row{display:flex;gap:6px;flex-wrap:wrap;}
-.mf-cat{font-family:var(--fm);font-size:10px;padding:6px 12px;border:1px solid var(--line2);border-radius:100px;color:var(--t2);cursor:pointer;transition:all var(--trans);}
-.mf-cat.on{background:var(--text);color:var(--bg);border-color:var(--text);}
-.mf-submit{width:100%;background:var(--gold);border:none;border-radius:14px;padding:14px;font-size:15px;font-family:var(--f);font-weight:700;color:#000;cursor:pointer;margin-top:4px;transition:background var(--trans);}
-.mf-submit:hover{background:var(--gold2);}
-
-/* Rating bar */
-.rr-score{display:flex;align-items:center;gap:8px;}
-.rr-num{font-family:var(--fm);font-size:28px;font-weight:700;color:var(--gold);letter-spacing:-1px;}
-.rr-bar-wrap{flex:1;height:4px;background:var(--line2);border-radius:2px;overflow:hidden;}
-.rr-bar{height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold2));border-radius:2px;transition:width .5s ease;}
-
-/* Done day button */
-.done-day-btn{margin:0 var(--pad) 16px;padding:13px 18px;border-radius:var(--r);border:1.5px solid var(--line2);text-align:center;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;transition:all .2s;font-family:var(--f);}
-.done-day-btn:hover{border-color:var(--gold);color:var(--gold);}
-.done-day-btn.done-btn-done{background:var(--gold-bg);border-color:var(--gold);color:var(--gold);}
-.tab.tab-done{position:relative;}
-.tab.tab-done::after{content:'·';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-size:16px;color:var(--gold);line-height:0;}
-
-.rr-label{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1px;text-transform:uppercase;}
+/* HEADER */
+.sb{flex-shrink:0;padding:0 var(--pad);height:54px;display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-bottom:1px solid var(--line);position:relative;z-index:10}
+.sb::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:40%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent)}
+.logo{display:flex;align-items:baseline;gap:2px;font-family:var(--fm);font-weight:700;letter-spacing:-1px}
+.logo .rx{font-size:19px;color:var(--text)}
+.logo .dot{width:5px;height:5px;border-radius:50%;background:var(--gold);margin:0 1px 4px}
+.logo .yr{font-size:13px;color:var(--gold)}
+.logo-tag{font-family:var(--fm);font-size:8px;color:var(--t2);letter-spacing:2px;text-transform:uppercase;border:1px solid var(--line2);border-radius:4px;padding:2px 6px;margin-left:8px}
+.sb-right{display:flex;align-items:center;gap:8px}
+.lang-sw{display:flex;border:1px solid var(--line2);border-radius:100px;overflow:hidden}
+.lb{font-family:var(--fm);font-size:9px;padding:4px 10px;color:var(--t2);cursor:pointer;letter-spacing:.8px;user-select:none;transition:background var(--trans),color var(--trans)}
+.lb.on{background:var(--text);color:var(--bg);font-weight:600}
+.icon-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.icon-btn svg{width:13px;height:13px;stroke:var(--t2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* SCREENS */
+.screen{display:none;flex:1;flex-direction:column;min-height:0}
+.screen.active{display:flex}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+/* NAV */
+.nav{background:var(--bg);border-top:1px solid var(--line);display:flex;padding:10px 0 max(14px,env(safe-area-inset-bottom));flex-shrink:0}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--fm);font-size:8px;letter-spacing:.6px;text-transform:uppercase;color:var(--t4);cursor:pointer;user-select:none;transition:color var(--trans)}
+.ni.on{color:var(--text)}
+.ni svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.5}
+.ni-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);margin-top:-1px}
+/* SHARED */
+.eyebrow{font-family:var(--fm);font-size:10px;color:var(--t2);letter-spacing:2.5px;text-transform:uppercase;font-weight:500}
+.eyebrow.gold{color:var(--gold)}
+.card{background:var(--card);border-radius:var(--r);border:1px solid var(--line);margin:0 var(--pad) var(--gap)}
+.sec-lbl{padding:14px var(--pad) 6px;font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:2.5px;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--line)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;cursor:pointer}
+.tog{width:42px;height:24px;border-radius:12px;background:var(--line2);position:relative;flex-shrink:0;transition:background .25s}
+.tog.on{background:var(--gold)}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--bg);transition:transform .2s}
+.tog.on::after{transform:translateX(18px)}
+/* ── SCREEN 1: DASHBOARD ── */
+.hero{padding:20px var(--pad) 0}
+.hero-eye{font-family:var(--fm);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.hero-eye::before{content:'';width:16px;height:1px;background:var(--gold);opacity:.5}
+.hero-title{font-size:36px;font-weight:800;color:var(--text);line-height:1.05;letter-spacing:-2px}
+.hero-title em{font-style:normal;background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:13px;color:var(--t2);margin-top:8px;font-family:var(--fm)}
+.cd-block{margin:16px var(--pad) 0;background:var(--card);border-radius:var(--r);border:1px solid var(--line);padding:22px 16px;position:relative;overflow:hidden}
+.cd-block::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,var(--gold-glow),transparent 70%);pointer-events:none}
+.cd-block::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent)}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.cd-cell{text-align:center;padding:4px 2px}
+.cd-n{font-family:var(--fm);font-size:40px;font-weight:700;color:var(--text);line-height:1;letter-spacing:-2px}
+.cd-l{font-family:var(--fm);font-size:8px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-top:5px}
+/* WEEK */
+.week-block{margin:10px var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.week-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.week-count{font-family:var(--fm);font-size:11px;color:var(--gold);font-weight:600}
+.week-row{display:flex;justify-content:space-between}
+.wd{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;cursor:pointer}
+.wd-ring{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:0;transition:all .15s}
+.wd-ring.done{border-color:var(--gold);background:var(--gold-bg)}
+.wd-ring.done::after{content:'';display:block;width:12px;height:8px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg) translate(1px,-1px)}
+.wd-ring.today:not(.done){border-color:var(--t4);border-style:dashed}
+.wd-lbl{font-family:var(--fm);font-size:8px;color:var(--t3);letter-spacing:.5px;text-transform:uppercase}
+.wd.today .wd-lbl{color:var(--t2)}
+/* PB */
+.pb-block{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.pb-scores{display:flex;gap:20px;padding:16px 18px}
+.pb-sc{flex:1}
+.pb-sc-lbl{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.pb-sc-lbl.gold{color:var(--gold)}
+.pb-sc input{font-family:var(--fm);font-size:28px;font-weight:700;color:var(--text);background:transparent;border:none;outline:none;width:100%;letter-spacing:-1px}
+.pb-sc.goal-sc input{color:var(--gold)}
+.pb-sc input::placeholder{color:var(--t3)}
+.pb-delta{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:3px;min-height:14px}
+.pb-delta.pos{color:var(--green)}
+.pb-delta.neg{color:var(--red)}
+.pb-improve-btn{border-top:1px solid var(--line);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.pb-improve-lbl{font-size:13px;color:var(--text);font-weight:500}
+.pb-improve-sub{font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:2px}
+.pb-improve-arr{font-size:14px;color:var(--t4)}
+/* INFO CARDS */
+.info-scroll{display:flex;gap:10px;padding:0 var(--pad);overflow-x:auto;scrollbar-width:none;margin-bottom:var(--gap)}
+.info-scroll::-webkit-scrollbar{display:none}
+.info-card{flex-shrink:0;width:200px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.info-card-icon{font-size:22px;margin-bottom:10px}
+.info-card-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.3}
+.info-card-body{font-size:12px;color:var(--t2);line-height:1.6}
+.info-card-badge{display:inline-block;font-family:var(--fm);font-size:9px;color:var(--gold);border:1px solid var(--gold-line);background:var(--gold-bg);border-radius:5px;padding:2px 7px;margin-top:8px;letter-spacing:.5px}
+/* CHECKLIST */
+.cl-block{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.cl-head{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.cl-head-l{display:flex;align-items:center;gap:10px}
+.cl-cnt{font-family:var(--fm);font-size:11px;color:var(--gold);font-weight:600}
+.cl-arr{font-size:14px;color:var(--t2);transition:transform .2s}
+.cl-open .cl-arr{transform:rotate(90deg)}
+.cl-body{border-top:1px solid var(--line);display:none}
+.cl-sec{padding:9px 18px 3px;font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:2px;text-transform:uppercase}
+.cl-item{display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--line);cursor:pointer}
+.cl-item:last-child{border-bottom:none}
+.cl-box{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line2);flex-shrink:0;transition:all .15s}
+.cl-item.done .cl-box{background:var(--gold);border-color:var(--gold)}
+.cl-txt{font-size:13px;color:var(--text)}
+.cl-item.done .cl-txt{color:var(--t2);text-decoration:line-through;text-decoration-color:var(--t3)}
+/* IMPROVE MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-sheet{width:100%;max-width:560px;margin:0 auto;background:var(--card);border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:none;max-height:85vh;display:flex;flex-direction:column;transform:translateY(30px);transition:transform .25s;position:relative}
+.modal-overlay.open .modal-sheet{transform:translateY(0)}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--line2);margin:12px auto 0}
+.modal-head{padding:16px 20px 10px;border-bottom:1px solid var(--line)}
+.modal-title{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.5px;margin-top:6px}
+.modal-sub{font-size:13px;color:var(--t2);margin-top:4px}
+.modal-close{position:absolute;top:14px;right:16px;width:28px;height:28px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--t2)}
+.modal-body{overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:20px}
+.modal-body::-webkit-scrollbar{display:none}
+.tip-group{padding:14px 20px 0}
+.tip-group-lbl{font-family:var(--fm);font-size:9px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.tip-row{display:flex;gap:10px;margin-bottom:8px}
+.tip-icon{width:36px;height:36px;border-radius:10px;background:var(--gold-bg);border:1px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.tip-content{flex:1}
+.tip-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.tip-desc{font-size:12px;color:var(--t2);line-height:1.6}
+.weak-input-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--card2);border:1px solid var(--line2);border-radius:12px;margin-bottom:6px}
+.weak-name{font-size:13px;color:var(--text);font-weight:500}
+.weak-tog-btn{width:22px;height:22px;border-radius:6px;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--t2);transition:all .15s}
+.weak-tog-btn.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+/* ── SCREEN 2: ANTRENMAN ── */
+.scr-head{padding:20px var(--pad) 4px;flex-shrink:0}
+.scr-title{font-size:28px;font-weight:700;color:var(--text);letter-spacing:-.5px;line-height:1.15;margin-top:6px}
+.scr-sub{font-size:13px;color:var(--t2);margin-top:5px}
+.tabs{display:flex;gap:6px;padding:8px var(--pad) 6px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;background:transparent;border:1px solid var(--line2);border-radius:10px;padding:7px 13px;font-family:var(--fm);font-size:10px;color:var(--t2);cursor:pointer;letter-spacing:.4px;font-weight:500;transition:all var(--trans)}
+.tab.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.tab.done-tab{border-color:var(--gold-line);color:var(--gold)}
+.tab.on.done-tab{background:var(--gold);border-color:var(--gold);color:#000}
+.tr-card{margin:0 var(--pad) var(--gap);background:var(--card);border-radius:var(--r);border:1px solid var(--line);overflow:hidden}
+.tr-head{padding:18px 18px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--card2),var(--card))}
+.tr-tag{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;display:inline-block;font-weight:600;padding:3px 9px;border:1px solid var(--gold-line);border-radius:6px;background:var(--gold-bg)}
+.tr-title{font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.3px;line-height:1.2;margin-top:8px}
+.tr-desc{font-size:13px;color:var(--t2);margin-top:5px;line-height:1.65}
+.ex-r{display:flex;align-items:flex-start;gap:13px;padding:13px 18px;border-bottom:1px solid var(--line)}
+.ex-r:last-child{border-bottom:none}
+.ex-i{font-family:var(--fm);font-size:10px;color:var(--t3);width:20px;margin-top:2px;flex-shrink:0;font-weight:600}
+.ex-body{flex:1}
+.ex-name{font-size:14px;color:var(--text);font-weight:500}
+.ex-sub{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:2px}
+.ex-v{font-family:var(--fm);font-size:11px;color:var(--gold);white-space:nowrap;flex-shrink:0;margin-top:2px;font-weight:600;padding:2px 8px;border:1px solid var(--gold-line);border-radius:6px;background:var(--gold-bg)}
+.tip-b{margin:0 var(--pad) var(--gap);padding:14px 16px;border:1px solid var(--line);border-radius:var(--r);display:flex;gap:12px;background:var(--card)}
+.tip-ico{font-size:11px;color:var(--gold);flex-shrink:0;margin-top:1px}
+.tip-txt{font-size:13px;color:var(--t2);line-height:1.7}
+.yt-b{margin:0 var(--pad) var(--gap);display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:1px solid var(--line);border-radius:var(--r);text-decoration:none;background:var(--card)}
+.yt-l{display:flex;align-items:center;gap:12px}
+.yt-icon{width:32px;height:32px;border-radius:8px;background:#ff0000;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.yt-title{font-size:13px;color:var(--text);font-weight:500}
+.yt-sub{font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:2px}
+.yt-arr{font-size:16px;color:var(--t3)}
+.done-day-btn{margin:0 var(--pad) 16px;padding:13px 18px;border-radius:var(--r);border:1.5px solid var(--line2);text-align:center;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;transition:all .2s}
+.done-day-btn:hover{border-color:var(--gold);color:var(--gold)}
+.done-day-btn.done{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+/* ── SCREEN 3: HESAP ── */
+.ca-goal{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.ca-goal-row{display:flex;align-items:flex-end;gap:8px;margin:12px 0 0}
+.ca-g{display:flex;flex-direction:column;gap:6px;flex:1}
+.ca-gl{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1px;text-transform:uppercase}
+.ca-in{width:100%;background:var(--card2);border:1px solid var(--line2);border-radius:12px;padding:12px 8px;font-size:30px;font-family:var(--fm);font-weight:700;color:var(--text);outline:none;text-align:center;letter-spacing:-1px;transition:border-color var(--trans)}
+.ca-in:focus{border-color:var(--gold)}
+.ca-sep{font-family:var(--fm);font-size:30px;color:var(--t3);padding-bottom:12px}
+.ca-summary{margin:0 var(--pad) var(--gap);border:1px solid var(--gold-line);border-radius:var(--r);background:var(--card);padding:20px 18px;position:relative;overflow:hidden}
+.ca-summary::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 80% at 50% 0%,var(--gold-glow),transparent 70%);pointer-events:none}
+.ca-summary::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:50%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent)}
+.ca-sum-lbl{font-family:var(--fm);font-size:9px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;font-weight:600}
+.ca-sum-time{font-family:var(--fm);font-size:52px;font-weight:700;color:var(--text);letter-spacing:-2px;line-height:1}
+.ca-sum-sub{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:7px}
+.ca-sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--gold-line)}
+.ca-sc{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:10px}
+:root.light .ca-sc{background:rgba(0,0,0,.03)}
+.ca-sc-v{font-family:var(--fm);font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.5px;line-height:1}
+.ca-sc-l{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:.5px;text-transform:uppercase;margin-top:4px}
+.sta-item{margin:0 var(--pad) 8px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.sta-item.open{border-color:var(--gold-line)}
+.sta-head{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+.sta-item.open .sta-head{background:linear-gradient(180deg,var(--gold-bg),transparent)}
+.sta-idx{font-family:var(--fm);font-size:10px;color:var(--t3);width:24px;height:24px;border-radius:6px;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:600}
+.sta-item.open .sta-idx{border-color:var(--gold-line);color:var(--gold)}
+.sta-info{flex:1}
+.sta-name{font-size:15px;color:var(--text);font-weight:600}
+.sta-desc{font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:2px}
+.sta-alloc{font-family:var(--fm);font-size:11px;color:var(--gold);margin-top:3px}
+.sta-chev{width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--t2);flex-shrink:0;transition:transform .2s}
+.sta-item.open .sta-chev{transform:rotate(90deg);border-color:var(--gold-line);color:var(--gold)}
+.sta-body{display:none;border-top:1px solid var(--line);padding:16px 16px 18px}
+.sta-item.open .sta-body{display:block}
+.sl-wrap{margin-bottom:14px}
+.sl-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.sl-lbl{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase}
+.sl-val{font-family:var(--fm);font-size:24px;font-weight:700;color:var(--gold);letter-spacing:-.5px}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--line2);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--text);border:3px solid var(--bg);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--text);border:3px solid var(--bg)}
+.sl-range-labels{display:flex;justify-content:space-between;margin-top:5px}
+.sl-range-labels span{font-family:var(--fm);font-size:9px;color:var(--t3)}
+.sta-metric{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--card2);border-radius:12px;border:1px solid var(--line);margin-bottom:12px}
+.sta-m-l{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase}
+.sta-m-v{font-family:var(--fm);font-size:24px;font-weight:700;color:var(--text);letter-spacing:-.5px}
+.sta-tip{font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:12px}
+.vid-a{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);text-decoration:none;padding:8px 13px;border:1px solid var(--line2);border-radius:10px;font-family:var(--fm)}
+/* ── SCREEN 4: GEAR ── */
+.shoe-filters{display:flex;gap:6px;padding:8px var(--pad) 6px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.shoe-filters::-webkit-scrollbar{display:none}
+.sf{flex-shrink:0;background:transparent;border:1px solid var(--line2);border-radius:100px;padding:6px 14px;font-family:var(--fm);font-size:10px;color:var(--t2);cursor:pointer;letter-spacing:.4px;transition:all var(--trans)}
+.sf.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.shoe-card{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.shoe-card-top{padding:16px 16px 14px;display:flex;gap:14px;align-items:flex-start}
+.shoe-rank{font-family:var(--fm);font-size:9px;color:var(--gold);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.shoe-name{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.3px;line-height:1.2}
+.shoe-brand{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:2px}
+.shoe-img-wrap{width:70px;height:70px;border-radius:12px;background:var(--card2);border:1px solid var(--line2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px}
+.shoe-score-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.shoe-badge{font-family:var(--fm);font-size:9px;padding:3px 8px;border-radius:5px;font-weight:600}
+.shoe-badge.speed{background:rgba(90,130,180,.12);color:var(--blue);border:1px solid rgba(90,130,180,.2)}
+.shoe-badge.grip{background:rgba(212,168,76,.08);color:var(--gold);border:1px solid var(--gold-line)}
+.shoe-badge.stable{background:rgba(90,158,111,.1);color:var(--green);border:1px solid rgba(90,158,111,.2)}
+.shoe-badge.budget{background:rgba(90,158,111,.1);color:var(--green);border:1px solid rgba(90,158,111,.2)}
+.shoe-desc{font-size:12px;color:var(--t2);margin-top:8px;line-height:1.6}
+.shoe-meta{display:flex;border-top:1px solid var(--line)}
+.shoe-meta-item{flex:1;padding:10px 12px;text-align:center;border-right:1px solid var(--line)}
+.shoe-meta-item:last-child{border-right:none}
+.shoe-meta-v{font-family:var(--fm);font-size:14px;font-weight:700;color:var(--text)}
+.shoe-meta-l{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:.5px;text-transform:uppercase;margin-top:3px}
+.shoe-meta-item.rr .shoe-meta-v{color:var(--gold)}
+.shoe-source{font-family:var(--fm);font-size:8px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;padding:6px 16px;text-align:right}
+.add-rec-btn{margin:0 var(--pad) var(--gap);background:var(--gold-bg);border:1px solid var(--gold-line);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.add-rec-l{font-size:14px;font-weight:600;color:var(--gold)}
+.add-rec-sub{font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:3px}
+.rec-card{margin:0 var(--pad) 8px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;position:relative}
+.rec-name{font-size:15px;font-weight:700;color:var(--text)}
+.rec-stars{font-size:13px;letter-spacing:1px;margin-top:4px}
+.rec-cat{display:inline-block;font-family:var(--fm);font-size:9px;color:var(--t2);border:1px solid var(--line2);border-radius:5px;padding:2px 7px;margin:6px 0;letter-spacing:.5px}
+.rec-text{font-size:13px;color:var(--t2);line-height:1.65}
+.rec-meta{font-family:var(--fm);font-size:10px;color:var(--t3);margin-top:8px}
+.rec-delete{position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--t3)}
+.comm-empty{padding:24px 20px;text-align:center}
+.comm-empty-icon{font-size:32px;margin-bottom:10px}
+.comm-empty-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
+.comm-empty-sub{font-size:13px;color:var(--t2);line-height:1.6}
+/* REC MODAL FORM */
+.modal-form{padding:16px 20px}
+.mf-group{margin-bottom:14px}
+.mf-lbl{font-family:var(--fm);font-size:10px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;display:block}
+.mf-input{width:100%;background:var(--card2);border:1px solid var(--line2);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--text);font-family:var(--f);outline:none;transition:border-color var(--trans)}
+.mf-input:focus{border-color:var(--gold)}
+.mf-input::placeholder{color:var(--t3)}
+.mf-textarea{min-height:80px;resize:none;line-height:1.6}
+.mf-star-row{display:flex;gap:8px}
+.mf-star{font-size:24px;cursor:pointer;opacity:.3;transition:opacity .15s}
+.mf-star.on{opacity:1}
+.mf-cat-row{display:flex;gap:6px;flex-wrap:wrap}
+.mf-cat{font-family:var(--fm);font-size:10px;padding:6px 12px;border:1px solid var(--line2);border-radius:100px;color:var(--t2);cursor:pointer;transition:all var(--trans)}
+.mf-cat.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.mf-submit{width:100%;background:var(--gold);border:none;border-radius:14px;padding:14px;font-size:15px;font-family:var(--f);font-weight:700;color:#000;cursor:pointer;margin-top:4px}
 </style>
 </head>
 <body>
 <div class="phone">
 
-  <!-- ── HEADER ── -->
-  <div class="sb">
-    <div class="logo-wrap">
-      <div class="logo"><span class="rx">RX</span><div class="dot"></div><span class="yr">26</span></div>
-      <div class="logo-tag" data-tr="İSTANBUL" data-en="ISTANBUL">İSTANBUL</div>
+<!-- HEADER -->
+<div class="sb">
+  <div style="display:flex;align-items:center">
+    <div class="logo"><span class="rx">RX</span><div class="dot"></div><span class="yr">26</span></div>
+    <div class="logo-tag" id="logo-tag">İSTANBUL</div>
+  </div>
+  <div class="sb-right">
+    <div class="lang-sw">
+      <div class="lb on" id="lb-tr" onclick="setLang('tr')">TR</div>
+      <div class="lb" id="lb-en" onclick="setLang('en')">EN</div>
     </div>
-    <div class="sb-right">
-      <div class="lang-sw">
-        <div class="lb on" id="lb-tr" onclick="setLang('tr')">TR</div>
-        <div class="lb" id="lb-en" onclick="setLang('en')">EN</div>
+    <div class="icon-btn" onclick="toggleTheme()">
+      <svg id="theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 1: DASHBOARD -->
+<div class="screen active" id="scr-cd">
+  <div class="scroll">
+    <div class="hero">
+      <div class="hero-eye" id="h-eye">Geri Sayım</div>
+      <div class="hero-title" id="h-title">01 Ağustos<br><em>2026</em></div>
+      <div class="hero-sub" id="h-sub">İstanbul · 8 istasyon · 8 km koşu</div>
+    </div>
+    <div class="cd-block">
+      <div class="cd-grid">
+        <div class="cd-cell"><div class="cd-n" id="cd-d">---</div><div class="cd-l" id="cd-ld">gün</div></div>
+        <div class="cd-cell"><div class="cd-n" id="cd-h">--</div><div class="cd-l" id="cd-lh">saat</div></div>
+        <div class="cd-cell"><div class="cd-n" id="cd-m">--</div><div class="cd-l" id="cd-lm">dk</div></div>
+        <div class="cd-cell"><div class="cd-n" id="cd-s">--</div><div class="cd-l" id="cd-ls">sn</div></div>
       </div>
-      <div class="icon-btn" onclick="toggleTheme()">
-        <svg id="theme-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </div>
+    <div class="week-block">
+      <div class="week-top">
+        <div class="eyebrow" id="wk-lbl">Bu Hafta</div>
+        <div class="week-count" id="week-count">0/7</div>
+      </div>
+      <div class="week-row" id="week-row"></div>
+    </div>
+    <div class="pb-block">
+      <div class="pb-scores">
+        <div class="pb-sc">
+          <div class="pb-sc-lbl" id="pb-lbl1">KİŞİSEL EN İYİ</div>
+          <input id="pb-in" type="text" placeholder="1:30" maxlength="5" oninput="updateDelta()">
+          <div class="pb-delta" id="pb-fmt">ss:dd</div>
+        </div>
+        <div class="pb-sc goal-sc">
+          <div class="pb-sc-lbl gold" id="pb-lbl2">HEDEF SÜRE</div>
+          <input id="goal-in" type="text" placeholder="1:20" maxlength="5" oninput="updateDelta()">
+          <div class="pb-delta" id="goal-delta">—</div>
+        </div>
+      </div>
+      <div class="pb-improve-btn" onclick="openImprove()">
+        <div>
+          <div class="pb-improve-lbl" id="imp-lbl">Süreyi Nasıl Geliştiririm?</div>
+          <div class="pb-improve-sub" id="imp-sub">Zayıf nokta analizi ve antrenman önerileri</div>
+        </div>
+        <div class="pb-improve-arr">›</div>
+      </div>
+    </div>
+    <div class="sec-lbl" id="info-lbl">HYROX Nedir?</div>
+    <div class="info-scroll" id="info-scroll"></div>
+    <div class="cl-block" id="cl-block">
+      <div class="cl-head" onclick="toggleCL()">
+        <div class="cl-head-l">
+          <div class="eyebrow" id="cl-lbl">Yarış Günü Listesi</div>
+          <div class="cl-cnt" id="cl-cnt">0/12</div>
+        </div>
+        <div class="cl-arr">›</div>
+      </div>
+      <div class="cl-body" id="cl-body"></div>
+    </div>
+    <div class="card" style="padding:0;margin-bottom:24px">
+      <div class="toggle-row" onclick="toggleNotif()">
+        <div>
+          <div style="font-size:14px;font-weight:500" id="notif-lbl">Antrenman Bildirimi</div>
+          <div style="font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:3px" id="notif-sub">Her sabah 08:00</div>
+        </div>
+        <div class="tog" id="ntoggle"></div>
       </div>
     </div>
   </div>
-
-  <!-- ═══════════════════ SCREEN 1: DASHBOARD ═══════════════════ -->
-  <div class="screen active" id="scr-cd">
-    <div class="scroll">
-      <div class="hero">
-        <div class="hero-eye" data-tr="Geri Sayım" data-en="Countdown">Geri Sayım</div>
-        <div class="hero-title" data-tr="01 Ağustos<br><em>2026</em>" data-en="August 01<br><em>2026</em>">01 Ağustos<br><em>2026</em></div>
-        <div class="hero-sub" data-tr="İstanbul · 8 istasyon · 8 km koşu" data-en="Istanbul · 8 stations · 8 km running">İstanbul · 8 istasyon · 8 km koşu</div>
-      </div>
-
-      <div class="cd-block">
-        <div class="cd-grid">
-          <div class="cd-cell"><div class="cd-n" id="cd-d">---</div><div class="cd-l" data-tr="gün" data-en="days">gün</div></div>
-          <div class="cd-cell"><div class="cd-n" id="cd-h">--</div><div class="cd-l" data-tr="saat" data-en="hrs">saat</div></div>
-          <div class="cd-cell"><div class="cd-n" id="cd-m">--</div><div class="cd-l" data-tr="dk" data-en="min">dk</div></div>
-          <div class="cd-cell"><div class="cd-n" id="cd-s">--</div><div class="cd-l" data-tr="sn" data-en="sec">sn</div></div>
-        </div>
-      </div>
-
-      <!-- BU HAFTA -->
-      <div class="week-block">
-        <div class="week-top">
-          <div class="eyebrow" data-tr="Bu Hafta" data-en="This Week">Bu Hafta</div>
-          <div class="week-count" id="week-count">0/7</div>
-        </div>
-        <div class="week-row" id="week-row"></div>
-      </div>
-
-      <!-- PB / HEDEF -->
-      <div class="pb-block">
-        <div class="pb-top">
-          <div class="pb-top-left">
-            <div class="eyebrow" data-tr="Performans" data-en="Performance">Performans</div>
-            <div style="font-size:12px;color:var(--t2);margin-top:2px" data-tr="ss:dd formatında gir" data-en="enter as hh:mm">ss:dd formatında gir</div>
-          </div>
-        </div>
-        <div class="pb-scores">
-          <div class="pb-sc">
-            <div class="pb-sc-lbl" data-tr="KİŞİSEL EN İYİ" data-en="PERSONAL BEST">KİŞİSEL EN İYİ</div>
-            <input id="pb-in" type="text" placeholder="1:30" maxlength="5" oninput="updateDelta()">
-            <div class="pb-delta" id="pb-hint" data-tr="ss:dd" data-en="hh:mm">ss:dd</div>
-          </div>
-          <div class="pb-sc goal-sc">
-            <div class="pb-sc-lbl gold" data-tr="HEDEF SÜRE" data-en="GOAL TIME">HEDEF SÜRE</div>
-            <input id="goal-in" type="text" placeholder="1:20" maxlength="5" oninput="updateDelta()">
-            <div class="pb-delta" id="goal-delta">—</div>
-          </div>
-        </div>
-        <div class="pb-improve-btn" onclick="openImprove()">
-          <div>
-            <div class="pb-improve-lbl" data-tr="Süreyi Nasıl Geliştiririm?" data-en="How to Improve My Time?">Süreyi Nasıl Geliştiririm?</div>
-            <div class="pb-improve-sub" data-tr="Zayıf nokta analizi ve antrenman önerileri" data-en="Weak station analysis and training tips">Zayıf nokta analizi ve antrenman önerileri</div>
-          </div>
-          <div class="pb-improve-arr">›</div>
-        </div>
-      </div>
-
-      <!-- HYROX INFO CARDS -->
-      <div class="sec-head eyebrow" data-tr="HYROX Nedir?" data-en="What is HYROX?">HYROX Nedir?</div>
-      <div class="info-scroll" id="info-scroll"></div>
-
-      <!-- CHECKLİST -->
-      <div class="cl-block" id="cl-block">
-        <div class="cl-head" onclick="toggleCL()">
-          <div class="cl-head-l">
-            <div class="eyebrow" data-tr="Yarış Günü Listesi" data-en="Race Day Checklist">Yarış Günü Listesi</div>
-            <div class="cl-cnt" id="cl-cnt">0/12</div>
-          </div>
-          <div class="cl-arr">›</div>
-        </div>
-        <div class="cl-body" id="cl-body"></div>
-      </div>
-
-      <!-- BİLDİRİM -->
-      <div class="card" style="padding:0">
-        <div class="toggle-row" onclick="toggleNotif()">
-          <div>
-            <div style="font-size:14px;font-weight:500" data-tr="Antrenman Bildirimi" data-en="Training Reminder">Antrenman Bildirimi</div>
-            <div style="font-family:var(--fm);font-size:11px;color:var(--t2);margin-top:3px" data-tr="Her sabah 08:00" data-en="Every morning 08:00">Her sabah 08:00</div>
-          </div>
-          <div class="tog" id="ntoggle"></div>
-        </div>
-      </div>
-      <div style="height:24px"></div>
-    </div>
-
-    <div class="nav">
-      <div class="ni on" onclick="go('cd')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span data-tr="Özet" data-en="Home">Özet</span><div class="ni-dot"></div></div>
-      <div class="ni" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-tr="Antrenman" data-en="Training">Antrenman</span></div>
-      <div class="ni" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span data-tr="Hesap" data-en="Calc">Hesap</span></div>
-      <div class="ni" onclick="go('gr')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span data-tr="Ekipman" data-en="Gear">Ekipman</span></div>
-    </div>
+  <div class="nav" id="nav-cd">
+    <div class="ni on" onclick="go('cd')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span id="nav-cd-lbl">Özet</span><div class="ni-dot"></div></div>
+    <div class="ni" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span id="nav-tr-lbl1">Antrenman</span></div>
+    <div class="ni" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span id="nav-ca-lbl1">Hesap</span></div>
+    <div class="ni" onclick="go('gr')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="nav-gr-lbl1">Ekipman</span></div>
   </div>
+</div>
 
-  <!-- ═══════════════════ SCREEN 2: ANTRENMAN ═══════════════════ -->
-  <div class="screen" id="scr-tr">
+<!-- SCREEN 2: ANTRENMAN -->
+<div class="screen" id="scr-tr">
+  <div class="scr-head">
+    <div class="eyebrow" id="tr-eye">Haftalık Program</div>
+    <div class="scr-title" id="tr-title">Antrenman Planı</div>
+  </div>
+  <div class="tabs" id="day-tabs"></div>
+  <div class="scroll" id="tr-body"></div>
+  <div class="nav">
+    <div class="ni" onclick="go('cd')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span id="nav-cd-lbl2">Özet</span></div>
+    <div class="ni on" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span id="nav-tr-lbl2">Antrenman</span><div class="ni-dot"></div></div>
+    <div class="ni" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span id="nav-ca-lbl2">Hesap</span></div>
+    <div class="ni" onclick="go('gr')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="nav-gr-lbl2">Ekipman</span></div>
+  </div>
+</div>
+
+<!-- SCREEN 3: HESAP -->
+<div class="screen" id="scr-ca">
+  <div class="scroll">
     <div class="scr-head">
-      <div class="eyebrow" data-tr="Haftalık Program" data-en="Weekly Schedule">Haftalık Program</div>
-      <div class="scr-title" data-tr="Antrenman Planı" data-en="Training Plan">Antrenman Planı</div>
+      <div class="eyebrow" id="ca-eye">Yarış Planlaması</div>
+      <div class="scr-title" id="ca-title">Süre Dağılımı</div>
+      <div class="scr-sub" id="ca-sub">Hedef sürenizi girin, bölüm hedefleri hesaplanır</div>
     </div>
-    <div class="tabs" id="day-tabs"></div>
-    <div class="scroll" id="tr-body"></div>
-    <div class="nav">
-      <div class="ni" onclick="go('cd')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span data-tr="Özet" data-en="Home">Özet</span></div>
-      <div class="ni on" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-tr="Antrenman" data-en="Training">Antrenman</span><div class="ni-dot"></div></div>
-      <div class="ni" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span data-tr="Hesap" data-en="Calc">Hesap</span></div>
-      <div class="ni" onclick="go('gr')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span data-tr="Ekipman" data-en="Gear">Ekipman</span></div>
+    <div class="ca-goal">
+      <div class="eyebrow" id="ca-goal-lbl">Hedef Bitiş Süresi</div>
+      <div class="ca-goal-row">
+        <div class="ca-g"><div class="ca-gl" id="ca-hl">Saat</div><input class="ca-in" id="ca-h" type="number" placeholder="1" min="0" max="5" oninput="distributeTime()"></div>
+        <div class="ca-sep">:</div>
+        <div class="ca-g"><div class="ca-gl" id="ca-ml">Dakika</div><input class="ca-in" id="ca-m" type="number" placeholder="30" min="0" max="59" oninput="distributeTime()"></div>
+      </div>
     </div>
+    <div class="ca-summary" id="ca-summary" style="display:none">
+      <div class="ca-sum-lbl" id="ca-sum-lbl">Toplam Hedef</div>
+      <div class="ca-sum-time" id="ca-sum-time">—</div>
+      <div class="ca-sum-sub" id="ca-sum-sub"></div>
+      <div class="ca-sum-grid">
+        <div class="ca-sc"><div class="ca-sc-v" id="cs-run">--</div><div class="ca-sc-l" id="cs-run-lbl">Koşu</div></div>
+        <div class="ca-sc"><div class="ca-sc-v" id="cs-sta">--</div><div class="ca-sc-l" id="cs-sta-lbl">İstasyon</div></div>
+        <div class="ca-sc"><div class="ca-sc-v" id="cs-rox">--</div><div class="ca-sc-l">Roxzone</div></div>
+      </div>
+    </div>
+    <div class="sec-lbl" id="sec-lbl" style="display:none">Bölüm Başı Hedefler</div>
+    <!-- RUN CARD -->
+    <div class="sta-item" id="sti-run" style="display:none">
+      <div class="sta-head" onclick="toggleSta('run')">
+        <div class="sta-idx">🏃</div>
+        <div class="sta-info">
+          <div class="sta-name" id="run-name">Koşu (8 × 1km)</div>
+          <div class="sta-desc" id="run-desc">İstasyonlar arası</div>
+          <div class="sta-alloc" id="alloc-run">--</div>
+        </div>
+        <div class="sta-chev">›</div>
+      </div>
+      <div class="sta-body">
+        <div class="sl-wrap">
+          <div class="sl-top"><div class="sl-lbl" id="run-sl-lbl">KM BAŞI TEMPO</div><div class="sl-val" id="slv-run">5:30</div></div>
+          <input type="range" id="sl-run" min="240" max="540" value="330" step="5" oninput="onRunSlider(this.value)">
+          <div class="sl-range-labels"><span>4:00/km</span><span>9:00/km</span></div>
+        </div>
+        <div class="sta-metric">
+          <div class="sta-m-l" id="run-total-lbl">TOPLAM KOŞU</div>
+          <div class="sta-m-v" id="met-run">--</div>
+        </div>
+        <div class="sta-tip" id="run-tip">HYROX koşucuları genellikle 5:00–6:30/km temposuyla koşar.</div>
+      </div>
+    </div>
+    <!-- ROX CARD -->
+    <div class="sta-item" id="sti-rox" style="display:none">
+      <div class="sta-head" onclick="toggleSta('rox')">
+        <div class="sta-idx">⟳</div>
+        <div class="sta-info">
+          <div class="sta-name">Roxzone</div>
+          <div class="sta-desc" id="rox-desc">8 geçiş · parkur ↔ istasyon</div>
+          <div class="sta-alloc" id="alloc-rox">--</div>
+        </div>
+        <div class="sta-chev">›</div>
+      </div>
+      <div class="sta-body">
+        <div class="sl-wrap">
+          <div class="sl-top"><div class="sl-lbl" id="rox-sl-lbl">GEÇİŞ BAŞI SÜRE</div><div class="sl-val" id="slv-rox">0:45</div></div>
+          <input type="range" id="sl-rox" min="20" max="120" value="45" step="5" oninput="onRoxSlider(this.value)">
+          <div class="sl-range-labels"><span>0:20</span><span>2:00</span></div>
+        </div>
+        <div class="sta-metric">
+          <div class="sta-m-l" id="rox-total-lbl">TOPLAM ROXZONE</div>
+          <div class="sta-m-v" id="met-rox">--</div>
+        </div>
+        <div class="sta-tip" id="rox-tip">Elitler Roxzone'da 4–5 dk harcar, ortalama atlet 7–9 dk.</div>
+      </div>
+    </div>
+    <div id="ca-stations"></div>
+    <div style="height:24px"></div>
   </div>
+  <div class="nav">
+    <div class="ni" onclick="go('cd')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span id="nav-cd-lbl3">Özet</span></div>
+    <div class="ni" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span id="nav-tr-lbl3">Antrenman</span></div>
+    <div class="ni on" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span id="nav-ca-lbl3">Hesap</span><div class="ni-dot"></div></div>
+    <div class="ni" onclick="go('gr')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="nav-gr-lbl3">Ekipman</span></div>
+  </div>
+</div>
 
-  <!-- ═══════════════════ SCREEN 3: HESAP ═══════════════════ -->
-  <div class="screen" id="scr-ca">
-    <div class="scroll">
-      <div class="scr-head">
-        <div class="eyebrow" data-tr="Yarış Planlaması" data-en="Race Planning">Yarış Planlaması</div>
-        <div class="scr-title" data-tr="Süre Dağılımı" data-en="Time Breakdown">Süre Dağılımı</div>
-        <div class="scr-sub" data-tr="Hedef sürenizi girin, bölüm hedefleri hesaplanır" data-en="Enter goal time, get section targets">Hedef sürenizi girin, bölüm hedefleri hesaplanır</div>
-      </div>
-      <div class="ca-goal">
-        <div class="eyebrow" data-tr="Hedef Bitiş Süresi" data-en="Goal Finish Time">Hedef Bitiş Süresi</div>
-        <div class="ca-goal-row">
-          <div class="ca-g"><div class="ca-gl" data-tr="Saat" data-en="Hours">Saat</div><input class="ca-in" id="ca-h" type="number" placeholder="1" min="0" max="5" oninput="distributeTime()"></div>
-          <div class="ca-sep">:</div>
-          <div class="ca-g"><div class="ca-gl" data-tr="Dakika" data-en="Minutes">Dakika</div><input class="ca-in" id="ca-m" type="number" placeholder="30" min="0" max="59" oninput="distributeTime()"></div>
-        </div>
-      </div>
-      <div class="ca-summary" id="ca-summary" style="display:none">
-        <div class="ca-sum-lbl" data-tr="Toplam Hedef" data-en="Total Goal">Toplam Hedef</div>
-        <div class="ca-sum-time" id="ca-sum-time">—</div>
-        <div class="ca-sum-sub" id="ca-sum-sub"></div>
-        <div class="ca-sum-grid">
-          <div class="ca-sc"><div class="ca-sc-v" id="cs-run">--</div><div class="ca-sc-l" data-tr="Koşu" data-en="Run">Koşu</div></div>
-          <div class="ca-sc"><div class="ca-sc-v" id="cs-sta">--</div><div class="ca-sc-l" data-tr="İstasyon" data-en="Stations">İstasyon</div></div>
-          <div class="ca-sc"><div class="ca-sc-v" id="cs-rox">--</div><div class="ca-sc-l">Roxzone</div></div>
-        </div>
-      </div>
-      <div class="sec-lbl" id="sec-lbl" style="display:none" data-tr="Bölüm Başı Hedefler" data-en="Target Per Section">Bölüm Başı Hedefler</div>
-      <div class="sta-item" id="sti-run" style="display:none">
-        <div class="sta-head" onclick="toggleSta('run')">
-          <div class="sta-idx">🏃</div>
-          <div class="sta-info"><div class="sta-name" data-tr="Koşu (8 × 1km)" data-en="Run (8 × 1km)">Koşu (8 × 1km)</div><div class="sta-desc" data-tr="İstasyonlar arası" data-en="Between stations">İstasyonlar arası</div><div class="sta-alloc" id="alloc-run">--</div></div>
-          <div class="sta-chev">›</div>
-        </div>
-        <div class="sta-body">
-          <div class="sl-wrap">
-            <div class="sl-top"><div class="sl-lbl" data-tr="KM BAŞI TEMPO" data-en="PACE PER KM">KM BAŞI TEMPO</div><div class="sl-val" id="slv-run">5:30</div></div>
-            <input type="range" id="sl-run" min="240" max="540" value="330" step="5" oninput="onRunSlider(this.value)">
-            <div class="sl-range-labels"><span>4:00/km</span><span>9:00/km</span></div>
-          </div>
-          <div class="sta-metric"><div class="sta-m-l" data-tr="TOPLAM KOŞU" data-en="TOTAL RUN TIME">TOPLAM KOŞU</div><div class="sta-m-v" id="met-run">--</div></div>
-          <div class="sta-tip" data-tr="HYROX koşucuları genellikle 5:00–6:30/km temposuyla koşar. Çok hızlı başlarsan son istasyonlarda çökersin." data-en="HYROX runners typically pace 5:00–6:30/km. Starting too fast means collapsing at final stations.">HYROX koşucuları genellikle 5:00–6:30/km temposuyla koşar.</div>
-        </div>
-      </div>
-      <div class="sta-item" id="sti-rox" style="display:none">
-        <div class="sta-head" onclick="toggleSta('rox')">
-          <div class="sta-idx">⟳</div>
-          <div class="sta-info"><div class="sta-name">Roxzone</div><div class="sta-desc" data-tr="8 geçiş · parkur ↔ istasyon" data-en="8 transitions · track ↔ station">8 geçiş · parkur ↔ istasyon</div><div class="sta-alloc" id="alloc-rox">--</div></div>
-          <div class="sta-chev">›</div>
-        </div>
-        <div class="sta-body">
-          <div class="sl-wrap">
-            <div class="sl-top"><div class="sl-lbl" data-tr="GEÇİŞ BAŞI SÜRE" data-en="TIME PER TRANSITION">GEÇİŞ BAŞI SÜRE</div><div class="sl-val" id="slv-rox">0:45</div></div>
-            <input type="range" id="sl-rox" min="20" max="120" value="45" step="5" oninput="onRoxSlider(this.value)">
-            <div class="sl-range-labels"><span>0:20</span><span>2:00</span></div>
-          </div>
-          <div class="sta-metric"><div class="sta-m-l" data-tr="TOPLAM ROXZONE" data-en="TOTAL ROXZONE">TOPLAM ROXZONE</div><div class="sta-m-v" id="met-rox">--</div></div>
-          <div class="sta-tip" data-tr="Elitler Roxzone'da 4–5 dk harcar, ortalama atlet 7–9 dk. Geçiş sırasında tempoyu düşürme." data-en="Elites spend 4–5 min in Roxzone, average athletes 7–9 min. Don't drop your pace during transitions.">Elitler Roxzone'da 4–5 dk harcar, ortalama atlet 7–9 dk.</div>
-        </div>
-      </div>
-      <div id="ca-stations"></div>
-      <div style="height:24px"></div>
-    </div>
-    <div class="nav">
-      <div class="ni" onclick="go('cd')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span data-tr="Özet" data-en="Home">Özet</span></div>
-      <div class="ni" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-tr="Antrenman" data-en="Training">Antrenman</span></div>
-      <div class="ni on" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span data-tr="Hesap" data-en="Calc">Hesap</span><div class="ni-dot"></div></div>
-      <div class="ni" onclick="go('gr')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span data-tr="Ekipman" data-en="Gear">Ekipman</span></div>
-    </div>
+<!-- SCREEN 4: GEAR -->
+<div class="screen" id="scr-gr">
+  <div class="scr-head" style="padding-bottom:0">
+    <div class="eyebrow" id="gr-eye">En İyi Ayakkabılar</div>
+    <div class="scr-title" id="gr-title">2026 Rehberi</div>
+    <div class="scr-sub" id="gr-sub">Mart 2026 verileri · Topluluk önerileriyle zenginleştirildi</div>
   </div>
+  <div class="shoe-filters" id="shoe-filters"></div>
+  <div class="scroll" id="gr-body"></div>
+  <div class="nav">
+    <div class="ni" onclick="go('cd')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span id="nav-cd-lbl4">Özet</span></div>
+    <div class="ni" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span id="nav-tr-lbl4">Antrenman</span></div>
+    <div class="ni" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span id="nav-ca-lbl4">Hesap</span></div>
+    <div class="ni on" onclick="go('gr')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span id="nav-gr-lbl4">Ekipman</span><div class="ni-dot"></div></div>
+  </div>
+</div>
 
-  <!-- ═══════════════════ SCREEN 4: GEAR ═══════════════════ -->
-  <div class="screen" id="scr-gr">
-    <div class="scr-head" style="padding-bottom:0">
-      <div class="eyebrow" data-tr="En İyi Ayakkabılar" data-en="Best Shoes">En İyi Ayakkabılar</div>
-      <div class="scr-title" data-tr="2025 Rehberi" data-en="2025 Guide">2025 Rehberi</div>
-      <div class="scr-sub" data-tr="RunRepeat lab testleri verisiyle · Topluluk önerileriyle zenginleştirildi" data-en="From RunRepeat lab data · Enriched with community picks">RunRepeat lab testleri verisiyle · Topluluk önerileriyle zenginleştirildi</div>
+<!-- MODAL: IMPROVE -->
+<div class="modal-overlay" id="improve-modal" onclick="closeImprove(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="eyebrow" id="imp-modal-eye">PB Geliştirme</div>
+      <div class="modal-title" id="imp-modal-title">Süreyi Nasıl Kırarım?</div>
+      <div class="modal-sub" id="imp-modal-sub">Zayıf istasyonlarını seç, kişisel öneriler al</div>
+      <div class="modal-close" onclick="closeImproveBtn()">✕</div>
     </div>
-    <div class="shoe-filters" id="shoe-filters"></div>
-    <div class="scroll" id="gr-body"></div>
-    <div class="nav">
-      <div class="ni" onclick="go('cd')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span data-tr="Özet" data-en="Home">Özet</span></div>
-      <div class="ni" onclick="go('tr')"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-tr="Antrenman" data-en="Training">Antrenman</span></div>
-      <div class="ni" onclick="go('ca')"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="14" y2="14"/></svg><span data-tr="Hesap" data-en="Calc">Hesap</span></div>
-      <div class="ni on" onclick="go('gr')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span data-tr="Ekipman" data-en="Gear">Ekipman</span><div class="ni-dot"></div></div>
-    </div>
+    <div class="modal-body" id="improve-body"></div>
   </div>
+</div>
 
-  <!-- ═══════════════════ MODAL: PB IMPROVE ═══════════════════ -->
-  <div class="modal-overlay" id="improve-modal" onclick="closeImprove(event)">
-    <div class="modal-sheet" style="position:relative">
-      <div class="modal-handle"></div>
-      <div class="modal-head">
-        <div class="eyebrow" data-tr="PB Geliştirme" data-en="PB Improvement">PB Geliştirme</div>
-        <div class="modal-title" data-tr="Süreyi Nasıl Kırarım?" data-en="How Do I Improve?">Süreyi Nasıl Kırarım?</div>
-        <div class="modal-sub" data-tr="Zayıf istasyonlarını seç, kişisel öneriler al" data-en="Select your weak stations, get personalized tips">Zayıf istasyonlarını seç, kişisel öneriler al</div>
-        <div class="modal-close" onclick="closeImproveBtn()">✕</div>
-      </div>
-      <div class="modal-body" id="improve-body"></div>
+<!-- MODAL: ADD REC -->
+<div class="modal-overlay" id="rec-modal" onclick="closeRecModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="eyebrow" id="rec-modal-eye">Topluluk</div>
+      <div class="modal-title" id="rec-modal-title">Öneri Ekle</div>
+      <div class="modal-sub" id="rec-modal-sub">Kullandığın ayakkabıyı değerlendir</div>
+      <div class="modal-close" onclick="closeRecModalBtn()">✕</div>
     </div>
-  </div>
-
-  <!-- ═══════════════════ MODAL: ADD REC ═══════════════════ -->
-  <div class="modal-overlay" id="rec-modal" onclick="closeRecModal(event)">
-    <div class="modal-sheet" style="position:relative">
-      <div class="modal-handle"></div>
-      <div class="modal-head">
-        <div class="eyebrow" data-tr="Topluluk" data-en="Community">Topluluk</div>
-        <div class="modal-title" data-tr="Öneri Ekle" data-en="Add Recommendation">Öneri Ekle</div>
-        <div class="modal-sub" data-tr="Kullandığın ayakkabıyı değerlendir" data-en="Rate the shoe you use">Kullandığın ayakkabıyı değerlendir</div>
-        <div class="modal-close" onclick="closeRecModalBtn()">✕</div>
-      </div>
-      <div class="modal-body">
-        <div class="modal-form">
-          <div class="mf-group">
-            <label class="mf-lbl" data-tr="AYAKKABI ADI" data-en="SHOE NAME">AYAKKABI ADI</label>
-            <input class="mf-input" id="mf-name" type="text" data-placeholder-tr="örn. PUMA Deviate Nitro Elite 3" data-placeholder-en="e.g. PUMA Deviate Nitro Elite 3" placeholder="örn. PUMA Deviate Nitro Elite 3">
-          </div>
-          <div class="mf-group">
-            <label class="mf-lbl" data-tr="KATEGORİ" data-en="CATEGORY">KATEGORİ</label>
-            <div class="mf-cat-row" id="mf-cats"></div>
-          </div>
-          <div class="mf-group">
-            <label class="mf-lbl" data-tr="PUANIN" data-en="YOUR RATING">PUANIN</label>
-            <div class="mf-star-row" id="mf-stars"></div>
-          </div>
-          <div class="mf-group">
-            <label class="mf-lbl" data-tr="DENEYİMİN" data-en="YOUR EXPERIENCE">DENEYİMİN</label>
-            <textarea class="mf-input mf-textarea" id="mf-text" data-placeholder-tr="Sled push'ta nasıl performans gösterdi? Koşu kısmında nasıldı?" data-placeholder-en="How was it on sled push? What about the running sections?" placeholder="Sled push'ta nasıl performans gösterdi?"></textarea>
-          </div>
-          <button class="mf-submit" onclick="submitRec()" data-tr="Paylaş" data-en="Share">Paylaş</button>
+    <div class="modal-body">
+      <div class="modal-form">
+        <div class="mf-group">
+          <label class="mf-lbl" id="mf-name-lbl">AYAKKABI ADI</label>
+          <input class="mf-input" id="mf-name" type="text" placeholder="örn. PUMA Deviate Nitro 3">
         </div>
+        <div class="mf-group">
+          <label class="mf-lbl" id="mf-cat-lbl">KATEGORİ</label>
+          <div class="mf-cat-row" id="mf-cats"></div>
+        </div>
+        <div class="mf-group">
+          <label class="mf-lbl" id="mf-star-lbl">PUANIN</label>
+          <div class="mf-star-row" id="mf-stars"></div>
+        </div>
+        <div class="mf-group">
+          <label class="mf-lbl" id="mf-text-lbl">DENEYİMİN</label>
+          <textarea class="mf-input mf-textarea" id="mf-text" placeholder="Sled push sırasında nasıl performans gösterdi?"></textarea>
+        </div>
+        <button class="mf-submit" id="mf-submit" onclick="submitRec()">Paylaş</button>
       </div>
     </div>
   </div>
+</div>
 
 </div><!-- .phone -->
 <script>
-'use strict';
+var lang='tr', notifOn=false, curDay=0, shoeFilter='all';
+var manualRunPace=null, manualRoxPerTrans=null;
+var sliderOverrides={}, lastGoalSec=0;
+var recStars=0, recCat='speed';
 
-/* ─── STATE ─── */
-let lang='tr', notifOn=false, curDay=0, shoeFilter='all';
-
-const state={weekDays:[],pb:'',goal:'',checklist:{},recs:[],weakStations:[]};
+var state={weekDays:[],pb:'',goal:'',checklist:{},recs:[],weakStations:[]};
 
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-function weekId(){const d=new Date(),jan=new Date(d.getFullYear(),0,1);return d.getFullYear()+'w'+Math.ceil(((d-jan)/86400000+jan.getDay()+1)/7);}
+function weekId(){var d=new Date(),jan=new Date(d.getFullYear(),0,1);return d.getFullYear()+'w'+Math.ceil(((d-jan)/86400000+jan.getDay()+1)/7)}
 
 function loadState(){
-  try{const w=lsGet('rx26_week_'+weekId());state.weekDays=w?JSON.parse(w):[];}catch(e){state.weekDays=[];}
+  try{var w=lsGet('rx26_week_'+weekId());state.weekDays=w?JSON.parse(w):[];}catch(e){state.weekDays=[];}
   state.pb=lsGet('rx26_pb')||'';
   state.goal=lsGet('rx26_goal')||'';
-  try{const cl=lsGet('rx26_cl');state.checklist=cl?JSON.parse(cl):{};}catch(e){state.checklist={};}
-  try{const r=lsGet('rx26_recs');state.recs=r?JSON.parse(r):[];}catch(e){state.recs=[];}
-  try{const ws=lsGet('rx26_weak');state.weakStations=ws?JSON.parse(ws):[];}catch(e){state.weakStations=[];}
+  try{var cl=lsGet('rx26_cl');state.checklist=cl?JSON.parse(cl):{};}catch(e){state.checklist={};}
+  try{var r=lsGet('rx26_recs');state.recs=r?JSON.parse(r):[];}catch(e){state.recs=[];}
+  try{var ws=lsGet('rx26_weak');state.weakStations=ws?JSON.parse(ws):[];}catch(e){state.weakStations=[];}
 }
 
-/* ─── NAVIGATION ─── */
+// ── NAVIGATION ──
 function go(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
   document.getElementById('scr-'+id).classList.add('active');
-  const map={cd:0,tr:1,ca:2,gr:3};
-  document.querySelectorAll('.nav').forEach(nav=>{
-    nav.querySelectorAll('.ni').forEach((ni,i)=>{
-      const on=i===map[id];
+  var map={cd:0,tr:1,ca:2,gr:3};
+  document.querySelectorAll('.nav').forEach(function(nav){
+    nav.querySelectorAll('.ni').forEach(function(ni,i){
+      var on=i===map[id];
       ni.classList.toggle('on',on);
-      const dot=ni.querySelector('.ni-dot');if(dot)dot.remove();
-      if(on){const d=document.createElement('div');d.className='ni-dot';ni.appendChild(d);}
+      var dot=ni.querySelector('.ni-dot');if(dot)dot.remove();
+      if(on){var d=document.createElement('div');d.className='ni-dot';ni.appendChild(d);}
     });
   });
   if(id==='gr')renderGear();
 }
 
-/* ─── COUNTDOWN ─── */
+// ── COUNTDOWN ──
 function cdTick(){
-  const diff=new Date('2026-08-01T08:00:00')-new Date();if(diff<=0)return;
+  var diff=new Date('2026-08-01T08:00:00')-new Date();if(diff<=0)return;
   document.getElementById('cd-d').textContent=String(Math.floor(diff/86400000)).padStart(3,'0');
   document.getElementById('cd-h').textContent=String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
   document.getElementById('cd-m').textContent=String(Math.floor(diff%3600000/60000)).padStart(2,'0');
@@ -671,578 +604,591 @@ function cdTick(){
 }
 cdTick();setInterval(cdTick,1000);
 
-/* ─── THEME & LANG ─── */
+// ── THEME & LANG ──
 function toggleTheme(){
-  const l=document.documentElement.classList.toggle('light');
+  var l=document.documentElement.classList.toggle('light');
   document.getElementById('theme-icon').innerHTML=l
     ?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
     :'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
 }
+
+var TR={
+  'logo-tag':'İSTANBUL','h-eye':'Geri Sayım','h-title':'01 Ağustos<br><em>2026</em>','h-sub':'İstanbul · 8 istasyon · 8 km koşu',
+  'cd-ld':'gün','cd-lh':'saat','cd-lm':'dk','cd-ls':'sn',
+  'wk-lbl':'Bu Hafta','pb-lbl1':'KİŞİSEL EN İYİ','pb-lbl2':'HEDEF SÜRE','pb-fmt':'ss:dd',
+  'imp-lbl':'Süreyi Nasıl Geliştiririm?','imp-sub':'Zayıf nokta analizi ve antrenman önerileri',
+  'info-lbl':'HYROX Nedir?','cl-lbl':'Yarış Günü Listesi','notif-lbl':'Antrenman Bildirimi','notif-sub':'Her sabah 08:00',
+  'nav-cd-lbl':'Özet','nav-cd-lbl2':'Özet','nav-cd-lbl3':'Özet','nav-cd-lbl4':'Özet',
+  'nav-tr-lbl1':'Antrenman','nav-tr-lbl2':'Antrenman','nav-tr-lbl3':'Antrenman','nav-tr-lbl4':'Antrenman',
+  'nav-ca-lbl1':'Hesap','nav-ca-lbl2':'Hesap','nav-ca-lbl3':'Hesap','nav-ca-lbl4':'Hesap',
+  'nav-gr-lbl1':'Ekipman','nav-gr-lbl2':'Ekipman','nav-gr-lbl3':'Ekipman','nav-gr-lbl4':'Ekipman',
+  'tr-eye':'Haftalık Program','tr-title':'Antrenman Planı',
+  'ca-eye':'Yarış Planlaması','ca-title':'Süre Dağılımı','ca-sub':'Hedef sürenizi girin, bölüm hedefleri hesaplanır',
+  'ca-goal-lbl':'Hedef Bitiş Süresi','ca-hl':'Saat','ca-ml':'Dakika','ca-sum-lbl':'Toplam Hedef',
+  'cs-run-lbl':'Koşu','cs-sta-lbl':'İstasyon','sec-lbl':'Bölüm Başı Hedefler',
+  'run-name':'Koşu (8 × 1km)','run-desc':'İstasyonlar arası','run-sl-lbl':'KM BAŞI TEMPO','run-total-lbl':'TOPLAM KOŞU',
+  'run-tip':'HYROX koşucuları genellikle 5:00–6:30/km temposuyla koşar. Çok hızlı başlarsan son istasyonlarda çökersin.',
+  'rox-desc':'8 geçiş · parkur ↔ istasyon','rox-sl-lbl':'GEÇİŞ BAŞI SÜRE','rox-total-lbl':'TOPLAM ROXZONE',
+  'rox-tip':'Elitler Roxzone\'da 4–5 dk harcar, ortalama atlet 7–9 dk. Geçiş sırasında tempoyu düşürme.',
+  'gr-eye':'En İyi Ayakkabılar','gr-title':'2026 Rehberi','gr-sub':'Mart 2026 verileri · Topluluk önerileriyle zenginleştirildi',
+  'imp-modal-eye':'PB Geliştirme','imp-modal-title':'Süreyi Nasıl Kırarım?','imp-modal-sub':'Zayıf istasyonlarını seç, kişisel öneriler al',
+  'rec-modal-eye':'Topluluk','rec-modal-title':'Öneri Ekle','rec-modal-sub':'Kullandığın ayakkabıyı değerlendir',
+  'mf-name-lbl':'AYAKKABI ADI','mf-cat-lbl':'KATEGORİ','mf-star-lbl':'PUANIN','mf-text-lbl':'DENEYİMİN','mf-submit':'Paylaş'
+};
+var EN={
+  'logo-tag':'ISTANBUL','h-eye':'Countdown','h-title':'August 01<br><em>2026</em>','h-sub':'Istanbul · 8 stations · 8 km running',
+  'cd-ld':'days','cd-lh':'hrs','cd-lm':'min','cd-ls':'sec',
+  'wk-lbl':'This Week','pb-lbl1':'PERSONAL BEST','pb-lbl2':'GOAL TIME','pb-fmt':'hh:mm',
+  'imp-lbl':'How to Improve My Time?','imp-sub':'Weak station analysis and training tips',
+  'info-lbl':'What is HYROX?','cl-lbl':'Race Day Checklist','notif-lbl':'Training Reminder','notif-sub':'Every morning 08:00',
+  'nav-cd-lbl':'Home','nav-cd-lbl2':'Home','nav-cd-lbl3':'Home','nav-cd-lbl4':'Home',
+  'nav-tr-lbl1':'Training','nav-tr-lbl2':'Training','nav-tr-lbl3':'Training','nav-tr-lbl4':'Training',
+  'nav-ca-lbl1':'Calc','nav-ca-lbl2':'Calc','nav-ca-lbl3':'Calc','nav-ca-lbl4':'Calc',
+  'nav-gr-lbl1':'Gear','nav-gr-lbl2':'Gear','nav-gr-lbl3':'Gear','nav-gr-lbl4':'Gear',
+  'tr-eye':'Weekly Schedule','tr-title':'Training Plan',
+  'ca-eye':'Race Planning','ca-title':'Time Breakdown','ca-sub':'Enter goal time, get section targets',
+  'ca-goal-lbl':'Goal Finish Time','ca-hl':'Hours','ca-ml':'Minutes','ca-sum-lbl':'Total Goal',
+  'cs-run-lbl':'Run','cs-sta-lbl':'Stations','sec-lbl':'Target Per Section',
+  'run-name':'Run (8 × 1km)','run-desc':'Between stations','run-sl-lbl':'PACE PER KM','run-total-lbl':'TOTAL RUN TIME',
+  'run-tip':'HYROX runners typically pace 5:00–6:30/km. Starting too fast means collapsing at final stations.',
+  'rox-desc':'8 transitions · track ↔ station','rox-sl-lbl':'TIME PER TRANSITION','rox-total-lbl':'TOTAL ROXZONE',
+  'rox-tip':'Elites spend 4–5 min in Roxzone, average athletes 7–9 min. Don\'t drop your pace during transitions.',
+  'gr-eye':'Best Shoes','gr-title':'2026 Guide','gr-sub':'March 2026 data · Enriched with community picks',
+  'imp-modal-eye':'PB Improvement','imp-modal-title':'How Do I Improve?','imp-modal-sub':'Select your weak stations, get personalized tips',
+  'rec-modal-eye':'Community','rec-modal-title':'Add Recommendation','rec-modal-sub':'Rate the shoe you use',
+  'mf-name-lbl':'SHOE NAME','mf-cat-lbl':'CATEGORY','mf-star-lbl':'YOUR RATING','mf-text-lbl':'YOUR EXPERIENCE','mf-submit':'Share'
+};
+
 function setLang(l){
   lang=l;
   document.getElementById('lb-tr').classList.toggle('on',l==='tr');
   document.getElementById('lb-en').classList.toggle('on',l==='en');
-  document.querySelectorAll('[data-tr],[data-en]').forEach(el=>{
-    const v=el.getAttribute('data-'+l);if(v!==null)el.innerHTML=v;
+  var dict=l==='tr'?TR:EN;
+  Object.keys(dict).forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.innerHTML=dict[id];
   });
-  document.querySelectorAll('[data-placeholder-tr],[data-placeholder-en]').forEach(el=>{
-    const v=el.getAttribute('data-placeholder-'+l);if(v)el.placeholder=v;
-  });
-  buildWeekRow();buildInfoCards();buildTabs();renderDay(curDay);buildChecklist();distributeTime();updateDelta();buildImproveBody();renderGear();buildRecCats();
+  buildWeekRow();buildInfoCards();buildTabs();renderDay(curDay);buildChecklist();
+  distributeTime();updateDelta();buildImproveBody();renderGear();buildRecCats();
 }
+
 function toggleNotif(){
   if(!('Notification' in window))return;
   if(notifOn){notifOn=false;document.getElementById('ntoggle').classList.remove('on');return;}
-  Notification.requestPermission().then(p=>{if(p==='granted'){notifOn=true;document.getElementById('ntoggle').classList.add('on');}});
+  Notification.requestPermission().then(function(p){if(p==='granted'){notifOn=true;document.getElementById('ntoggle').classList.add('on');}});
 }
 
-/* ─── WEEK RINGS ─── */
-const DL_TR=['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
-const DL_EN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+// ── WEEK RINGS ──
+var DL_TR=['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
+var DL_EN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 function buildWeekRow(){
-  const today=new Date().getDay();
-  const labels=lang==='tr'?DL_TR:DL_EN;
-  document.getElementById('week-row').innerHTML=labels.map((lbl,i)=>{
-    const done=state.weekDays.includes(i),isToday=i===today;
-    return`<div class="wd${isToday?' today':''}" onclick="toggleDay(${i})">
-      <div class="wd-ring${done?' done':''}${isToday&&!done?' today':''}"></div>
-      <div class="wd-lbl">${lbl}</div>
-    </div>`;
-  }).join('');
+  var today=new Date().getDay();
+  var labels=lang==='tr'?DL_TR:DL_EN;
+  var html='';
+  for(var i=0;i<7;i++){
+    var done=state.weekDays.indexOf(i)>=0, isToday=i===today;
+    var cls='wd'+(isToday?' today':'');
+    var ringCls='wd-ring'+(done?' done':'')+(isToday&&!done?' today':'');
+    html+='<div class="'+cls+'" onclick="toggleDay('+i+')">';
+    html+='<div class="'+ringCls+'"></div>';
+    html+='<div class="wd-lbl">'+labels[i]+'</div>';
+    html+='</div>';
+  }
+  document.getElementById('week-row').innerHTML=html;
   document.getElementById('week-count').textContent=state.weekDays.length+'/7';
 }
 function toggleDay(i){
-  const idx=state.weekDays.indexOf(i);
+  var idx=state.weekDays.indexOf(i);
   if(idx>=0)state.weekDays.splice(idx,1);else state.weekDays.push(i);
   lsSet('rx26_week_'+weekId(),JSON.stringify(state.weekDays));
-  buildWeekRow();
+  buildWeekRow();buildTabs();
 }
 
-/* ─── PB / DELTA ─── */
-function parseHHMM(s){if(!s)return null;const m=s.match(/^(\d{1,2}):(\d{2})$/);return m?+m[1]*60+ +m[2]:null;}
-function fmtMins(m){return Math.floor(m/60)+':'+(m%60).toString().padStart(2,'0');}
+// ── PB / DELTA ──
+function parseHHMM(s){if(!s)return null;var m=s.match(/^(\d{1,2}):(\d{2})$/);return m?+m[1]*60+ +m[2]:null}
+function fmtMins(m){return Math.floor(m/60)+':'+(m%60<10?'0':'')+m%60}
 function updateDelta(){
   state.pb=document.getElementById('pb-in').value||'';
   state.goal=document.getElementById('goal-in').value||'';
   lsSet('rx26_pb',state.pb);lsSet('rx26_goal',state.goal);
-  const pb=parseHHMM(state.pb),goal=parseHHMM(state.goal);
-  const el=document.getElementById('goal-delta');if(!el)return;
+  var pb=parseHHMM(state.pb),goal=parseHHMM(state.goal);
+  var el=document.getElementById('goal-delta');if(!el)return;
   if(pb&&goal){
-    const diff=pb-goal;
-    if(diff>0){el.textContent=(lang==='tr'?'PB\'den ':'')+ fmtMins(Math.abs(diff))+(lang==='tr'?' daha hızlı':' faster');el.className='pb-delta pos';}
-    else if(diff<0){el.textContent=(lang==='tr'?'PB\'den ':'')+ fmtMins(Math.abs(diff))+(lang==='tr'?' daha yavaş':' slower');el.className='pb-delta neg';}
+    var diff=pb-goal;
+    if(diff>0){el.textContent=(lang==='tr'?'PB\'den ':'')+fmtMins(Math.abs(diff))+(lang==='tr'?' daha hızlı':' faster');el.className='pb-delta pos';}
+    else if(diff<0){el.textContent=(lang==='tr'?'PB\'den ':'')+fmtMins(Math.abs(diff))+(lang==='tr'?' daha yavaş':' slower');el.className='pb-delta neg';}
     else{el.textContent=lang==='tr'?'PB ile aynı':'Matches PB';el.className='pb-delta';}
-  } else{el.textContent='—';el.className='pb-delta';}
+  }else{el.textContent='—';el.className='pb-delta';}
 }
 
-/* ─── HYROX INFO CARDS ─── */
-const INFO_DATA=[
-  {icon:'🏟️',tr:{title:'Format',body:'8 × 1km koşu + 8 fonksiyonel istasyon. Toplamda ~10km hareket. Koşu ve güç arasında kesintisiz geçiş.'},en:{title:'Format',body:'8 × 1km run + 8 functional stations. ~10km total movement. Non-stop transitions between running and strength.'},badge:'8 + 8'},
-  {icon:'⚖️',tr:{title:'Open Kategorisi Ağırlıkları',body:'SkiErg 1km · Sled Push 50m+50m (102kg E / 56kg K) · Farmers Carry 200m (24kg E / 16kg K) · Sandbag Lunges 100 tekrar (20kg E / 10kg K) · Wall Balls 100 tekrar (9kg / 6kg)'},en:{title:'Open Category Weights',body:'SkiErg 1km · Sled Push 50m+50m (102kg M / 56kg W) · Farmers Carry 200m (24kg M / 16kg W) · Sandbag Lunges 100 reps (20kg M / 10kg W) · Wall Balls 100 reps (9kg / 6kg)'},badge:'Open'},
-  {icon:'🏆',tr:{title:'Pro Kategorisi',body:'Pro\'da ağırlıklar önemli ölçüde artar: Sled Push 152kg E / 102kg K · Farmers Carry 32kg E / 24kg K · Sandbag Lunges 30kg E / 20kg K · Wall Balls 11kg / 9kg'},en:{title:'Pro Category',body:'Pro weights increase significantly: Sled Push 152kg M / 102kg W · Farmers Carry 32kg M / 24kg W · Sandbag Lunges 30kg M / 20kg W · Wall Balls 11kg / 9kg'},badge:'Pro'},
-  {icon:'⏱️',tr:{title:'Süre Aralıkları',body:'Elite erkek ~55 dk · Elite kadın ~62 dk · Ortalama Open atlet 1:15–1:30 · İlk kez katılanlar genellikle 1:30–2:00 bandında bitirir.'},en:{title:'Finish Times',body:'Elite men ~55 min · Elite women ~62 min · Average Open athlete 1:15–1:30 · First-timers typically finish in the 1:30–2:00 range.'},badge:'Times'},
-  {icon:'🗺️',tr:{title:'Roxzone',body:'Her koşudan sonra geçiş bölgesi. Elitler ~30–40sn/geçiş, ortalama atlet 60–90sn. Toplam zamanın %5\'ini oluşturur — kayıpları sinsice birikirken.'},en:{title:'Roxzone',body:'Transition area after each run. Elites ~30–40s/transition, average athlete 60–90s. Makes up ~5% of total time — losses accumulate quietly.'},badge:'~5% süre'},
+// ── INFO CARDS ──
+var INFO=[
+  {icon:'🏟️',tr:{title:'Format',body:'8 × 1km koşu + 8 fonksiyonel istasyon. Toplamda ~10km. Kesintisiz koşu-güç geçişi.',badge:'8 + 8'},en:{title:'Format',body:'8 × 1km run + 8 functional stations. ~10km total. Non-stop transitions between running and strength.',badge:'8 + 8'}},
+  {icon:'⚖️',tr:{title:'Open Ağırlıkları',body:'Sled Push: 102kg E / 56kg K · Farmers Carry: 24kg/16kg · Sandbag: 20kg/10kg · Wall Balls: 9kg/6kg',badge:'Open'},en:{title:'Open Weights',body:'Sled Push: 102kg M / 56kg W · Farmers Carry: 24kg/16kg · Sandbag: 20kg/10kg · Wall Balls: 9kg/6kg',badge:'Open'}},
+  {icon:'🏆',tr:{title:'Pro Ağırlıkları',body:'Sled Push: 152kg E / 102kg K · Farmers Carry: 32kg/24kg · Sandbag: 30kg/20kg · Wall Balls: 11kg/9kg',badge:'Pro'},en:{title:'Pro Weights',body:'Sled Push: 152kg M / 102kg W · Farmers Carry: 32kg/24kg · Sandbag: 30kg/20kg · Wall Balls: 11kg/9kg',badge:'Pro'}},
+  {icon:'⏱️',tr:{title:'Süre Aralıkları',body:'Elite erkek ~55 dk · Elite kadın ~62 dk · Ortalama Open 1:15–1:30 · İlk kez 1:30–2:00',badge:'Times'},en:{title:'Finish Times',body:'Elite men ~55 min · Elite women ~62 min · Average Open 1:15–1:30 · First-timers 1:30–2:00',badge:'Times'}},
+  {icon:'🗺️',tr:{title:'Roxzone',body:'Her koşudan sonra geçiş bölgesi. Elitler ~30sn/geçiş, ortalama 60–90sn. Toplam zamanın ~%5\'i.',badge:'~%5 süre'},en:{title:'Roxzone',body:'Transition area after each run. Elites ~30s each, average 60–90s. About 5% of total race time.',badge:'~5% time'}}
 ];
 function buildInfoCards(){
-  document.getElementById('info-scroll').innerHTML=INFO_DATA.map(c=>{
-    const t=lang==='tr'?c.tr:c.en;
-    return`<div class="info-card">
-      <div class="info-card-icon">${c.icon}</div>
-      <div class="info-card-title">${t.title}</div>
-      <div class="info-card-body">${t.body}</div>
-      <div class="info-card-badge">${c.badge}</div>
-    </div>`;
-  }).join('');
+  var html='';
+  INFO.forEach(function(c){
+    var t=lang==='tr'?c.tr:c.en;
+    html+='<div class="info-card">';
+    html+='<div class="info-card-icon">'+c.icon+'</div>';
+    html+='<div class="info-card-title">'+t.title+'</div>';
+    html+='<div class="info-card-body">'+t.body+'</div>';
+    html+='<div class="info-card-badge">'+t.badge+'</div>';
+    html+='</div>';
+  });
+  document.getElementById('info-scroll').innerHTML=html;
 }
 
-/* ─── CHECKLIST ─── */
-const CL_TR=[
+// ── CHECKLIST ──
+var CL_TR=[
   {s:'Kıyafet & Ekipman',items:['Koşu ayakkabısı','Yarış kıyafeti (şort + tişört)','Çorap (2 çift)','Race belt / kemer numarası','Akıllı saat / nabız bandı']},
   {s:'Beslenme',items:['Enerji jeli / bar (3–4 adet)','Su şişesi (500ml)','Elektrolit tozu','Yarış sabahı kahvaltısı']},
-  {s:'Belgeler',items:['Kayıt onayı / QR kod','Kimlik / pasaport','Küçük havlu']},
+  {s:'Belgeler',items:['Kayıt onayı / QR kod','Kimlik / pasaport','Küçük havlu']}
 ];
-const CL_EN=[
+var CL_EN=[
   {s:'Clothing & Gear',items:['Running shoes','Race outfit (shorts + tee)','Socks (2 pairs)','Race belt / bib number','Smartwatch / HR monitor']},
   {s:'Nutrition',items:['Energy gel / bar (3–4)','Water bottle (500ml)','Electrolyte powder','Pre-race breakfast']},
-  {s:'Documents',items:['Registration email / QR code','ID / passport','Small towel']},
+  {s:'Documents',items:['Registration email / QR code','ID / passport','Small towel']}
 ];
 function buildChecklist(){
-  const list=lang==='tr'?CL_TR:CL_EN;
-  const body=document.getElementById('cl-body');if(!body)return;
-  let total=0,checked=0;
-  body.innerHTML=list.map(sec=>
-    `<div class="cl-sec">${sec.s}</div>`+
-    sec.items.map((item,i)=>{
-      const key=sec.s+'__'+i,done=!!state.checklist[key];
+  var list=lang==='tr'?CL_TR:CL_EN;
+  var html='',total=0,checked=0;
+  list.forEach(function(sec){
+    html+='<div class="cl-sec">'+sec.s+'</div>';
+    sec.items.forEach(function(item,i){
+      var key=sec.s+'__'+i,done=!!state.checklist[key];
       total++;if(done)checked++;
-      return`<div class="cl-item${done?' done':''}" onclick="toggleCLItem('${key}',this)"><div class="cl-box"></div><div class="cl-txt">${item}</div></div>`;
-    }).join('')
-  ).join('');
+      html+='<div class="cl-item'+(done?' done':'')+'" onclick="toggleCLItem(\''+key+'\',this)">';
+      html+='<div class="cl-box"></div>';
+      html+='<div class="cl-txt">'+item+'</div>';
+      html+='</div>';
+    });
+  });
+  document.getElementById('cl-body').innerHTML=html;
   document.getElementById('cl-cnt').textContent=checked+'/'+total;
 }
 function toggleCLItem(key,el){
   state.checklist[key]=!state.checklist[key];
   lsSet('rx26_cl',JSON.stringify(state.checklist));
   el.classList.toggle('done',!!state.checklist[key]);
-  const all=document.querySelectorAll('.cl-item');
-  const done=[...all].filter(x=>x.classList.contains('done')).length;
+  var all=document.querySelectorAll('.cl-item');
+  var done=Array.from(all).filter(function(x){return x.classList.contains('done');}).length;
   document.getElementById('cl-cnt').textContent=done+'/'+all.length;
 }
 function toggleCL(){
-  const block=document.getElementById('cl-block'),body=document.getElementById('cl-body');
-  const open=block.classList.toggle('cl-open');
+  var block=document.getElementById('cl-block'),body=document.getElementById('cl-body');
+  var open=block.classList.toggle('cl-open');
   body.style.display=open?'block':'none';
 }
 
-/* ─── IMPROVE MODAL ─── */
-const STATIONS_TR=['SkiErg','Sled Push','Sled Pull','Burpee Broad Jump','Rowing','Farmers Carry','Sandbag Lunges','Wall Balls','Koşu'];
-const STATIONS_EN=['SkiErg','Sled Push','Sled Pull','Burpee Broad Jump','Rowing','Farmers Carry','Sandbag Lunges','Wall Balls','Running'];
-const TIPS_TR={
-  'SkiErg':{icon:'🎿',title:'SkiErg Gelişimi',desc:'Kol hızını artır: Her çekişi maksimum kuvvetle tamamla. 3×500m aralıklarla antrenman yap, 500m hedef 2:05–2:15 band.'},
-  'Sled Push':{icon:'🛷',title:'Sled Push Gelişimi',desc:'Öne eğilim açısını doğru kur: 45°. Kısa ve patlayıcı adımlarla it. Haftada 2 kez artan ağırlıkla çalış.'},
-  'Sled Pull':{icon:'⛓️',title:'Sled Pull Gelişimi',desc:'Kalça uzatma ile güç üret. Omuzları geri çek, dik duruş. Geriye doğru yürüyüş antrenmanı yap.'},
-  'Burpee Broad Jump':{icon:'🦘',title:'Burpee BJ Gelişimi',desc:'Tekrar ritmi 1 saniye/tekrar hedefle. Sıçrayış mesafesini artır. Haftada 3×20 tekrar antrenmanla ritmi geliştir.'},
-  'Rowing':{icon:'🚣',title:'Rowing Gelişimi',desc:'500m hedef süren 2:05 altına çek. Bacak–gövde–kol sıralamasını kur. Damper ayarı 4–5 arası optimal.'},
-  'Farmers Carry':{icon:'🏋️',title:'Farmers Carry Gelişimi',desc:'Core güçlendirmeye odaklan: Plank, dead bug, suitcase carry. Hız: 100m/dk hedefi. Sallanmadan yürü.'},
-  'Sandbag Lunges':{icon:'🎒',title:'Sandbag Lunges Gelişimi',desc:'Her adımda diz zeminden 5cm yukarıda kalsın. Sandbag tek omuza. Haftada 4×25 tekrar antrenman.'},
-  'Wall Balls':{icon:'🏀',title:'Wall Balls Gelişimi',desc:'Nefes ritmi kur: 10 tekrar–nefes al–devam et. Hedefi her zaman geç. Squat derinliği tutarlı olsun.'},
-  'Koşu':{icon:'🏃',title:'Koşu Gelişimi',desc:'Zone 2 hacim artır: Haftada 3×1km antrenman ekle. Tempo koşu: 400m × 6 aralık. Yarış temposu 5:30–6:30/km.'},
+// ── IMPROVE MODAL ──
+var STA_TR=['SkiErg','Sled Push','Sled Pull','Burpee Broad Jump','Rowing','Farmers Carry','Sandbag Lunges','Wall Balls','Koşu'];
+var STA_EN=['SkiErg','Sled Push','Sled Pull','Burpee Broad Jump','Rowing','Farmers Carry','Sandbag Lunges','Wall Balls','Running'];
+var TIPS_TR={
+  'SkiErg':{icon:'🎿',title:'SkiErg Gelişimi',desc:'3×500m aralıklarla antrenman yap, hedef 2:05–2:15/500m. Her çekişte kolları tamamen aşağı indir.'},
+  'Sled Push':{icon:'🛷',title:'Sled Push Gelişimi',desc:'45° öne eğilim, kısa patlayıcı adımlar. Haftada 2 kez artan ağırlıkla çalış.'},
+  'Sled Pull':{icon:'⛓️',title:'Sled Pull Gelişimi',desc:'Kalça uzatmayla güç üret. Omuzları geri çek, dik duruş. Geriye yürüyüş drilleri yap.'},
+  'Burpee Broad Jump':{icon:'🦘',title:'Burpee BJ Gelişimi',desc:'Hedef ritim: 1 tekrar/saniye. Haftada 3×20 tekrar antrenman. Sıçrayış mesafesini artır.'},
+  'Rowing':{icon:'🚣',title:'Rowing Gelişimi',desc:'Hedef: 500m split 2:05 altına çek. Sıralama: bacak–gövde–kol. Damper ayarı 4–5 optimal.'},
+  'Farmers Carry':{icon:'🏋️',title:'Farmers Carry Gelişimi',desc:'Core odaklı antrenman: plank, dead bug, suitcase carry. Hedef hız: 100m/dk. Sallanmadan yürü.'},
+  'Sandbag Lunges':{icon:'🎒',title:'Sandbag Lunges Gelişimi',desc:'Diz zeminden 5cm yukarda kalsın. Sandbag tek omuza. Haftada 4×25 tekrar.'},
+  'Wall Balls':{icon:'🏀',title:'Wall Balls Gelişimi',desc:'Nefes ritmi: 10 tekrar–nefes–devam. Her zaman hedefi geç. Squat derinliği tutarlı olsun.'},
+  'Koşu':{icon:'🏃',title:'Koşu Gelişimi',desc:'Zone 2 hacmi artır: haftada 3×1km ek interval. Yarış temposu: 5:30–6:30/km hedefle.'}
 };
-const TIPS_EN={
-  'SkiErg':{icon:'🎿',title:'SkiErg Improvement',desc:'Increase arm speed: complete each pull with max force. Train with 3×500m intervals, target 500m pace of 2:05–2:15.'},
-  'Sled Push':{icon:'🛷',title:'Sled Push Improvement',desc:'Perfect the 45° forward lean. Short, explosive steps. Train twice a week with progressive load.'},
-  'Sled Pull':{icon:'⛓️',title:'Sled Pull Improvement',desc:'Generate power from hip extension. Pull shoulders back, stay upright. Practice backward walking drills.'},
-  'Burpee Broad Jump':{icon:'🦘',title:'Burpee BJ Improvement',desc:'Target 1 rep/second rhythm. Increase jump distance. Train 3×20 reps weekly to build rhythm.'},
+var TIPS_EN={
+  'SkiErg':{icon:'🎿',title:'SkiErg Improvement',desc:'Train with 3×500m intervals, target 2:05–2:15/500m. Pull arms all the way down each rep.'},
+  'Sled Push':{icon:'🛷',title:'Sled Push Improvement',desc:'45° forward lean, short explosive steps. Train twice a week with progressive load.'},
+  'Sled Pull':{icon:'⛓️',title:'Sled Pull Improvement',desc:'Power from hip extension. Shoulders back, stay upright. Practice backward walking drills.'},
+  'Burpee Broad Jump':{icon:'🦘',title:'Burpee BJ Improvement',desc:'Target 1 rep/second rhythm. Train 3×20 weekly. Increase jump distance progressively.'},
   'Rowing':{icon:'🚣',title:'Rowing Improvement',desc:'Get 500m split below 2:05. Sequence: legs–torso–arms. Damper setting 4–5 is optimal.'},
-  'Farmers Carry':{icon:'🏋️',title:'Farmers Carry Improvement',desc:'Focus on core strength: Plank, dead bug, suitcase carry. Target 100m/min. Walk without swaying.'},
-  'Sandbag Lunges':{icon:'🎒',title:'Sandbag Lunges Improvement',desc:'Keep knee 5cm off the ground each step. Sandbag on one shoulder. Train 4×25 reps weekly.'},
-  'Wall Balls':{icon:'🏀',title:'Wall Balls Improvement',desc:'Build breathing rhythm: 10 reps–breathe–continue. Always clear the target height. Consistent squat depth.'},
-  'Running':{icon:'🏃',title:'Running Improvement',desc:'Increase Zone 2 volume: add 3×1km sessions weekly. Tempo intervals: 400m × 6. Race pace 5:30–6:30/km.'},
+  'Farmers Carry':{icon:'🏋️',title:'Farmers Carry Improvement',desc:'Core strength: plank, dead bug, suitcase carry. Target 100m/min. Walk without swaying.'},
+  'Sandbag Lunges':{icon:'🎒',title:'Sandbag Lunges Improvement',desc:'Keep knee 5cm off floor. Sandbag on one shoulder. Train 4×25 reps weekly.'},
+  'Wall Balls':{icon:'🏀',title:'Wall Balls Improvement',desc:'Build breathing rhythm: 10 reps, breathe, continue. Always clear target height. Consistent squat depth.'},
+  'Running':{icon:'🏃',title:'Running Improvement',desc:'Add Zone 2 volume: 3×1km extra intervals weekly. Race pace target: 5:30–6:30/km.'}
 };
-function openImprove(){
-  buildImproveBody();
-  document.getElementById('improve-modal').classList.add('open');
-  document.body.style.overflow='hidden';
-}
+function openImprove(){buildImproveBody();document.getElementById('improve-modal').classList.add('open');}
 function closeImprove(e){if(e.target===document.getElementById('improve-modal'))closeImproveBtn();}
-function closeImproveBtn(){
-  document.getElementById('improve-modal').classList.remove('open');
-  document.body.style.overflow='';
-}
+function closeImproveBtn(){document.getElementById('improve-modal').classList.remove('open');}
 function buildImproveBody(){
-  const stations=lang==='tr'?STATIONS_TR:STATIONS_EN;
-  const tips=lang==='tr'?TIPS_TR:TIPS_EN;
-  const body=document.getElementById('improve-body');if(!body)return;
-  const weakTitle=lang==='tr'?'Zayıf İstasyonlarını Seç':'Select Your Weak Stations';
-  const tipsTitle=lang==='tr'?'Kişisel Öneriler':'Personalized Tips';
-  const noWeakMsg=lang==='tr'?'Zayıf istasyon seçilmedi — yukarıdan işaretle':'No weak stations selected — mark above';
-  let weakHTML=`<div class="tip-group"><div class="tip-group-lbl">${weakTitle}</div><div class="weak-inputs" id="weak-inp">`;
-  stations.forEach((s,i)=>{
-    const isWeak=state.weakStations.includes(i);
-    weakHTML+=`<div class="weak-input-row"><div><div class="weak-name">${s}</div></div>
-      <div class="weak-tog"><div class="weak-tog-btn${isWeak?' on':''}" onclick="toggleWeak(${i},this)" id="wtog-${i}">${isWeak?'✓':'+'}</div></div>
-    </div>`;
+  var stations=lang==='tr'?STA_TR:STA_EN;
+  var tips=lang==='tr'?TIPS_TR:TIPS_EN;
+  var tips_keys=lang==='tr'?STA_TR:STA_EN;
+  var weakTitle=lang==='tr'?'Zayıf İstasyonlarını Seç':'Select Your Weak Stations';
+  var tipsTitle=lang==='tr'?'Kişisel Öneriler':'Personalized Tips';
+  var noWeakMsg=lang==='tr'?'Zayıf istasyon seçilmedi — yukarıdan işaretle':'No weak stations selected — mark above';
+  var html='<div class="tip-group"><div class="tip-group-lbl">'+weakTitle+'</div>';
+  html+='<div style="padding:0 20px">';
+  stations.forEach(function(s,i){
+    var isWeak=state.weakStations.indexOf(i)>=0;
+    html+='<div class="weak-input-row">';
+    html+='<div class="weak-name">'+s+'</div>';
+    html+='<div class="weak-tog-btn'+(isWeak?' on':'')+'" id="wtog-'+i+'" onclick="toggleWeak('+i+')">'+( isWeak?'✓':'+')+'</div>';
+    html+='</div>';
   });
-  weakHTML+='</div></div>';
-  let tipsHTML=`<div class="tip-group" id="tips-out"><div class="tip-group-lbl">${tipsTitle}</div>`;
+  html+='</div></div>';
+  html+='<div class="tip-group" id="tips-out"><div class="tip-group-lbl">'+tipsTitle+'</div>';
   if(state.weakStations.length===0){
-    tipsHTML+=`<div style="padding:10px 0 20px;font-size:13px;color:var(--t2)">${noWeakMsg}</div>`;
-  } else {
-    state.weakStations.forEach(i=>{
-      const key=lang==='tr'?STATIONS_TR[i]:STATIONS_EN[i];
-      const t=lang==='tr'?TIPS_TR[STATIONS_TR[i]]:TIPS_EN[STATIONS_EN[i]];
-      if(!t)return;
-      tipsHTML+=`<div class="tip-row"><div class="tip-icon">${t.icon}</div><div class="tip-content"><div class="tip-title">${t.title}</div><div class="tip-desc">${t.desc}</div></div></div>`;
+    html+='<div style="padding:10px 20px 20px;font-size:13px;color:var(--t2)">'+noWeakMsg+'</div>';
+  }else{
+    state.weakStations.forEach(function(i){
+      var t=tips[tips_keys[i]];if(!t)return;
+      html+='<div class="tip-row" style="padding:0 20px;margin-bottom:10px">';
+      html+='<div class="tip-icon">'+t.icon+'</div>';
+      html+='<div class="tip-content"><div class="tip-title">'+t.title+'</div><div class="tip-desc">'+t.desc+'</div></div>';
+      html+='</div>';
     });
   }
-  tipsHTML+='</div>';
-  body.innerHTML=weakHTML+tipsHTML;
+  html+='</div>';
+  document.getElementById('improve-body').innerHTML=html;
 }
-function toggleWeak(i,el){
-  const idx=state.weakStations.indexOf(i);
+function toggleWeak(i){
+  var idx=state.weakStations.indexOf(i);
   if(idx>=0)state.weakStations.splice(idx,1);else state.weakStations.push(i);
   lsSet('rx26_weak',JSON.stringify(state.weakStations));
-  el.classList.toggle('on',state.weakStations.includes(i));
-  el.textContent=state.weakStations.includes(i)?'✓':'+';
-  // refresh tips
-  const stations=lang==='tr'?STATIONS_TR:STATIONS_EN;
-  const tipsTitle=lang==='tr'?'Kişisel Öneriler':'Personalized Tips';
-  const noWeakMsg=lang==='tr'?'Zayıf istasyon seçilmedi — yukarıdan işaretle':'No weak stations selected — mark above';
-  const out=document.getElementById('tips-out');if(!out)return;
-  let html=`<div class="tip-group-lbl">${tipsTitle}</div>`;
-  if(state.weakStations.length===0){
-    html+=`<div style="padding:10px 0 20px;font-size:13px;color:var(--t2)">${noWeakMsg}</div>`;
-  } else {
-    state.weakStations.forEach(j=>{
-      const t=lang==='tr'?TIPS_TR[STATIONS_TR[j]]:TIPS_EN[STATIONS_EN[j]];
-      if(!t)return;
-      html+=`<div class="tip-row"><div class="tip-icon">${t.icon}</div><div class="tip-content"><div class="tip-title">${t.title}</div><div class="tip-desc">${t.desc}</div></div></div>`;
-    });
-  }
-  out.innerHTML=html;
+  buildImproveBody();
 }
 
-/* ─── TRAINING ─── */
-const DAYS=[
-  {tr:{day:'Pazartesi',tag:'Kardiyo',title:'Aerobik Taban',desc:'Düşük yoğunluklu uzun koşu ve makine antrenmanı.',tip:'Zone 2\'de kal — (220–yaş) × 0.65. Konuşabiliyorsan doğru tempodayısın.'},en:{day:'Monday',tag:'Cardio',title:'Aerobic Base',desc:'Low-intensity long run and machine training.',tip:'Stay Zone 2 — (220–age) × 0.65. If you can hold a conversation, you\'re on pace.'},yt:'https://www.youtube.com/results?search_query=hyrox+zone2+training',ex:[{tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'Hafif tempo',en:'Easy pace'},v:'10 dk'},{tr:'Tempo koşu',en:'Tempo run',sub:{tr:'5km, orta tempo',en:'5km moderate'},v:'5 km'},{tr:'SkiErg',en:'SkiErg',sub:{tr:'90sn dinlenme arası',en:'90s rest between'},v:'3×500m'},{tr:'Rowing',en:'Rowing',sub:{tr:'90sn dinlenme arası',en:'90s rest between'},v:'3×500m'},{tr:'Soğuma',en:'Cool-down',sub:{tr:'Tam vücut esneme',en:'Full body stretch'},v:'10 dk'}]},
+// ── TRAINING ──
+var DAYS=[
+  {tr:{day:'Pazartesi',tag:'Kardiyo',title:'Aerobik Taban',desc:'Düşük yoğunluklu uzun koşu ve makine antrenmanı.',tip:'Zone 2\'de kal. Konuşabiliyorsan doğru tempodayısın.'},en:{day:'Monday',tag:'Cardio',title:'Aerobic Base',desc:'Low-intensity long run and machine training.',tip:'Stay Zone 2. If you can hold a conversation, you\'re on pace.'},yt:'https://www.youtube.com/results?search_query=hyrox+zone2+training',ex:[{tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'Hafif tempo',en:'Easy pace'},v:'10 dk'},{tr:'Tempo koşu',en:'Tempo run',sub:{tr:'5km orta tempo',en:'5km moderate'},v:'5 km'},{tr:'SkiErg',en:'SkiErg',sub:{tr:'90sn aralar',en:'90s rest'},v:'3×500m'},{tr:'Rowing',en:'Rowing',sub:{tr:'90sn aralar',en:'90s rest'},v:'3×500m'},{tr:'Soğuma',en:'Cool-down',sub:{tr:'Tam vücut esneme',en:'Full body stretch'},v:'10 dk'}]},
   {tr:{day:'Salı',tag:'Güç',title:'Sled & Taşıma',desc:'Sled push/pull ve taşıma egzersizleri.',tip:'Sled push\'ta 45° öne eğil, kısa adımlarla it.'},en:{day:'Tuesday',tag:'Strength',title:'Sled & Carry',desc:'Sled push/pull and carry work.',tip:'Lean 45° forward on sled push, short quick steps.'},yt:'https://www.youtube.com/results?search_query=hyrox+sled+carry+training',ex:[{tr:'Sled Push',en:'Sled Push',sub:{tr:'%50 vücut ağırlığı',en:'50% body weight'},v:'6×30m'},{tr:'Sled Pull',en:'Sled Pull',sub:{tr:'İp ile, dik duruş',en:'Rope pull, upright'},v:'6×30m'},{tr:'Farmers Carry',en:'Farmers Carry',sub:{tr:'Her elde kettlebell',en:'KB each hand'},v:'4×50m'},{tr:'Sandbag Lunges',en:'Sandbag Lunges',sub:{tr:'Omuzda sandbag',en:'Sandbag on shoulder'},v:'4×20'},{tr:'Plank',en:'Plank',sub:{tr:'Ön + yan',en:'Front + side'},v:'3×60sn'}]},
-  {tr:{day:'Çarşamba',tag:'HIIT',title:'Interval Koşu',desc:'Yüksek yoğunluklu interval antrenmanı.',tip:'Her 400m\'yi %85–90 eforda koş. İlk setleri çok hızlı koşarsan son setleri bitiremezsin.'},en:{day:'Wednesday',tag:'HIIT',title:'Interval Run',desc:'High-intensity interval training.',tip:'Run each 400m at 85–90% effort. Go too fast early and you won\'t finish the last sets.'},yt:'https://www.youtube.com/results?search_query=hyrox+interval+hiit+training',ex:[{tr:'400m koşu',en:'400m run',sub:{tr:'%85–90 efor, 90sn dinlenme',en:'85–90% effort, 90s rest'},v:'8×tekrar'},{tr:'Wall Balls',en:'Wall Balls',sub:{tr:'9kg, 3m hedef',en:'9kg, 3m target'},v:'4×25'},{tr:'Burpee Broad Jump',en:'Burpee Broad Jump',sub:{tr:'Tam atlayış',en:'Full jump'},v:'4×15'},{tr:'Box Jump',en:'Box Jump',sub:{tr:'60cm, patlayıcı',en:'60cm, explosive'},v:'3×12'}]},
-  {tr:{day:'Perşembe',tag:'Simülasyon',title:'HYROX Protokol',desc:'Yarı yarış simülasyonu. Gerçek koşullarda istasyon geçiş pratiği.',tip:'İstasyonlar arası ritim koru — çok hızlı başlamak seni bitirir.'},en:{day:'Thursday',tag:'Simulation',title:'HYROX Protocol',desc:'Half-race simulation. Station transitions under race conditions.',tip:'Maintain rhythm between stations — going out too hard will end your race.'},yt:'https://www.youtube.com/results?search_query=hyrox+race+simulation',ex:[{tr:'1km + SkiErg',en:'1km + SkiErg',sub:{tr:'Tempo: 2:10–2:20/500m',en:'Pace: 2:10–2:20/500m'},v:'1.000m'},{tr:'1km + Sled Push',en:'1km + Sled Push',sub:{tr:'E: 102kg / K: 56kg',en:'M: 102kg / W: 56kg'},v:'2×25m'},{tr:'1km + Burpee BJ',en:'1km + Burpee BJ',sub:{tr:'Sabit ritim',en:'Steady rhythm'},v:'40 tekrar'},{tr:'1km + Rowing',en:'1km + Rowing',sub:{tr:'Tempo: 2:00–2:10/500m',en:'Pace: 2:00–2:10/500m'},v:'1.000m'},{tr:'Hedef',en:'Target',sub:{tr:'Yarı protokol toplamı',en:'Half protocol total'},v:'< 45dk'}]},
-  {tr:{day:'Cuma',tag:'Güç',title:'Ağırlık & Fonksiyonel',desc:'Compound hareketler, HYROX\'a özel kas grupları.',tip:'Deadlift\'te sırtı düz tut. Arka zincir sled ve sandbag için kritik.'},en:{day:'Friday',tag:'Strength',title:'Weights & Functional',desc:'Compound movements, HYROX-specific muscle groups.',tip:'Keep your back flat on deadlifts. The posterior chain is critical for sled and sandbag.'},yt:'https://www.youtube.com/results?search_query=hyrox+strength+training',ex:[{tr:'Deadlift',en:'Deadlift',sub:{tr:'%80 1RM, kontrollü',en:'80% 1RM, controlled'},v:'4×6'},{tr:'Romanian DL',en:'Romanian DL',sub:{tr:'Hamstring odaklı',en:'Hamstring focused'},v:'3×10'},{tr:'Goblet Squat',en:'Goblet Squat',sub:{tr:'Kettlebell',en:'KB'},v:'4×12'},{tr:'KB Swing',en:'KB Swing',sub:{tr:'Patlayıcı kalça',en:'Explosive hip'},v:'4×20'},{tr:"Farmer's Walk",en:"Farmer's Walk",sub:{tr:'Maksimum yük',en:'Max load'},v:'3×40m'}]},
+  {tr:{day:'Çarşamba',tag:'HIIT',title:'Interval Koşu',desc:'Yüksek yoğunluklu interval antrenmanı.',tip:'Her 400m\'yi %85–90 eforda koş. İlk setleri çok hızlı koşarsan son setleri bitiremezsin.'},en:{day:'Wednesday',tag:'HIIT',title:'Interval Run',desc:'High-intensity interval training.',tip:'Run each 400m at 85–90% effort. Go out too fast and you won\'t finish the last sets.'},yt:'https://www.youtube.com/results?search_query=hyrox+interval+training',ex:[{tr:'400m koşu',en:'400m run',sub:{tr:'%85–90, 90sn dinlenme',en:'85–90%, 90s rest'},v:'8×'},{tr:'Wall Balls',en:'Wall Balls',sub:{tr:'9kg, 3m hedef',en:'9kg, 3m target'},v:'4×25'},{tr:'Burpee Broad Jump',en:'Burpee Broad Jump',sub:{tr:'Tam atlayış',en:'Full jump'},v:'4×15'},{tr:'Box Jump',en:'Box Jump',sub:{tr:'60cm, patlayıcı',en:'60cm, explosive'},v:'3×12'}]},
+  {tr:{day:'Perşembe',tag:'Simülasyon',title:'HYROX Protokol',desc:'Yarı yarış simülasyonu. Gerçek koşullarda istasyon geçişi.',tip:'İstasyonlar arası ritim koru — çok hızlı başlamak seni bitirir.'},en:{day:'Thursday',tag:'Simulation',title:'HYROX Protocol',desc:'Half-race simulation. Station transitions under race conditions.',tip:'Maintain rhythm between stations — going out too hard will end your race.'},yt:'https://www.youtube.com/results?search_query=hyrox+race+simulation',ex:[{tr:'1km + SkiErg',en:'1km + SkiErg',sub:{tr:'Tempo: 2:10–2:20/500m',en:'Pace: 2:10–2:20/500m'},v:'1.000m'},{tr:'1km + Sled Push',en:'1km + Sled Push',sub:{tr:'E:102kg / K:56kg',en:'M:102kg / W:56kg'},v:'2×25m'},{tr:'1km + Burpee BJ',en:'1km + Burpee BJ',sub:{tr:'Sabit ritim',en:'Steady rhythm'},v:'40 tekrar'},{tr:'1km + Rowing',en:'1km + Rowing',sub:{tr:'Tempo: 2:00–2:10/500m',en:'Pace: 2:00–2:10/500m'},v:'1.000m'}]},
+  {tr:{day:'Cuma',tag:'Güç',title:'Ağırlık & Fonksiyonel',desc:'Compound hareketler, HYROX\'a özel kas grupları.',tip:'Deadlift\'te sırtı düz tut. Arka zincir sled ve sandbag için kritik.'},en:{day:'Friday',tag:'Strength',title:'Weights & Functional',desc:'Compound movements, HYROX-specific muscle groups.',tip:'Keep your back flat on deadlifts. Posterior chain is critical for sled and sandbag.'},yt:'https://www.youtube.com/results?search_query=hyrox+strength+training',ex:[{tr:'Deadlift',en:'Deadlift',sub:{tr:'%80 1RM',en:'80% 1RM'},v:'4×6'},{tr:'Romanian DL',en:'Romanian DL',sub:{tr:'Hamstring odaklı',en:'Hamstring focused'},v:'3×10'},{tr:'Goblet Squat',en:'Goblet Squat',sub:{tr:'Kettlebell',en:'KB'},v:'4×12'},{tr:'KB Swing',en:'KB Swing',sub:{tr:'Patlayıcı kalça',en:'Explosive hip'},v:'4×20'},{tr:'Farmers Walk',en:'Farmers Walk',sub:{tr:'Maksimum yük',en:'Max load'},v:'3×40m'}]},
   {tr:{day:'Cumartesi',tag:'Kardiyo',title:'Uzun Koşu',desc:'Uzun mesafe, düşük tempo. Zone 2 aerobik motor.',tip:'Nabız (220–yaş) × 0.65\'i aşmamalı. Çok yavaş geliyorsa endişelenme.'},en:{day:'Saturday',tag:'Cardio',title:'Long Run',desc:'Long distance, low pace. Zone 2 aerobic engine.',tip:'HR should not exceed (220–age) × 0.65. If it feels too slow, you\'re doing it right.'},yt:'https://www.youtube.com/results?search_query=zone2+long+run+hyrox',ex:[{tr:'Uzun koşu',en:'Long run',sub:{tr:'Zone 2, konuşma temposu',en:'Zone 2, conversational'},v:'12–15km'},{tr:'Tempo surge',en:'Tempo surge',sub:{tr:'Ortada 2km hız artışı',en:'2km pace surge mid-run'},v:'2km'},{tr:'Mobility',en:'Mobility',sub:{tr:'Kalça + hamstring',en:'Hip + hamstring'},v:'20dk'}]},
-  {tr:{day:'Pazar',tag:'Dinlenme',title:'Aktif Toparlanma',desc:'Hafif hareket ve zihinsel dinlenme.',tip:'Dinlenme antrenmanın bir parçası. Kaslar büyür ve onarılır.'},en:{day:'Sunday',tag:'Rest',title:'Active Recovery',desc:'Light movement and mental rest.',tip:'Rest is part of training. Muscles grow and repair; the mind resets.'},yt:'https://www.youtube.com/results?search_query=active+recovery+mobility',ex:[{tr:'Yürüyüş',en:'Walk',sub:{tr:'Hafif tempo',en:'Easy pace'},v:'30–45dk'},{tr:'Foam Rolling',en:'Foam Rolling',sub:{tr:'Bacak + sırt',en:'Legs + back'},v:'15dk'},{tr:'Esneme',en:'Stretching',sub:{tr:'Statik, tam vücut',en:'Static, full body'},v:'20dk'},{tr:'Nefes',en:'Breathing',sub:{tr:'Box breathing 4-4-4-4',en:'Box breathing 4-4-4-4'},v:'5dk'}]},
-  {tr:{day:'Salonsuz',tag:'Açık Hava',title:'Ekipmansız HYROX',desc:'HYROX salonu olmadan istasyon simülasyonu. Her istasyon için ev/park alternatifi.',tip:'Sled yerine duvara it, Ski Erg yerine TRX / direnç bandı kullan. Bağlam değil ritim önemli.'},en:{day:'No Gym',tag:'Outdoor',title:'Equipment-Free HYROX',desc:'Station simulation without a HYROX gym. Home or park alternative for every station.',tip:'Push a wall instead of sled, use TRX / resistance band instead of SkiErg. Context doesn't matter — rhythm does.'},yt:'https://www.youtube.com/results?search_query=hyrox+training+at+home+no+equipment',ex:[
-    {tr:'Koşu (dışarı/koşu bandı)',en:'Run (outdoor / treadmill)',sub:{tr:'1km × 8 interval temposu',en:'1km × 8 interval pace'},v:'1km'},
-    {tr:'Duvar İtiş (Sled Push alt.)',en:'Wall Push (Sled alt.)',sub:{tr:'Duvara 45° eğil, ittir',en:'Lean 45° into wall, drive'},v:'3×30sn'},
-    {tr:'Direnç Bandı Çekiş (Sled Pull alt.)',en:'Band Row (Sled Pull alt.)',sub:{tr:'Yere otur, band çek',en:'Seated band row'},v:'3×20'},
-    {tr:'Burpee Broad Jump',en:'Burpee Broad Jump',sub:{tr:'Tam vücut, ileri atlayış',en:'Full body, forward jump'},v:'4×15'},
-    {tr:'Ev Rowing (Band / Sandalye)',en:'Home Rowing (Band / Chair)',sub:{tr:'Direnç bandı, uzun çekiş',en:'Resistance band long pull'},v:'3×500m tempo'},
-    {tr:'Yük Taşıma (Farmers Carry alt.)',en:'Loaded Carry (Farmers alt.)',sub:{tr:'Su bidonu / sırt çantası',en:'Water jugs / loaded backpack'},v:'4×50m'},
-    {tr:'Ağırlıklı Lunge (Sandbag alt.)',en:'Weighted Lunge (Sandbag alt.)',sub:{tr:'Sırt çantası veya su bidonu',en:'Backpack or water jugs'},v:'4×25'},
-    {tr:'Squat Fırlatma (Wall Ball alt.)',en:'Squat Jump (Wall Ball alt.)',sub:{tr:'Hedefe balon/top fırlat',en:'Throw ball at target height'},v:'4×20'},
-  ]},
+  {tr:{day:'Pazar',tag:'Dinlenme',title:'Aktif Toparlanma',desc:'Hafif hareket ve zihinsel dinlenme.',tip:'Dinlenme antrenmanın bir parçası. Kaslar büyür ve onarılır.'},en:{day:'Sunday',tag:'Rest',title:'Active Recovery',desc:'Light movement and mental rest.',tip:'Rest is part of training. Muscles grow and repair.'},yt:'https://www.youtube.com/results?search_query=active+recovery+mobility',ex:[{tr:'Yürüyüş',en:'Walk',sub:{tr:'Hafif tempo',en:'Easy pace'},v:'30–45dk'},{tr:'Foam Rolling',en:'Foam Rolling',sub:{tr:'Bacak + sırt',en:'Legs + back'},v:'15dk'},{tr:'Esneme',en:'Stretching',sub:{tr:'Statik, tam vücut',en:'Static, full body'},v:'20dk'},{tr:'Nefes',en:'Breathing',sub:{tr:'Box breathing 4-4-4-4',en:'Box breathing 4-4-4-4'},v:'5dk'}]},
+  {tr:{day:'Salonsuz',tag:'Açık Hava',title:'Ekipmansız HYROX',desc:'HYROX salonu olmadan 8 istasyonun ev/park alternatifi.',tip:'Sled yerine duvara it, SkiErg yerine direnç bandı kullan. Bağlam degil ritim önemli.'},en:{day:'No Gym',tag:'Outdoor',title:'Equipment-Free HYROX',desc:'Home or park alternative for all 8 stations without a HYROX gym.',tip:'Push a wall instead of a sled, use a resistance band instead of SkiErg. Rhythm matters, not equipment.'},yt:'https://www.youtube.com/results?search_query=hyrox+training+at+home+no+equipment',ex:[{tr:'Koşu',en:'Run',sub:{tr:'1km × 8 interval temposu',en:'1km × 8 interval pace'},v:'1 km'},{tr:'Duvar İtiş (Sled Push)',en:'Wall Push (Sled alt.)',sub:{tr:'Duvara 45° eğil, ittir',en:'Lean 45° into wall, drive'},v:'3×30sn'},{tr:'Band Çekiş (Sled Pull)',en:'Band Row (Sled Pull alt.)',sub:{tr:'Otur, direnç bandı çek',en:'Seated resistance band row'},v:'3×20'},{tr:'Burpee Broad Jump',en:'Burpee Broad Jump',sub:{tr:'Tam vücut, ileri atlayış',en:'Full body, forward jump'},v:'4×15'},{tr:'Band Rowing (Ev)',en:'Band Rowing (Home)',sub:{tr:'Uzun çekiş direnç bandı',en:'Long pull resistance band'},v:'3×500m tempo'},{tr:'Yük Taşıma (Farmers Carry)',en:'Loaded Carry (Farmers alt.)',sub:{tr:'Su bidonu / sırt çantası',en:'Water jugs / loaded backpack'},v:'4×50m'},{tr:'Ağırlıklı Lunge (Sandbag)',en:'Weighted Lunge (Sandbag alt.)',sub:{tr:'Sırt çantası / su bidonu',en:'Backpack or water jugs'},v:'4×25'},{tr:'Squat Fırlatma (Wall Ball)',en:'Squat Jump (Wall Ball alt.)',sub:{tr:'Hedefe top fırlat',en:'Throw ball at target height'},v:'4×20'}]}
 ];
+
 function buildTabs(){
-  document.getElementById('day-tabs').innerHTML=DAYS.map((d,i)=>{
-    const isDone=state.weekDays.includes(i);
-    const lbl=(lang==='tr'?d.tr.day:d.en.day).slice(0,3);
-    return`<div class="tab${i===curDay?' on':''}${isDone?' tab-done':''}" onclick="switchDay(${i})">${lbl}${isDone?' ✓':''}</div>`;
-  }).join('');
+  var html='';
+  DAYS.forEach(function(d,i){
+    var isDone=state.weekDays.indexOf(i)>=0;
+    var lbl=(lang==='tr'?d.tr.day:d.en.day).slice(0,4);
+    var cls='tab'+(i===curDay?' on':'')+(isDone?' done-tab':'');
+    html+='<div class="'+cls+'" onclick="switchDay('+i+')">'+(isDone?'✓ ':'')+lbl+'</div>';
+  });
+  document.getElementById('day-tabs').innerHTML=html;
 }
 function renderDay(i){
-  curDay=i;const d=DAYS[i],t=lang==='tr'?d.tr:d.en;
+  curDay=i;
+  var d=DAYS[i],t=lang==='tr'?d.tr:d.en;
+  var isDone=state.weekDays.indexOf(i)>=0;
+  var doneLbl=isDone?(lang==='tr'?'✓ Tamamlandı':'✓ Completed'):(lang==='tr'?'✓ Tamamla':'✓ Mark as Done');
+  var doneCls='done-day-btn'+(isDone?' done':'');
+  var exHTML='';
+  d.ex.forEach(function(e,j){
+    exHTML+='<div class="ex-r">';
+    exHTML+='<div class="ex-i">'+String(j+1).padStart(2,'0')+'</div>';
+    exHTML+='<div class="ex-body"><div class="ex-name">'+(lang==='tr'?e.tr:e.en)+'</div><div class="ex-sub">'+(lang==='tr'?e.sub.tr:e.sub.en)+'</div></div>';
+    exHTML+='<div class="ex-v">'+e.v+'</div>';
+    exHTML+='</div>';
+  });
+  var vidLbl=lang==='tr'?'Antrenman Videosu':'Training Video';
   document.getElementById('tr-body').innerHTML=
-    `<div style="height:4px"></div>
-    <div class="tr-card">
-      <div class="tr-head">
-        <span class="tr-tag">${t.tag}</span>
-        <div class="tr-title">${t.title}</div>
-        <div class="tr-desc">${t.desc}</div>
-      </div>
-      ${d.ex.map((e,j)=>`<div class="ex-r"><div class="ex-i">${String(j+1).padStart(2,'0')}</div><div class="ex-body"><div class="ex-name">${lang==='tr'?e.tr:e.en}</div><div class="ex-sub">${lang==='tr'?e.sub.tr:e.sub.en}</div></div><div class="ex-v">${e.v}</div></div>`).join('')}
-    </div>
-    <div class="tip-b"><div class="tip-ico">—</div><div class="tip-txt">${t.tip}</div></div>
-    <a class="yt-b" href="${d.yt}" target="_blank" rel="noopener"><div class="yt-l"><div class="yt-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M19.6 3.2C16 3 12 3 12 3s-4 0-7.6.2C2.5 3.4 1.2 4.7 1 6.6.8 8.2.8 12s0 3.8.2 5.4c.2 1.9 1.5 3.2 3.4 3.4C7.8 21 12 21 12 21s4 0 7.6-.2c1.9-.2 3.2-1.5 3.4-3.4.2-1.6.2-5.4.2-5.4s0-3.8-.2-5.4c-.2-1.9-1.5-3.2-3.4-3.4zM9.8 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg></div><div><div class="yt-title">${lang==='tr'?'Antrenman Videosu':'Training Video'}</div><div class="yt-sub">YouTube →</div></div></div><div class="yt-arr">›</div></a>
-    <div onclick="markDayDoneFromTraining(${i},this)" class="done-day-btn${state.weekDays.includes(i)?' done-btn-done':''}">${state.weekDays.includes(i)?(lang==='tr'?'✓ Tamamlandı':'✓ Completed'):(lang==='tr'?'✓ Tamamla':'✓ Mark Done')}</div>
-    <div style="height:4px"></div>`;
+    '<div style="height:4px"></div>'+
+    '<div class="tr-card">'+
+      '<div class="tr-head">'+
+        '<span class="tr-tag">'+t.tag+'</span>'+
+        '<div class="tr-title">'+t.title+'</div>'+
+        '<div class="tr-desc">'+t.desc+'</div>'+
+      '</div>'+
+      exHTML+
+    '</div>'+
+    '<div class="tip-b"><div class="tip-ico">—</div><div class="tip-txt">'+t.tip+'</div></div>'+
+    '<a class="yt-b" href="'+d.yt+'" target="_blank" rel="noopener">'+
+      '<div class="yt-l">'+
+        '<div class="yt-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M19.6 3.2C16 3 12 3 12 3s-4 0-7.6.2C2.5 3.4 1.2 4.7 1 6.6.8 8.2.8 12s0 3.8.2 5.4c.2 1.9 1.5 3.2 3.4 3.4C7.8 21 12 21 12 21s4 0 7.6-.2c1.9-.2 3.2-1.5 3.4-3.4.2-1.6.2-5.4.2-5.4s0-3.8-.2-5.4c-.2-1.9-1.5-3.2-3.4-3.4zM9.8 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg></div>'+
+        '<div><div class="yt-title">'+vidLbl+'</div><div class="yt-sub">YouTube →</div></div>'+
+      '</div>'+
+      '<div class="yt-arr">›</div>'+
+    '</a>'+
+    '<div class="'+doneCls+'" id="done-btn-'+i+'" onclick="markDayDone('+i+')">'+doneLbl+'</div>'+
+    '<div style="height:4px"></div>';
 }
-function switchDay(i){document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===i));renderDay(i);}
-
-function markDayDoneFromTraining(i,btn){
-  const idx=state.weekDays.indexOf(i);
-  if(idx>=0){state.weekDays.splice(idx,1);btn.textContent=lang==='tr'?'✓ Tamamla':'✓ Done';btn.classList.remove('done-btn-done');}
-  else{state.weekDays.push(i);btn.textContent=lang==='tr'?'✓ Tamamlandı':'✓ Completed';btn.classList.add('done-btn-done');}
+function switchDay(i){buildTabs();document.querySelectorAll('.tab').forEach(function(t,j){t.classList.toggle('on',j===i);});renderDay(i);}
+function markDayDone(i){
+  var idx=state.weekDays.indexOf(i);
+  if(idx>=0)state.weekDays.splice(idx,1);else state.weekDays.push(i);
   lsSet('rx26_week_'+weekId(),JSON.stringify(state.weekDays));
-  buildWeekRow();
-  // update tabs
-  buildTabs();
-  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===curDay));
+  buildWeekRow();buildTabs();
+  document.querySelectorAll('.tab').forEach(function(t,j){t.classList.toggle('on',j===curDay);});
+  var btn=document.getElementById('done-btn-'+i);
+  if(btn){
+    var isDone=state.weekDays.indexOf(i)>=0;
+    btn.textContent=isDone?(lang==='tr'?'✓ Tamamlandı':'✓ Completed'):(lang==='tr'?'✓ Tamamla':'✓ Mark as Done');
+    btn.classList.toggle('done',isDone);
+  }
 }
 
-/* ─── CALCULATOR ─── */
-const STS=[
-  {id:'ski',tr:{name:'SkiErg',tip:'Kolları tamamen aşağı çek, core sıkı. Her çekişi tamamla.'},en:{name:'SkiErg',tip:'Pull arms all the way down, core tight. Complete each pull.'},desc:'1.000m',type:'pace',dist:1000,defPct:11,minS:180,maxS:480,yt:'https://www.youtube.com/results?search_query=hyrox+skierg+technique'},
+// ── CALCULATOR ──
+var STS=[
+  {id:'ski',tr:{name:'SkiErg',tip:'Kolları tamamen aşağı çek. Core sıkı tut.'},en:{name:'SkiErg',tip:'Pull arms all the way down. Keep core tight.'},desc:'1.000m',type:'pace',dist:1000,defPct:11,minS:180,maxS:480,yt:'https://www.youtube.com/results?search_query=hyrox+skierg+technique'},
   {id:'spsh',tr:{name:'Sled Push',tip:'45° öne eğil, kısa hızlı adımlar.'},en:{name:'Sled Push',tip:'Lean 45° forward, short quick steps.'},desc:'50m × 2',type:'speed',dist:100,defPct:9,minS:60,maxS:300,yt:'https://www.youtube.com/results?search_query=hyrox+sled+push'},
   {id:'spll',tr:{name:'Sled Pull',tip:'Kısa kavrayış, kalçayı kullan.'},en:{name:'Sled Pull',tip:'Short grip, use hips each step.'},desc:'50m × 2',type:'speed',dist:100,defPct:10,minS:60,maxS:300,yt:'https://www.youtube.com/results?search_query=hyrox+sled+pull'},
-  {id:'brp',tr:{name:'Burpee Broad Jump',tip:'Her sıçrayışta iki ayak sağlam zemine. Ritim önemli.'},en:{name:'Burpee Broad Jump',tip:'Land both feet firmly. Rhythm matters more than speed.'},desc:'80 tekrar',type:'reps',reps:80,defPct:13,minS:120,maxS:540,yt:'https://www.youtube.com/results?search_query=hyrox+burpee+broad+jump'},
+  {id:'brp',tr:{name:'Burpee Broad Jump',tip:'Her sıçrayışta iki ayak sağlam zemine. Ritim önemli.'},en:{name:'Burpee Broad Jump',tip:'Land both feet firmly. Rhythm matters.'},desc:'80 tekrar',type:'reps',reps:80,defPct:13,minS:120,maxS:540,yt:'https://www.youtube.com/results?search_query=hyrox+burpee+broad+jump'},
   {id:'row',tr:{name:'Rowing',tip:'Önce bacakları it, sonra kolları çek.'},en:{name:'Rowing',tip:'Push legs first, then pull arms.'},desc:'1.000m',type:'pace',dist:1000,defPct:11,minS:180,maxS:480,yt:'https://www.youtube.com/results?search_query=hyrox+rowing+technique'},
-  {id:'frm',tr:{name:'Farmers Carry',tip:'Omuzlar geri ve aşağı, baş dik.'},en:{name:'Farmers Carry',tip:'Shoulders back and down, head up.'},desc:'200m',type:'speed',dist:200,defPct:9,minS:60,maxS:300,yt:'https://www.youtube.com/results?search_query=hyrox+farmers+carry'},
+  {id:'frm',tr:{name:'Farmers Carry',tip:'Omuzlar geri, baş dik. Sallanma.'},en:{name:'Farmers Carry',tip:'Shoulders back, head up. No swaying.'},desc:'200m',type:'speed',dist:200,defPct:9,minS:60,maxS:300,yt:'https://www.youtube.com/results?search_query=hyrox+farmers+carry'},
   {id:'snd',tr:{name:'Sandbag Lunges',tip:'Diz zemine değmemeli. Öne eğilme.'},en:{name:'Sandbag Lunges',tip:'Knee must not touch floor. Don\'t lean forward.'},desc:'100 tekrar',type:'reps',reps:100,defPct:14,minS:180,maxS:600,yt:'https://www.youtube.com/results?search_query=hyrox+sandbag+lunges'},
-  {id:'wbl',tr:{name:'Wall Balls',tip:'Top 3m hedefi geçmeli. Tam squat.'},en:{name:'Wall Balls',tip:'Ball must clear 3m target. Full squat.'},desc:'100 tekrar',type:'reps',reps:100,defPct:23,minS:180,maxS:600,yt:'https://www.youtube.com/results?search_query=hyrox+wall+balls'},
+  {id:'wbl',tr:{name:'Wall Balls',tip:'Top 3m hedefi geçmeli. Tam squat.'},en:{name:'Wall Balls',tip:'Ball must clear 3m target. Full squat.'},desc:'100 tekrar',type:'reps',reps:100,defPct:23,minS:180,maxS:600,yt:'https://www.youtube.com/results?search_query=hyrox+wall+balls'}
 ];
-const sliderOverrides={};let lastGoalSec=0;
-function p2(n){return String(Math.floor(Math.abs(n))).padStart(2,'0');}
-function fmtHms(s){return Math.floor(s/3600)+':'+p2(s%3600/60)+':'+p2(s%60);}
-function fmtMm(s){return p2(s/60)+':'+p2(s%60);}
-function calcMetric(s,secs){if(s.type==='pace'){const p=secs/(s.dist/500);return p2(p/60)+':'+p2(p%60)+' /500m';}return'';}
-// Global state for manual run/rox overrides
-let manualRunPace=null; // secs per km
-let manualRoxPerTrans=null; // secs per transition
 
-function fmtPace(sPerKm){return p2(sPerKm/60)+':'+p2(sPerKm%60);}
+function p2(n){return String(Math.floor(Math.abs(n))).padStart(2,'0')}
+function fmtHms(s){return Math.floor(s/3600)+':'+p2(s%3600/60)+':'+p2(s%60)}
+function fmtMm(s){return p2(s/60)+':'+p2(s%60)}
+function fmtPace(s){return p2(s/60)+':'+p2(s%60)}
+function calcMetric(s,secs){if(s.type==='pace'){var p=secs/(s.dist/500);return p2(p/60)+':'+p2(p%60)+' /500m';}return '';}
 
 function distributeTime(){
-  const h=+document.getElementById('ca-h').value||0,m=+document.getElementById('ca-m').value||0,total=(h*60+m)*60;
+  var h=+document.getElementById('ca-h').value||0;
+  var m=+document.getElementById('ca-m').value||0;
+  var total=(h*60+m)*60;
   lastGoalSec=total;
-  const sumEl=document.getElementById('ca-summary'),secLbl=document.getElementById('sec-lbl'),runCard=document.getElementById('sti-run'),roxCard=document.getElementById('sti-rox');
-  if(!total){[sumEl,secLbl,runCard,roxCard].forEach(el=>{if(el)el.style.display='none';});document.getElementById('ca-stations').innerHTML='';return;}
-  
-  // Run: manual pace override or derive from total
-  let runSec;
+  var sumEl=document.getElementById('ca-summary');
+  var secLbl=document.getElementById('sec-lbl');
+  var runCard=document.getElementById('sti-run');
+  var roxCard=document.getElementById('sti-rox');
+  if(!total){
+    [sumEl,secLbl,runCard,roxCard].forEach(function(el){if(el)el.style.display='none';});
+    document.getElementById('ca-stations').innerHTML='';
+    return;
+  }
+  // Run pace: manual override or derive from goal
+  var runSec;
   if(manualRunPace!==null){
     runSec=manualRunPace*8;
-  } else {
+  }else{
     runSec=Math.round(total*0.42);
-    // sync slider to derived pace
-    const kmPaceDerived=Math.round(runSec/8);
-    const sl=document.getElementById('sl-run');
-    if(sl){sl.value=kmPaceDerived;document.getElementById('slv-run').textContent=fmtPace(kmPaceDerived);}
+    var kmPaceDerived=Math.round(runSec/8);
+    var slRun=document.getElementById('sl-run');
+    if(slRun){slRun.value=Math.min(540,Math.max(240,kmPaceDerived));document.getElementById('slv-run').textContent=fmtPace(kmPaceDerived);}
   }
-  
   // Roxzone: manual override or derive
-  let roxSec;
+  var roxSec;
   if(manualRoxPerTrans!==null){
     roxSec=manualRoxPerTrans*8;
-  } else {
+  }else{
     roxSec=Math.round(total*0.05);
-    const perRoxDerived=Math.round(roxSec/8);
-    const slr=document.getElementById('sl-rox');
-    if(slr){slr.value=Math.min(120,Math.max(20,perRoxDerived));document.getElementById('slv-rox').textContent=fmtPace(perRoxDerived);}
+    var perRoxDerived=Math.round(roxSec/8);
+    var slRox=document.getElementById('sl-rox');
+    if(slRox){slRox.value=Math.min(120,Math.max(20,perRoxDerived));document.getElementById('slv-rox').textContent=fmtPace(perRoxDerived);}
   }
-  
-  const staSec=Math.max(0,total-runSec-roxSec);
+  var staSec=Math.max(0,total-runSec-roxSec);
   sumEl.style.display='block';secLbl.style.display='flex';runCard.style.display='block';roxCard.style.display='block';
-  
-  const recalcTotal=runSec+roxSec+staSec;
-  document.getElementById('ca-sum-time').textContent=fmtHms(recalcTotal);
-  const kmPace=Math.round(runSec/8);
-  document.getElementById('ca-sum-sub').textContent=lang==='tr'?`Koşu ${fmtPace(kmPace)}/km · Roxzone ${fmtMm(roxSec)}`:`Run ${fmtPace(kmPace)}/km · Roxzone ${fmtMm(roxSec)}`;
+  var recalc=runSec+roxSec+staSec;
+  document.getElementById('ca-sum-time').textContent=fmtHms(recalc);
+  var kmPace=Math.round(runSec/8);
+  var perRox=Math.round(roxSec/8);
+  document.getElementById('ca-sum-sub').textContent=(lang==='tr'?'Koşu ':'Run ')+fmtPace(kmPace)+'/km · Roxzone '+fmtMm(roxSec);
   document.getElementById('cs-run').textContent=fmtMm(runSec);
   document.getElementById('cs-sta').textContent=fmtMm(staSec);
   document.getElementById('cs-rox').textContent=fmtMm(roxSec);
   document.getElementById('alloc-run').textContent=fmtMm(runSec)+' · '+fmtPace(kmPace)+'/km';
   document.getElementById('met-run').textContent=fmtMm(runSec);
-  const perRox=Math.round(roxSec/8);
   document.getElementById('alloc-rox').textContent=fmtMm(roxSec)+' · '+fmtPace(perRox)+(lang==='tr'?'/geçiş':'/trans');
   document.getElementById('met-rox').textContent=fmtMm(roxSec);
   buildStationsCalc(staSec);
 }
+function onRunSlider(val){manualRunPace=+val;document.getElementById('slv-run').textContent=fmtPace(+val);distributeTime();}
+function onRoxSlider(val){manualRoxPerTrans=+val;document.getElementById('slv-rox').textContent=fmtPace(+val);distributeTime();}
 
-function onRunSlider(val){
-  manualRunPace=+val;
-  document.getElementById('slv-run').textContent=fmtPace(+val);
-  distributeTime();
-}
-
-function onRoxSlider(val){
-  manualRoxPerTrans=+val;
-  document.getElementById('slv-rox').textContent=fmtPace(+val);
-  distributeTime();
-}
 function buildStationsCalc(staBudget){
-  const totalPct=STS.reduce((a,s)=>a+s.defPct,0);
-  document.getElementById('ca-stations').innerHTML=STS.map((s,i)=>{
-    const sec=sliderOverrides[s.id]!==undefined?sliderOverrides[s.id]:Math.max(s.minS,Math.min(s.maxS,Math.round(staBudget*(s.defPct/totalPct))));
-    const nm=lang==='tr'?s.tr.name:s.en.name,tip=lang==='tr'?s.tr.tip:s.en.tip,metric=calcMetric(s,sec);
-    return`<div class="sta-item" id="sti-${s.id}">
-      <div class="sta-head" onclick="toggleSta('${s.id}')">
-        <div class="sta-idx">${String(i+1).padStart(2,'0')}</div>
-        <div class="sta-info"><div class="sta-name">${nm}</div><div class="sta-desc">${s.desc}</div><div class="sta-alloc" id="alloc-${s.id}">${fmtMm(sec)}${s.type==='pace'?' · '+metric:''}</div></div>
-        <div class="sta-chev">›</div>
-      </div>
-      <div class="sta-body">
-        <div class="sl-wrap">
-          <div class="sl-top"><div class="sl-lbl">${lang==='tr'?'İstasyon Süresi':'Station Time'}</div><div class="sl-val" id="slv-${s.id}">${fmtMm(sec)}</div></div>
-          <input type="range" id="sl-${s.id}" min="${s.minS}" max="${s.maxS}" value="${sec}" step="5" oninput="onSlider('${s.id}',this.value)">
-          <div class="sl-range-labels"><span>${fmtMm(s.minS)}</span><span>${fmtMm(s.maxS)}</span></div>
-        </div>
-        ${s.type==='pace'?`<div class="sta-metric"><div class="sta-m-l">500M TEMPO</div><div class="sta-m-v" id="met-${s.id}">${metric}</div></div>`:''}
-        <div class="sta-tip">${tip}</div>
-        <a class="vid-a" href="${s.yt}" target="_blank" rel="noopener">▶ ${lang==='tr'?'Teknik videosu':'Technique video'} →</a>
-      </div>
-    </div>`;
-  }).join('');
+  var totalPct=STS.reduce(function(a,s){return a+s.defPct;},0);
+  var html='';
+  STS.forEach(function(s,i){
+    var sec=sliderOverrides[s.id]!==undefined?sliderOverrides[s.id]:Math.max(s.minS,Math.min(s.maxS,Math.round(staBudget*(s.defPct/totalPct))));
+    var nm=lang==='tr'?s.tr.name:s.en.name;
+    var tip=lang==='tr'?s.tr.tip:s.en.tip;
+    var metric=calcMetric(s,sec);
+    var timeLbl=lang==='tr'?'İstasyon Süresi':'Station Time';
+    var vidLbl=lang==='tr'?'Teknik videosu':'Technique video';
+    var paceRow=s.type==='pace'?('<div class="sta-metric"><div class="sta-m-l">500M TEMPO</div><div class="sta-m-v" id="met-'+s.id+'">'+metric+'</div></div>'):'';
+    html+='<div class="sta-item" id="sti-'+s.id+'">';
+    html+='<div class="sta-head" onclick="toggleSta(\''+s.id+'\')">';
+    html+='<div class="sta-idx">'+String(i+1).padStart(2,'0')+'</div>';
+    html+='<div class="sta-info"><div class="sta-name">'+nm+'</div><div class="sta-desc">'+s.desc+'</div><div class="sta-alloc" id="alloc-'+s.id+'">'+fmtMm(sec)+(s.type==='pace'?' · '+metric:'')+'</div></div>';
+    html+='<div class="sta-chev">›</div>';
+    html+='</div>';
+    html+='<div class="sta-body">';
+    html+='<div class="sl-wrap"><div class="sl-top"><div class="sl-lbl">'+timeLbl+'</div><div class="sl-val" id="slv-'+s.id+'">'+fmtMm(sec)+'</div></div>';
+    html+='<input type="range" id="sl-'+s.id+'" min="'+s.minS+'" max="'+s.maxS+'" value="'+sec+'" step="5" oninput="onSlider(\''+s.id+'\',this.value)">';
+    html+='<div class="sl-range-labels"><span>'+fmtMm(s.minS)+'</span><span>'+fmtMm(s.maxS)+'</span></div></div>';
+    html+=paceRow;
+    html+='<div class="sta-tip">'+tip+'</div>';
+    html+='<a class="vid-a" href="'+s.yt+'" target="_blank" rel="noopener">▶ '+vidLbl+' →</a>';
+    html+='</div></div>';
+  });
+  document.getElementById('ca-stations').innerHTML=html;
 }
 function onSlider(id,val){
-  const v=+val,s=STS.find(x=>x.id===id);sliderOverrides[id]=v;
+  var v=+val,s=STS.find(function(x){return x.id===id;});
+  sliderOverrides[id]=v;
   document.getElementById('slv-'+id).textContent=fmtMm(v);
-  if(s.type==='pace'){const mel=document.getElementById('met-'+id);if(mel)mel.textContent=calcMetric(s,v);}
+  if(s.type==='pace'){var mel=document.getElementById('met-'+id);if(mel)mel.textContent=calcMetric(s,v);}
   document.getElementById('alloc-'+id).textContent=fmtMm(v)+(s.type==='pace'?' · '+calcMetric(s,v):'');
   if(lastGoalSec){
-    const roxSec=Math.round(lastGoalSec*.05),runSec=Math.round(lastGoalSec*.42),staSec=lastGoalSec-runSec-roxSec;
-    const totalPct=STS.reduce((a,s2)=>a+s2.defPct,0);
-    let used=0;STS.forEach(s2=>{used+=sliderOverrides[s2.id]!==undefined?sliderOverrides[s2.id]:Math.round(staSec*(s2.defPct/totalPct));});
+    var roxSec=manualRoxPerTrans!==null?manualRoxPerTrans*8:Math.round(lastGoalSec*0.05);
+    var runSec=manualRunPace!==null?manualRunPace*8:Math.round(lastGoalSec*0.42);
+    var staSec=Math.max(0,lastGoalSec-runSec-roxSec);
+    var tPct=STS.reduce(function(a,s2){return a+s2.defPct;},0);
+    var used=0;
+    STS.forEach(function(s2){used+=sliderOverrides[s2.id]!==undefined?sliderOverrides[s2.id]:Math.round(staSec*(s2.defPct/tPct));});
     document.getElementById('cs-sta').textContent=fmtMm(used);
     document.getElementById('ca-sum-time').textContent=fmtHms(runSec+used+roxSec);
   }
 }
 function toggleSta(id){
-  const el=document.getElementById('sti-'+id);const was=el.classList.contains('open');
-  document.querySelectorAll('.sta-item').forEach(x=>x.classList.remove('open'));
+  var el=document.getElementById('sti-'+id);
+  var was=el.classList.contains('open');
+  document.querySelectorAll('.sta-item').forEach(function(x){x.classList.remove('open');});
   if(!was)el.classList.add('open');
 }
 
-/* ─── GEAR — SHOES ─── */
-const SHOES=[
+// ── GEAR ──
+var SHOES=[
   {id:'dne3',brand:'PUMA',name:'Deviate Nitro 3',emoji:'⚡',score:92,price:160,weight:'276g',drop:'10mm',cats:['speed','grip'],badges:['speed','grip'],
-   tr:{rank:'#1 2026 — Topluluk Tercihi',desc:'2026 en çok önerilen ayakkabı. Karbon plaka + PumaGrip: slippage olmaksızın sled push yapabilirsin. 2025 Dünya Şampiyonu Linda Meier'in tercihi Deviate serisi. Ağırlık/performans dengesi üstün.'},
-   en:{rank:'#1 2026 — Community Pick',desc:'Most recommended shoe for 2026. Carbon plate + PumaGrip: sled push without slippage. 2025 World Champion Linda Meier races the Deviate series. Outstanding weight-to-performance ratio.'},
+   tr:{rank:'#1 2026 — Topluluk Favorisi',desc:'2026 en çok önerilen HYROX ayakkabısı. Karbon plaka + PumaGrip: slippage olmadan sled push. 2025 Dünya Şampiyonu Linda Meier tercihi.'},
+   en:{rank:'#1 2026 — Community Favorite',desc:'Most recommended HYROX shoe for 2026. Carbon plate + PumaGrip: sled push without slippage. 2025 World Champion Linda Meier choice.'},
    source:'Trio Fitness · Mar 2026'},
   {id:'ep4',brand:'Saucony',name:'Endorphin Pro 4',emoji:'👟',score:90,price:190,weight:'210g',drop:'9.5mm',cats:['speed'],badges:['speed'],
-   tr:{rank:'#2 2026 — Hız Odaklı',desc:'RunRepeat lab testi: 71.7% enerji geri dönüşü. Karbon plaka ile 210g hafiflikte. Elite atlet Michael Sandbach "şimdiye kadar test ettiğim en iyi HYROX ayakkabısı" diyor.'},
-   en:{rank:'#2 2026 — Speed Focused',desc:'RunRepeat lab: 71.7% energy return. Carbon plate at 210g. Elite athlete Michael Sandbach calls it "by far the best HYROX shoe" he's tested.'},
+   tr:{rank:'#2 2026 — En Hafif Hız Ayakkabısı',desc:'RunRepeat lab: %71.7 enerji geri dönüşü. Karbon plaka ile sadece 210g. Elite atlet Michael Sandbach "en iyi HYROX ayakkabısı" olarak önerdi.'},
+   en:{rank:'#2 2026 — Lightest Speed Shoe',desc:'RunRepeat lab: 71.7% energy return. Carbon plate at only 210g. Elite athlete Michael Sandbach called it the best HYROX shoe he has tested.'},
    source:'RunRepeat Lab · Oct 2025'},
   {id:'peg41',brand:'Nike',name:'Pegasus 41',emoji:'🟠',score:82,price:125,weight:'281g',drop:'10mm',cats:['stable','budget'],badges:['stable','budget'],
-   tr:{rank:'#3 2026 — Güvenilir Seçim',desc:'Karbon plaka yok ama tam lastik taban = mükemmel sled tutuşu. Tanıdık fit, konforlu koşu. İlk yarışa katılanlar için ideal bütçe dostu seçim.'},
-   en:{rank:'#3 2026 — Reliable Pick',desc:'No carbon plate but full rubber outsole = excellent sled grip. Familiar fit, comfortable run. Ideal budget-friendly choice for first-time racers.'},
+   tr:{rank:'#3 2026 — Güvenilir Bütçe Seçimi',desc:'Karbon plaka yok ama tam lastik taban mükemmel sled tutuşu sağlar. Tanıdık fit, konforlu koşu. İlk yarış için ideal bütçe dostu seçim.'},
+   en:{rank:'#3 2026 — Reliable Budget Pick',desc:'No carbon plate but full rubber outsole gives excellent sled grip. Familiar fit, comfortable run. Ideal budget-friendly choice for first-time racers.'},
    source:'Trio Fitness · Mar 2026'},
   {id:'hyp3',brand:'Brooks',name:'Hyperion 3',emoji:'🟣',score:81,price:140,weight:'244g',drop:'11.3mm',cats:['speed'],badges:['speed'],
-   tr:{rank:'#4 2026 — Hız/Fiyat Dengesi',desc:'Karbon plakazsız ama hızlı. DNA Flash köpüğü enerji geri dönüşünde üst sınıfta yarışıyor. Yüksek drop heel-striker için uygun. Orta bütçe en iyi seçeneklerinden.'},
-   en:{rank:'#4 2026 — Speed/Value',desc:'No carbon plate but fast. DNA Flash foam competes at the top for energy return. Higher drop suits heel-strikers. One of the best mid-budget options.'},
+   tr:{rank:'#4 2026 — Hız / Fiyat Dengesi',desc:'Karbon plakasız ama hızlı. DNA Flash köpüğü enerji geri dönüşünde üst sınıfta. Yüksek drop heel-striker için uygun.'},
+   en:{rank:'#4 2026 — Speed / Value',desc:'No carbon plate but fast. DNA Flash foam competes at the top for energy return. Higher drop suits heel-strikers.'},
    source:'Trio Fitness · Mar 2026'},
   {id:'mach6',brand:'Hoka',name:'Mach 6',emoji:'🔵',score:83,price:170,weight:'232g',drop:'5mm',cats:['stable','grip'],badges:['stable'],
-   tr:{rank:'#5 2026 — Denge Şampiyonu',desc:'RunRepeat: en dengeli HYROX ayakkabısı. Düşük drop sled push mekaniğine mükemmel uyum. Lateral hareketlerde ayağı sabit tutar. Koşu kısımlarında da yeterince hızlı.'},
-   en:{rank:'#5 2026 — Stability Champion',desc:'RunRepeat: most stable HYROX shoe. Low drop matches perfectly with sled push mechanics. Keeps foot locked during lateral movements. Fast enough on running sections.'},
+   tr:{rank:'#5 2026 — Denge Şampiyonu',desc:'RunRepeat: en dengeli HYROX ayakkabısı. Düşük drop sled push mekaniğine mükemmel uyum. Lateral hareketlerde güvenli.'},
+   en:{rank:'#5 2026 — Stability Champion',desc:'RunRepeat: most stable HYROX shoe. Low drop matches sled push mechanics perfectly. Safe and controlled on lateral movements.'},
    source:'RunRepeat Lab · Dec 2025'},
-  {id:'ep4s',brand:'Saucony',name:'Endorphin Speed 5',emoji:'🟢',score:85,price:165,weight:'241g',drop:'10mm',cats:['speed'],badges:['speed'],
-   tr:{rank:'#6 — Enerji Odaklı',desc:'PWRRUN PB köpüğü + naylon plaka. RunRepeat testinde en yüksek enerji geri dönüşü. 37.4mm stack'e rağmen hafif. Karbon plaka istemeyenler için Pro 4'ün alternatifi.'},
-   en:{rank:'#6 — Energy Focused',desc:'PWRRUN PB foam + nylon plate. Highest energy return in RunRepeat HYROX test. Light despite 37.4mm stack. Great alternative to Pro 4 without carbon plate.'},
+  {id:'es5',brand:'Saucony',name:'Endorphin Speed 5',emoji:'🟢',score:85,price:165,weight:'241g',drop:'10mm',cats:['speed'],badges:['speed'],
+   tr:{rank:'#6 — Enerji Odaklı',desc:'PWRRUN PB köpüğü + naylon plaka. RunRepeat testinde en yüksek enerji geri dönüşü. Karbon plaka istemeyenler için Pro 4 alternatifi.'},
+   en:{rank:'#6 — Energy Focused',desc:'PWRRUN PB foam + nylon plate. Highest energy return in RunRepeat HYROX test. Great alternative to Pro 4 without carbon plate.'},
    source:'RunRepeat Lab · Oct 2025'},
   {id:'nobull',brand:'NOBULL',name:'Drive Ripstop',emoji:'🖤',score:76,price:119,weight:'280g',drop:'4mm',cats:['stable','grip'],badges:['stable','budget'],
-   tr:{rank:'#7 — Sled Uzmanı',desc:'4mm drop + düşük stack = sled push için ideal zemine yakınlık. Tam lastik taban tutuşu garantiler. En uygun fiyatlı öneri. HYROX salonu olmayan spor salonu atletleri için de harika.'},
-   en:{rank:'#7 — Sled Specialist',desc:'4mm drop + low stack = ideal ground closeness for sled push. Full rubber outsole guarantees grip. Most affordable pick. Great for gym athletes without HYROX-specific equipment.'},
-   source:'RunRepeat Lab · Oct 2025'},
+   tr:{rank:'#7 — Sled Uzmanı / Bütçe',desc:'4mm drop + düşük stack = sled push için ideal zemine yakınlık. Tam lastik taban tutuşu garantiler. En uygun fiyatlı seçenek.'},
+   en:{rank:'#7 — Sled Specialist / Budget',desc:'4mm drop + low stack = ideal ground closeness for sled push. Full rubber outsole guarantees grip. Most affordable pick.'},
+   source:'RunRepeat Lab · Oct 2025'}
 ];
-  {id:'ep4',brand:'Saucony',name:'Endorphin Pro 4',emoji:'👟',score:88,price:230,weight:'249g',drop:'8mm',cats:['speed'],badges:['speed'],tr:{rank:'#1 Genel',desc:'RunRepeat\'in en yüksek puanlı HYROX ayakkabısı. Karbon plaka + PWRRUN HG köpüğü ile 71.7% enerji geri dönüşü. İstanbul parkurunda hız arayan atletler için.'},en:{rank:'#1 Overall',desc:'RunRepeat\'s highest-rated HYROX shoe. Carbon plate + PWRRUN HG foam with 71.7% energy return. Perfect for Istanbul athletes chasing speed.'},source:'RunRepeat Lab'},
-  {id:'dne3',brand:'PUMA',name:'Deviate Nitro Elite 3',emoji:'⚡',score:91,price:230,weight:'204g',drop:'8mm',cats:['speed','grip'],badges:['speed','grip'],tr:{rank:'#1 Tutuş',desc:'Test edilen en iyi tutuş (0.67 skor, ortalamadan %42.6 daha iyi). Terin olduğu zemin şartlarında bile güven verir. 77.1% enerji geri dönüşü. Linda Meier\'in (2025 Dünya Şampiyonu) tercihi.'},en:{rank:'#1 Grip',desc:'Best grip of any HYROX shoe tested (0.67 score, 42.6% better than average). Confident on wet gym floors. 77.1% energy return. Linda Meier\'s (2025 World Champion) choice.'},source:'RunRepeat Lab'},
-  {id:'es5',brand:'Saucony',name:'Endorphin Speed 5',emoji:'🏃',score:85,price:165,weight:'241g',drop:'10mm',cats:['speed'],badges:['speed'],tr:{rank:'#1 Enerji Geri Dönüşü',desc:'Test edilen HYROX ayakkabıları içinde en yüksek enerji geri dönüşü. PWRRUN PB köpüğü + naylon plaka. 37.4mm stack yüksekliğine rağmen hafif. Orta seviye atlet için ideal.'},en:{rank:'#1 Energy Return',desc:'Top energy return of all HYROX shoes tested. PWRRUN PB foam + nylon plate. Despite 37.4mm stack, stays lightweight. Ideal for mid-level athletes.'},source:'RunRepeat Lab'},
-  {id:'mach6',brand:'Hoka',name:'Mach 6',emoji:'🔵',score:83,price:145,weight:'221g',drop:'5mm',cats:['stable','grip'],badges:['stable'],tr:{rank:'#1 Denge',desc:'En dengeli HYROX ayakkabısı. Sled push ve yan hareket gerektiren istasyonlarda güven verir. Öne doğru eğimli geometri koşuyu kolaylaştırır.'},en:{rank:'#1 Stability',desc:'Most stable HYROX shoe tested. Confident on sled push and lateral movements. Forward-leaning geometry helps running sections.'},source:'RunRepeat Lab'},
-  {id:'vn4',brand:'PUMA',name:'Velocity Nitro 4',emoji:'💛',score:80,price:130,weight:'248g',drop:'10mm',cats:['stable'],badges:['stable'],tr:{rank:'#1 Esneklik',desc:'En esnek HYROX ayakkabısı. Burpee, lunge gibi hareket gerektiren istasyonlarda rahat. Koşu kısımlarında da yeterli enerji geri dönüşü.'},en:{rank:'#1 Flexibility',desc:'Most flexible HYROX shoe. Comfortable on movement-heavy stations like burpees and lunges. Adequate energy return for running sections.'},source:'RunRepeat Lab'},
-  {id:'noosa',brand:'ASICS',name:'Noosa Tri 16',emoji:'🌈',score:79,price:155,weight:'217g',drop:'5mm',cats:['speed'],badges:['speed'],tr:{rank:'#1 Hafiflik',desc:'Test edilen en hafif HYROX ayakkabısı (217g). Triathlon kökeni sayesinde hızlı geçişe uygun. İstasyon performansı yeterli, koşu kısmında öne çıkıyor.'},en:{rank:'#1 Lightweight',desc:'Lightest HYROX shoe tested (217g). Triathlon heritage makes transitions easy. Adequate station performance, excels on running sections.'},source:'RunRepeat Lab'},
-  {id:'nobull',brand:'NOBULL',name:'Drive Ripstop',emoji:'🖤',score:76,price:119,weight:'280g',drop:'4mm',cats:['stable','grip'],badges:['stable','budget'],tr:{rank:'#1 Düşük Stack',desc:'Sled push için ideal düşük stack + low drop kombinasyonu. Zemine yakın duruş istasyon performansını artırır. En uygun fiyatlı RunRepeat seçimi.'},en:{rank:'#1 Low Stack',desc:'Ideal low stack + low drop combination for sled push. Close-to-ground feel improves station performance. Most affordable RunRepeat pick.'},source:'RunRepeat Lab'},
-];
-
-const FILTER_TR=[{id:'all',lbl:'Tümü'},{id:'speed',lbl:'Hız'},{id:'grip',lbl:'Tutuş'},{id:'stable',lbl:'Denge'},{id:'budget',lbl:'Uygun Fiyat'}];
-const FILTER_EN=[{id:'all',lbl:'All'},{id:'speed',lbl:'Speed'},{id:'grip',lbl:'Grip'},{id:'stable',lbl:'Stable'},{id:'budget',lbl:'Budget'}];
+var FILTER_TR=[{id:'all',lbl:'Tümü'},{id:'speed',lbl:'Hız'},{id:'grip',lbl:'Tutuş'},{id:'stable',lbl:'Denge'},{id:'budget',lbl:'Uygun Fiyat'}];
+var FILTER_EN=[{id:'all',lbl:'All'},{id:'speed',lbl:'Speed'},{id:'grip',lbl:'Grip'},{id:'stable',lbl:'Stable'},{id:'budget',lbl:'Budget'}];
+var BADGE_TR={speed:'Hız',grip:'Tutuş',stable:'Denge',budget:'Uygun'};
+var BADGE_EN={speed:'Speed',grip:'Grip',stable:'Stable',budget:'Budget'};
 
 function buildShoeFilters(){
-  const filters=lang==='tr'?FILTER_TR:FILTER_EN;
-  document.getElementById('shoe-filters').innerHTML=filters.map(f=>
-    `<div class="sf${f.id===shoeFilter?' on':''}" onclick="filterShoes('${f.id}')">${f.lbl}</div>`
-  ).join('');
+  var filters=lang==='tr'?FILTER_TR:FILTER_EN;
+  var html='';
+  filters.forEach(function(f){html+='<div class="sf'+(f.id===shoeFilter?' on':'')+'" onclick="filterShoes(\''+f.id+'\')">'+f.lbl+'</div>';});
+  document.getElementById('shoe-filters').innerHTML=html;
 }
 function filterShoes(id){shoeFilter=id;buildShoeFilters();renderGear();}
 
 function renderGear(){
-  const filtered=shoeFilter==='all'?SHOES:SHOES.filter(s=>s.cats.includes(shoeFilter));
-  const commTitle=lang==='tr'?'Topluluk Önerileri':'Community Picks';
-  const addLabel=lang==='tr'?'Öneri Ekle':'Add Recommendation';
-  const addSub=lang==='tr'?'Senin ayakkabı deneyimini paylaş':'Share your shoe experience';
-  const noRecs=lang==='tr'?'Henüz öneri yok':'No recommendations yet';
-  const noRecsSub=lang==='tr'?'İlk öneriyi sen ekle':'Be the first to add one';
-
-  let html='';
-
-  // Shoes
-  html+=filtered.map(s=>{
-    const t=lang==='tr'?s.tr:s.en;
-    const badgeLabels_tr={speed:'Hız',grip:'Tutuş',stable:'Denge',budget:'Uygun'};
-    const badgeLabels_en={speed:'Speed',grip:'Grip',stable:'Stable',budget:'Budget'};
-    const bl=lang==='tr'?badgeLabels_tr:badgeLabels_en;
-    const scoreColor=s.score>=85?'var(--green)':s.score>=80?'var(--gold)':'var(--text)';
-    return`<div class="shoe-card">
-      <div class="shoe-card-top">
-        <div style="flex:1">
-          <div class="shoe-rank">${t.rank}</div>
-          <div class="shoe-name">${s.name}</div>
-          <div class="shoe-brand">${s.brand}</div>
-          <div class="shoe-score-row">
-            ${s.badges.map(b=>`<div class="shoe-badge ${b}">${bl[b]||b}</div>`).join('')}
-          </div>
-          <div style="font-size:12px;color:var(--t2);margin-top:8px;line-height:1.6">${t.desc}</div>
-        </div>
-        <div class="shoe-img-wrap">${s.emoji}</div>
-      </div>
-      <div class="shoe-meta">
-        <div class="shoe-meta-item rr">
-          <div class="shoe-meta-v rr" style="color:${scoreColor}">${s.score}</div>
-          <div class="shoe-meta-l">RunRepeat</div>
-        </div>
-        <div class="shoe-meta-item">
-          <div class="shoe-meta-v">$${s.price}</div>
-          <div class="shoe-meta-l" data-tr="Fiyat" data-en="Price">${lang==='tr'?'Fiyat':'Price'}</div>
-        </div>
-        <div class="shoe-meta-item">
-          <div class="shoe-meta-v">${s.weight}</div>
-          <div class="shoe-meta-l" data-tr="Ağırlık" data-en="Weight">${lang==='tr'?'Ağırlık':'Weight'}</div>
-        </div>
-        <div class="shoe-meta-item">
-          <div class="shoe-meta-v">${s.drop}</div>
-          <div class="shoe-meta-l">Drop</div>
-        </div>
-      </div>
-      <div class="shoe-source">${s.source} · runrepeat.com</div>
-    </div>`;
-  }).join('');
-
-  // Community
-  html+=`<div class="sec-head eyebrow" style="padding-top:6px">${commTitle}</div>`;
-  html+=`<div class="add-rec-btn" onclick="openRecModal()"><div><div class="add-rec-l">${addLabel}</div><div class="add-rec-sub">${addSub}</div></div><div style="font-size:18px;color:var(--gold)">+</div></div>`;
-
+  buildShoeFilters();
+  var filtered=shoeFilter==='all'?SHOES:SHOES.filter(function(s){return s.cats.indexOf(shoeFilter)>=0;});
+  var bl=lang==='tr'?BADGE_TR:BADGE_EN;
+  var commTitle=lang==='tr'?'Topluluk Önerileri':'Community Picks';
+  var addLabel=lang==='tr'?'Öneri Ekle':'Add Recommendation';
+  var addSub=lang==='tr'?'Senin ayakkabı deneyimini paylaş':'Share your shoe experience';
+  var noRecs=lang==='tr'?'Henüz öneri yok':'No recommendations yet';
+  var noRecsSub=lang==='tr'?'İlk öneriyi sen ekle':'Be the first to add one';
+  var priceLbl=lang==='tr'?'Fiyat':'Price';
+  var weightLbl=lang==='tr'?'Ağırlık':'Weight';
+  var html='';
+  filtered.forEach(function(s){
+    var t=lang==='tr'?s.tr:s.en;
+    var sc=s.score>=85?'var(--green)':s.score>=80?'var(--gold)':'var(--text)';
+    html+='<div class="shoe-card">';
+    html+='<div class="shoe-card-top">';
+    html+='<div style="flex:1">';
+    html+='<div class="shoe-rank">'+t.rank+'</div>';
+    html+='<div class="shoe-name">'+s.name+'</div>';
+    html+='<div class="shoe-brand">'+s.brand+'</div>';
+    html+='<div class="shoe-score-row">';
+    s.badges.forEach(function(b){html+='<div class="shoe-badge '+b+'">'+( bl[b]||b)+'</div>';});
+    html+='</div>';
+    html+='<div class="shoe-desc">'+t.desc+'</div>';
+    html+='</div>';
+    html+='<div class="shoe-img-wrap">'+s.emoji+'</div>';
+    html+='</div>';
+    html+='<div class="shoe-meta">';
+    html+='<div class="shoe-meta-item rr"><div class="shoe-meta-v" style="color:'+sc+'">'+s.score+'</div><div class="shoe-meta-l">Score</div></div>';
+    html+='<div class="shoe-meta-item"><div class="shoe-meta-v">$'+s.price+'</div><div class="shoe-meta-l">'+priceLbl+'</div></div>';
+    html+='<div class="shoe-meta-item"><div class="shoe-meta-v">'+s.weight+'</div><div class="shoe-meta-l">'+weightLbl+'</div></div>';
+    html+='<div class="shoe-meta-item"><div class="shoe-meta-v">'+s.drop+'</div><div class="shoe-meta-l">Drop</div></div>';
+    html+='</div>';
+    html+='<div class="shoe-source">'+s.source+'</div>';
+    html+='</div>';
+  });
+  html+='<div class="sec-lbl" style="padding-top:6px">'+commTitle+'</div>';
+  html+='<div class="add-rec-btn" onclick="openRecModal()"><div><div class="add-rec-l">'+addLabel+'</div><div class="add-rec-sub">'+addSub+'</div></div><div style="font-size:18px;color:var(--gold)">+</div></div>';
   if(state.recs.length===0){
-    html+=`<div class="comm-empty"><div class="comm-empty-icon">💬</div><div class="comm-empty-title">${noRecs}</div><div class="comm-empty-sub">${noRecsSub}</div></div>`;
-  } else {
-    html+=state.recs.slice().reverse().map((r,i)=>{
-      const realIdx=state.recs.length-1-i;
-      const cats_tr={speed:'Hız',grip:'Tutuş',stable:'Denge',budget:'Uygun Fiyat'};
-      const catLbl=lang==='tr'?(cats_tr[r.cat]||r.cat):r.cat;
-      return`<div class="rec-card">
-        <div class="rec-card-top"><div class="rec-name">${r.name}</div><div class="rec-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div></div>
-        <div class="rec-cat">${catLbl}</div>
-        <div class="rec-text">${r.text}</div>
-        <div class="rec-meta">${r.date}</div>
-        <div class="rec-delete" onclick="deleteRec(${realIdx})">×</div>
-      </div>`;
-    }).join('');
+    html+='<div class="comm-empty"><div class="comm-empty-icon">💬</div><div class="comm-empty-title">'+noRecs+'</div><div class="comm-empty-sub">'+noRecsSub+'</div></div>';
+  }else{
+    var recs=state.recs.slice().reverse();
+    recs.forEach(function(r,i){
+      var realIdx=state.recs.length-1-i;
+      var catLbl=lang==='tr'?(BADGE_TR[r.cat]||r.cat):(BADGE_EN[r.cat]||r.cat);
+      html+='<div class="rec-card">';
+      html+='<div class="rec-name">'+r.name+'</div>';
+      html+='<div class="rec-stars">'+'★'.repeat(r.stars)+'☆'.repeat(5-r.stars)+'</div>';
+      html+='<div class="rec-cat">'+catLbl+'</div>';
+      html+='<div class="rec-text">'+r.text+'</div>';
+      html+='<div class="rec-meta">'+r.date+'</div>';
+      html+='<div class="rec-delete" onclick="deleteRec('+realIdx+')">×</div>';
+      html+='</div>';
+    });
   }
   html+='<div style="height:24px"></div>';
   document.getElementById('gr-body').innerHTML=html;
 }
 
-/* ─── REC MODAL ─── */
-let recStars=0,recCat='speed';
-const CATS_TR=['speed','grip','stable','budget'];
-const CAT_LBLS_TR=['Hız','Tutuş','Denge','Uygun Fiyat'];
-const CAT_LBLS_EN=['Speed','Grip','Stable','Budget'];
-
+// ── REC MODAL ──
+var CAT_IDS=['speed','grip','stable','budget'];
+var CAT_TR_LBL=['Hız','Tutuş','Denge','Uygun Fiyat'];
+var CAT_EN_LBL=['Speed','Grip','Stable','Budget'];
 function buildRecCats(){
-  const lbls=lang==='tr'?CAT_LBLS_TR:CAT_LBLS_EN;
-  document.getElementById('mf-cats').innerHTML=CATS_TR.map((c,i)=>
-    `<div class="mf-cat${c===recCat?' on':''}" onclick="setRecCat('${c}',this)">${lbls[i]}</div>`
-  ).join('');
-  document.getElementById('mf-stars').innerHTML='★★★★★'.split('').map((_,i)=>
-    `<div class="mf-star${i<recStars?' on':''}" onclick="setRecStars(${i+1})">${'★'}</div>`
-  ).join('');
+  var lbls=lang==='tr'?CAT_TR_LBL:CAT_EN_LBL;
+  var catHtml='',starHtml='';
+  CAT_IDS.forEach(function(c,i){catHtml+='<div class="mf-cat'+(c===recCat?' on':'')+'" onclick="setRecCat(\''+c+'\')">'+lbls[i]+'</div>';});
+  for(var i=0;i<5;i++){starHtml+='<div class="mf-star'+(i<recStars?' on':'')+'" onclick="setRecStars('+(i+1)+')">★</div>';}
+  document.getElementById('mf-cats').innerHTML=catHtml;
+  document.getElementById('mf-stars').innerHTML=starHtml;
 }
-function setRecCat(c,el){recCat=c;document.querySelectorAll('.mf-cat').forEach(x=>x.classList.remove('on'));el.classList.add('on');}
-function setRecStars(n){recStars=n;document.querySelectorAll('.mf-star').forEach((s,i)=>s.classList.toggle('on',i<n));}
-function openRecModal(){
-  recStars=0;recCat='speed';
-  buildRecCats();
-  document.getElementById('rec-modal').classList.add('open');
-  document.body.style.overflow='hidden';
-}
+function setRecCat(c){recCat=c;buildRecCats();}
+function setRecStars(n){recStars=n;buildRecCats();}
+function openRecModal(){recStars=0;recCat='speed';buildRecCats();document.getElementById('rec-modal').classList.add('open');}
 function closeRecModal(e){if(e.target===document.getElementById('rec-modal'))closeRecModalBtn();}
-function closeRecModalBtn(){document.getElementById('rec-modal').classList.remove('open');document.body.style.overflow='';}
+function closeRecModalBtn(){document.getElementById('rec-modal').classList.remove('open');}
 function submitRec(){
-  const name=document.getElementById('mf-name').value.trim();
-  const text=document.getElementById('mf-text').value.trim();
-  if(!name||!text||recStars===0){
-    alert(lang==='tr'?'Lütfen tüm alanları doldurun ve puan verin.':'Please fill in all fields and give a rating.');
-    return;
-  }
-  const now=new Date();
-  state.recs.push({name,cat:recCat,stars:recStars,text,date:now.toLocaleDateString(lang==='tr'?'tr-TR':'en-GB',{day:'numeric',month:'short',year:'numeric'})});
+  var name=document.getElementById('mf-name').value.trim();
+  var text=document.getElementById('mf-text').value.trim();
+  if(!name||!text||recStars===0){alert(lang==='tr'?'Lütfen tüm alanları doldurun ve puan verin.':'Please fill all fields and give a rating.');return;}
+  var now=new Date();
+  state.recs.push({name:name,cat:recCat,stars:recStars,text:text,date:now.toLocaleDateString(lang==='tr'?'tr-TR':'en-GB',{day:'numeric',month:'short',year:'numeric'})});
   lsSet('rx26_recs',JSON.stringify(state.recs));
   document.getElementById('mf-name').value='';
   document.getElementById('mf-text').value='';
   recStars=0;buildRecCats();
-  closeRecModalBtn();
-  renderGear();
+  closeRecModalBtn();renderGear();
 }
-function deleteRec(i){
-  state.recs.splice(i,1);
-  lsSet('rx26_recs',JSON.stringify(state.recs));
-  renderGear();
-}
+function deleteRec(i){state.recs.splice(i,1);lsSet('rx26_recs',JSON.stringify(state.recs));renderGear();}
 
-/* ─── INIT ─── */
+// ── INIT ──
 loadState();
 buildWeekRow();
 buildInfoCards();
 buildChecklist();
 buildImproveBody();
-buildShoeFilters();
 if(state.pb)document.getElementById('pb-in').value=state.pb;
 if(state.goal)document.getElementById('goal-in').value=state.goal;
 updateDelta();
