@@ -348,6 +348,14 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .rr-num{font-family:var(--fm);font-size:28px;font-weight:700;color:var(--gold);letter-spacing:-1px;}
 .rr-bar-wrap{flex:1;height:4px;background:var(--line2);border-radius:2px;overflow:hidden;}
 .rr-bar{height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold2));border-radius:2px;transition:width .5s ease;}
+
+/* Done day button */
+.done-day-btn{margin:0 var(--pad) 16px;padding:13px 18px;border-radius:var(--r);border:1.5px solid var(--line2);text-align:center;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;transition:all .2s;font-family:var(--f);}
+.done-day-btn:hover{border-color:var(--gold);color:var(--gold);}
+.done-day-btn.done-btn-done{background:var(--gold-bg);border-color:var(--gold);color:var(--gold);}
+.tab.tab-done{position:relative;}
+.tab.tab-done::after{content:'·';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-size:16px;color:var(--gold);line-height:0;}
+
 .rr-label{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1px;text-transform:uppercase;}
 </style>
 </head>
@@ -514,7 +522,12 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
           <div class="sta-chev">›</div>
         </div>
         <div class="sta-body">
-          <div class="sta-metric"><div class="sta-m-l" data-tr="KM BAŞI TEMPO" data-en="PACE PER KM">KM BAŞI TEMPO</div><div class="sta-m-v" id="met-run">--</div></div>
+          <div class="sl-wrap">
+            <div class="sl-top"><div class="sl-lbl" data-tr="KM BAŞI TEMPO" data-en="PACE PER KM">KM BAŞI TEMPO</div><div class="sl-val" id="slv-run">5:30</div></div>
+            <input type="range" id="sl-run" min="240" max="540" value="330" step="5" oninput="onRunSlider(this.value)">
+            <div class="sl-range-labels"><span>4:00/km</span><span>9:00/km</span></div>
+          </div>
+          <div class="sta-metric"><div class="sta-m-l" data-tr="TOPLAM KOŞU" data-en="TOTAL RUN TIME">TOPLAM KOŞU</div><div class="sta-m-v" id="met-run">--</div></div>
           <div class="sta-tip" data-tr="HYROX koşucuları genellikle 5:00–6:30/km temposuyla koşar. Çok hızlı başlarsan son istasyonlarda çökersin." data-en="HYROX runners typically pace 5:00–6:30/km. Starting too fast means collapsing at final stations.">HYROX koşucuları genellikle 5:00–6:30/km temposuyla koşar.</div>
         </div>
       </div>
@@ -525,7 +538,12 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
           <div class="sta-chev">›</div>
         </div>
         <div class="sta-body">
-          <div class="sta-metric"><div class="sta-m-l" data-tr="GEÇİŞ BAŞI" data-en="PER TRANSITION">GEÇİŞ BAŞI</div><div class="sta-m-v" id="met-rox">--</div></div>
+          <div class="sl-wrap">
+            <div class="sl-top"><div class="sl-lbl" data-tr="GEÇİŞ BAŞI SÜRE" data-en="TIME PER TRANSITION">GEÇİŞ BAŞI SÜRE</div><div class="sl-val" id="slv-rox">0:45</div></div>
+            <input type="range" id="sl-rox" min="20" max="120" value="45" step="5" oninput="onRoxSlider(this.value)">
+            <div class="sl-range-labels"><span>0:20</span><span>2:00</span></div>
+          </div>
+          <div class="sta-metric"><div class="sta-m-l" data-tr="TOPLAM ROXZONE" data-en="TOTAL ROXZONE">TOPLAM ROXZONE</div><div class="sta-m-v" id="met-rox">--</div></div>
           <div class="sta-tip" data-tr="Elitler Roxzone'da 4–5 dk harcar, ortalama atlet 7–9 dk. Geçiş sırasında tempoyu düşürme." data-en="Elites spend 4–5 min in Roxzone, average athletes 7–9 min. Don't drop your pace during transitions.">Elitler Roxzone'da 4–5 dk harcar, ortalama atlet 7–9 dk.</div>
         </div>
       </div>
@@ -873,9 +891,23 @@ const DAYS=[
   {tr:{day:'Cuma',tag:'Güç',title:'Ağırlık & Fonksiyonel',desc:'Compound hareketler, HYROX\'a özel kas grupları.',tip:'Deadlift\'te sırtı düz tut. Arka zincir sled ve sandbag için kritik.'},en:{day:'Friday',tag:'Strength',title:'Weights & Functional',desc:'Compound movements, HYROX-specific muscle groups.',tip:'Keep your back flat on deadlifts. The posterior chain is critical for sled and sandbag.'},yt:'https://www.youtube.com/results?search_query=hyrox+strength+training',ex:[{tr:'Deadlift',en:'Deadlift',sub:{tr:'%80 1RM, kontrollü',en:'80% 1RM, controlled'},v:'4×6'},{tr:'Romanian DL',en:'Romanian DL',sub:{tr:'Hamstring odaklı',en:'Hamstring focused'},v:'3×10'},{tr:'Goblet Squat',en:'Goblet Squat',sub:{tr:'Kettlebell',en:'KB'},v:'4×12'},{tr:'KB Swing',en:'KB Swing',sub:{tr:'Patlayıcı kalça',en:'Explosive hip'},v:'4×20'},{tr:"Farmer's Walk",en:"Farmer's Walk",sub:{tr:'Maksimum yük',en:'Max load'},v:'3×40m'}]},
   {tr:{day:'Cumartesi',tag:'Kardiyo',title:'Uzun Koşu',desc:'Uzun mesafe, düşük tempo. Zone 2 aerobik motor.',tip:'Nabız (220–yaş) × 0.65\'i aşmamalı. Çok yavaş geliyorsa endişelenme.'},en:{day:'Saturday',tag:'Cardio',title:'Long Run',desc:'Long distance, low pace. Zone 2 aerobic engine.',tip:'HR should not exceed (220–age) × 0.65. If it feels too slow, you\'re doing it right.'},yt:'https://www.youtube.com/results?search_query=zone2+long+run+hyrox',ex:[{tr:'Uzun koşu',en:'Long run',sub:{tr:'Zone 2, konuşma temposu',en:'Zone 2, conversational'},v:'12–15km'},{tr:'Tempo surge',en:'Tempo surge',sub:{tr:'Ortada 2km hız artışı',en:'2km pace surge mid-run'},v:'2km'},{tr:'Mobility',en:'Mobility',sub:{tr:'Kalça + hamstring',en:'Hip + hamstring'},v:'20dk'}]},
   {tr:{day:'Pazar',tag:'Dinlenme',title:'Aktif Toparlanma',desc:'Hafif hareket ve zihinsel dinlenme.',tip:'Dinlenme antrenmanın bir parçası. Kaslar büyür ve onarılır.'},en:{day:'Sunday',tag:'Rest',title:'Active Recovery',desc:'Light movement and mental rest.',tip:'Rest is part of training. Muscles grow and repair; the mind resets.'},yt:'https://www.youtube.com/results?search_query=active+recovery+mobility',ex:[{tr:'Yürüyüş',en:'Walk',sub:{tr:'Hafif tempo',en:'Easy pace'},v:'30–45dk'},{tr:'Foam Rolling',en:'Foam Rolling',sub:{tr:'Bacak + sırt',en:'Legs + back'},v:'15dk'},{tr:'Esneme',en:'Stretching',sub:{tr:'Statik, tam vücut',en:'Static, full body'},v:'20dk'},{tr:'Nefes',en:'Breathing',sub:{tr:'Box breathing 4-4-4-4',en:'Box breathing 4-4-4-4'},v:'5dk'}]},
+  {tr:{day:'Salonsuz',tag:'Açık Hava',title:'Ekipmansız HYROX',desc:'HYROX salonu olmadan istasyon simülasyonu. Her istasyon için ev/park alternatifi.',tip:'Sled yerine duvara it, Ski Erg yerine TRX / direnç bandı kullan. Bağlam değil ritim önemli.'},en:{day:'No Gym',tag:'Outdoor',title:'Equipment-Free HYROX',desc:'Station simulation without a HYROX gym. Home or park alternative for every station.',tip:'Push a wall instead of sled, use TRX / resistance band instead of SkiErg. Context doesn't matter — rhythm does.'},yt:'https://www.youtube.com/results?search_query=hyrox+training+at+home+no+equipment',ex:[
+    {tr:'Koşu (dışarı/koşu bandı)',en:'Run (outdoor / treadmill)',sub:{tr:'1km × 8 interval temposu',en:'1km × 8 interval pace'},v:'1km'},
+    {tr:'Duvar İtiş (Sled Push alt.)',en:'Wall Push (Sled alt.)',sub:{tr:'Duvara 45° eğil, ittir',en:'Lean 45° into wall, drive'},v:'3×30sn'},
+    {tr:'Direnç Bandı Çekiş (Sled Pull alt.)',en:'Band Row (Sled Pull alt.)',sub:{tr:'Yere otur, band çek',en:'Seated band row'},v:'3×20'},
+    {tr:'Burpee Broad Jump',en:'Burpee Broad Jump',sub:{tr:'Tam vücut, ileri atlayış',en:'Full body, forward jump'},v:'4×15'},
+    {tr:'Ev Rowing (Band / Sandalye)',en:'Home Rowing (Band / Chair)',sub:{tr:'Direnç bandı, uzun çekiş',en:'Resistance band long pull'},v:'3×500m tempo'},
+    {tr:'Yük Taşıma (Farmers Carry alt.)',en:'Loaded Carry (Farmers alt.)',sub:{tr:'Su bidonu / sırt çantası',en:'Water jugs / loaded backpack'},v:'4×50m'},
+    {tr:'Ağırlıklı Lunge (Sandbag alt.)',en:'Weighted Lunge (Sandbag alt.)',sub:{tr:'Sırt çantası veya su bidonu',en:'Backpack or water jugs'},v:'4×25'},
+    {tr:'Squat Fırlatma (Wall Ball alt.)',en:'Squat Jump (Wall Ball alt.)',sub:{tr:'Hedefe balon/top fırlat',en:'Throw ball at target height'},v:'4×20'},
+  ]},
 ];
 function buildTabs(){
-  document.getElementById('day-tabs').innerHTML=DAYS.map((d,i)=>`<div class="tab${i===curDay?' on':''}" onclick="switchDay(${i})">${(lang==='tr'?d.tr.day:d.en.day).slice(0,3)}</div>`).join('');
+  document.getElementById('day-tabs').innerHTML=DAYS.map((d,i)=>{
+    const isDone=state.weekDays.includes(i);
+    const lbl=(lang==='tr'?d.tr.day:d.en.day).slice(0,3);
+    return`<div class="tab${i===curDay?' on':''}${isDone?' tab-done':''}" onclick="switchDay(${i})">${lbl}${isDone?' ✓':''}</div>`;
+  }).join('');
 }
 function renderDay(i){
   curDay=i;const d=DAYS[i],t=lang==='tr'?d.tr:d.en;
@@ -891,9 +923,21 @@ function renderDay(i){
     </div>
     <div class="tip-b"><div class="tip-ico">—</div><div class="tip-txt">${t.tip}</div></div>
     <a class="yt-b" href="${d.yt}" target="_blank" rel="noopener"><div class="yt-l"><div class="yt-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M19.6 3.2C16 3 12 3 12 3s-4 0-7.6.2C2.5 3.4 1.2 4.7 1 6.6.8 8.2.8 12s0 3.8.2 5.4c.2 1.9 1.5 3.2 3.4 3.4C7.8 21 12 21 12 21s4 0 7.6-.2c1.9-.2 3.2-1.5 3.4-3.4.2-1.6.2-5.4.2-5.4s0-3.8-.2-5.4c-.2-1.9-1.5-3.2-3.4-3.4zM9.8 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg></div><div><div class="yt-title">${lang==='tr'?'Antrenman Videosu':'Training Video'}</div><div class="yt-sub">YouTube →</div></div></div><div class="yt-arr">›</div></a>
+    <div onclick="markDayDoneFromTraining(${i},this)" class="done-day-btn${state.weekDays.includes(i)?' done-btn-done':''}">${state.weekDays.includes(i)?(lang==='tr'?'✓ Tamamlandı':'✓ Completed'):(lang==='tr'?'✓ Tamamla':'✓ Mark Done')}</div>
     <div style="height:4px"></div>`;
 }
 function switchDay(i){document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===i));renderDay(i);}
+
+function markDayDoneFromTraining(i,btn){
+  const idx=state.weekDays.indexOf(i);
+  if(idx>=0){state.weekDays.splice(idx,1);btn.textContent=lang==='tr'?'✓ Tamamla':'✓ Done';btn.classList.remove('done-btn-done');}
+  else{state.weekDays.push(i);btn.textContent=lang==='tr'?'✓ Tamamlandı':'✓ Completed';btn.classList.add('done-btn-done');}
+  lsSet('rx26_week_'+weekId(),JSON.stringify(state.weekDays));
+  buildWeekRow();
+  // update tabs
+  buildTabs();
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===curDay));
+}
 
 /* ─── CALCULATOR ─── */
 const STS=[
@@ -911,26 +955,69 @@ function p2(n){return String(Math.floor(Math.abs(n))).padStart(2,'0');}
 function fmtHms(s){return Math.floor(s/3600)+':'+p2(s%3600/60)+':'+p2(s%60);}
 function fmtMm(s){return p2(s/60)+':'+p2(s%60);}
 function calcMetric(s,secs){if(s.type==='pace'){const p=secs/(s.dist/500);return p2(p/60)+':'+p2(p%60)+' /500m';}return'';}
+// Global state for manual run/rox overrides
+let manualRunPace=null; // secs per km
+let manualRoxPerTrans=null; // secs per transition
+
+function fmtPace(sPerKm){return p2(sPerKm/60)+':'+p2(sPerKm%60);}
+
 function distributeTime(){
   const h=+document.getElementById('ca-h').value||0,m=+document.getElementById('ca-m').value||0,total=(h*60+m)*60;
   lastGoalSec=total;
   const sumEl=document.getElementById('ca-summary'),secLbl=document.getElementById('sec-lbl'),runCard=document.getElementById('sti-run'),roxCard=document.getElementById('sti-rox');
   if(!total){[sumEl,secLbl,runCard,roxCard].forEach(el=>{if(el)el.style.display='none';});document.getElementById('ca-stations').innerHTML='';return;}
-  const roxSec=Math.round(total*.05),runSec=Math.round(total*.42),staSec=total-runSec-roxSec;
-  [sumEl,secLbl,runCard,roxCard].forEach(el=>{if(el)el.style.display=sumEl===el?'block':'flex';});
+  
+  // Run: manual pace override or derive from total
+  let runSec;
+  if(manualRunPace!==null){
+    runSec=manualRunPace*8;
+  } else {
+    runSec=Math.round(total*0.42);
+    // sync slider to derived pace
+    const kmPaceDerived=Math.round(runSec/8);
+    const sl=document.getElementById('sl-run');
+    if(sl){sl.value=kmPaceDerived;document.getElementById('slv-run').textContent=fmtPace(kmPaceDerived);}
+  }
+  
+  // Roxzone: manual override or derive
+  let roxSec;
+  if(manualRoxPerTrans!==null){
+    roxSec=manualRoxPerTrans*8;
+  } else {
+    roxSec=Math.round(total*0.05);
+    const perRoxDerived=Math.round(roxSec/8);
+    const slr=document.getElementById('sl-rox');
+    if(slr){slr.value=Math.min(120,Math.max(20,perRoxDerived));document.getElementById('slv-rox').textContent=fmtPace(perRoxDerived);}
+  }
+  
+  const staSec=Math.max(0,total-runSec-roxSec);
   sumEl.style.display='block';secLbl.style.display='flex';runCard.style.display='block';roxCard.style.display='block';
-  document.getElementById('ca-sum-time').textContent=fmtHms(total);
-  document.getElementById('ca-sum-sub').textContent=lang==='tr'?`Koşu ~${fmtMm(Math.round(runSec/8))}/km · Roxzone ~${fmtMm(roxSec)}`:`Run ~${fmtMm(Math.round(runSec/8))}/km · Roxzone ~${fmtMm(roxSec)}`;
+  
+  const recalcTotal=runSec+roxSec+staSec;
+  document.getElementById('ca-sum-time').textContent=fmtHms(recalcTotal);
+  const kmPace=Math.round(runSec/8);
+  document.getElementById('ca-sum-sub').textContent=lang==='tr'?`Koşu ${fmtPace(kmPace)}/km · Roxzone ${fmtMm(roxSec)}`:`Run ${fmtPace(kmPace)}/km · Roxzone ${fmtMm(roxSec)}`;
   document.getElementById('cs-run').textContent=fmtMm(runSec);
   document.getElementById('cs-sta').textContent=fmtMm(staSec);
   document.getElementById('cs-rox').textContent=fmtMm(roxSec);
-  const kmPace=Math.round(runSec/8);
-  document.getElementById('alloc-run').textContent=fmtMm(runSec)+' · '+fmtMm(kmPace)+'/km';
-  document.getElementById('met-run').textContent=fmtMm(kmPace)+'/km';
+  document.getElementById('alloc-run').textContent=fmtMm(runSec)+' · '+fmtPace(kmPace)+'/km';
+  document.getElementById('met-run').textContent=fmtMm(runSec);
   const perRox=Math.round(roxSec/8);
-  document.getElementById('alloc-rox').textContent=fmtMm(roxSec)+' · '+fmtMm(perRox)+(lang==='tr'?'/geçiş':'/trans');
-  document.getElementById('met-rox').textContent=fmtMm(perRox);
+  document.getElementById('alloc-rox').textContent=fmtMm(roxSec)+' · '+fmtPace(perRox)+(lang==='tr'?'/geçiş':'/trans');
+  document.getElementById('met-rox').textContent=fmtMm(roxSec);
   buildStationsCalc(staSec);
+}
+
+function onRunSlider(val){
+  manualRunPace=+val;
+  document.getElementById('slv-run').textContent=fmtPace(+val);
+  distributeTime();
+}
+
+function onRoxSlider(val){
+  manualRoxPerTrans=+val;
+  document.getElementById('slv-rox').textContent=fmtPace(+val);
+  distributeTime();
 }
 function buildStationsCalc(staBudget){
   const totalPct=STS.reduce((a,s)=>a+s.defPct,0);
@@ -977,6 +1064,35 @@ function toggleSta(id){
 
 /* ─── GEAR — SHOES ─── */
 const SHOES=[
+  {id:'dne3',brand:'PUMA',name:'Deviate Nitro 3',emoji:'⚡',score:92,price:160,weight:'276g',drop:'10mm',cats:['speed','grip'],badges:['speed','grip'],
+   tr:{rank:'#1 2026 — Topluluk Tercihi',desc:'2026 en çok önerilen ayakkabı. Karbon plaka + PumaGrip: slippage olmaksızın sled push yapabilirsin. 2025 Dünya Şampiyonu Linda Meier'in tercihi Deviate serisi. Ağırlık/performans dengesi üstün.'},
+   en:{rank:'#1 2026 — Community Pick',desc:'Most recommended shoe for 2026. Carbon plate + PumaGrip: sled push without slippage. 2025 World Champion Linda Meier races the Deviate series. Outstanding weight-to-performance ratio.'},
+   source:'Trio Fitness · Mar 2026'},
+  {id:'ep4',brand:'Saucony',name:'Endorphin Pro 4',emoji:'👟',score:90,price:190,weight:'210g',drop:'9.5mm',cats:['speed'],badges:['speed'],
+   tr:{rank:'#2 2026 — Hız Odaklı',desc:'RunRepeat lab testi: 71.7% enerji geri dönüşü. Karbon plaka ile 210g hafiflikte. Elite atlet Michael Sandbach "şimdiye kadar test ettiğim en iyi HYROX ayakkabısı" diyor.'},
+   en:{rank:'#2 2026 — Speed Focused',desc:'RunRepeat lab: 71.7% energy return. Carbon plate at 210g. Elite athlete Michael Sandbach calls it "by far the best HYROX shoe" he's tested.'},
+   source:'RunRepeat Lab · Oct 2025'},
+  {id:'peg41',brand:'Nike',name:'Pegasus 41',emoji:'🟠',score:82,price:125,weight:'281g',drop:'10mm',cats:['stable','budget'],badges:['stable','budget'],
+   tr:{rank:'#3 2026 — Güvenilir Seçim',desc:'Karbon plaka yok ama tam lastik taban = mükemmel sled tutuşu. Tanıdık fit, konforlu koşu. İlk yarışa katılanlar için ideal bütçe dostu seçim.'},
+   en:{rank:'#3 2026 — Reliable Pick',desc:'No carbon plate but full rubber outsole = excellent sled grip. Familiar fit, comfortable run. Ideal budget-friendly choice for first-time racers.'},
+   source:'Trio Fitness · Mar 2026'},
+  {id:'hyp3',brand:'Brooks',name:'Hyperion 3',emoji:'🟣',score:81,price:140,weight:'244g',drop:'11.3mm',cats:['speed'],badges:['speed'],
+   tr:{rank:'#4 2026 — Hız/Fiyat Dengesi',desc:'Karbon plakazsız ama hızlı. DNA Flash köpüğü enerji geri dönüşünde üst sınıfta yarışıyor. Yüksek drop heel-striker için uygun. Orta bütçe en iyi seçeneklerinden.'},
+   en:{rank:'#4 2026 — Speed/Value',desc:'No carbon plate but fast. DNA Flash foam competes at the top for energy return. Higher drop suits heel-strikers. One of the best mid-budget options.'},
+   source:'Trio Fitness · Mar 2026'},
+  {id:'mach6',brand:'Hoka',name:'Mach 6',emoji:'🔵',score:83,price:170,weight:'232g',drop:'5mm',cats:['stable','grip'],badges:['stable'],
+   tr:{rank:'#5 2026 — Denge Şampiyonu',desc:'RunRepeat: en dengeli HYROX ayakkabısı. Düşük drop sled push mekaniğine mükemmel uyum. Lateral hareketlerde ayağı sabit tutar. Koşu kısımlarında da yeterince hızlı.'},
+   en:{rank:'#5 2026 — Stability Champion',desc:'RunRepeat: most stable HYROX shoe. Low drop matches perfectly with sled push mechanics. Keeps foot locked during lateral movements. Fast enough on running sections.'},
+   source:'RunRepeat Lab · Dec 2025'},
+  {id:'ep4s',brand:'Saucony',name:'Endorphin Speed 5',emoji:'🟢',score:85,price:165,weight:'241g',drop:'10mm',cats:['speed'],badges:['speed'],
+   tr:{rank:'#6 — Enerji Odaklı',desc:'PWRRUN PB köpüğü + naylon plaka. RunRepeat testinde en yüksek enerji geri dönüşü. 37.4mm stack'e rağmen hafif. Karbon plaka istemeyenler için Pro 4'ün alternatifi.'},
+   en:{rank:'#6 — Energy Focused',desc:'PWRRUN PB foam + nylon plate. Highest energy return in RunRepeat HYROX test. Light despite 37.4mm stack. Great alternative to Pro 4 without carbon plate.'},
+   source:'RunRepeat Lab · Oct 2025'},
+  {id:'nobull',brand:'NOBULL',name:'Drive Ripstop',emoji:'🖤',score:76,price:119,weight:'280g',drop:'4mm',cats:['stable','grip'],badges:['stable','budget'],
+   tr:{rank:'#7 — Sled Uzmanı',desc:'4mm drop + düşük stack = sled push için ideal zemine yakınlık. Tam lastik taban tutuşu garantiler. En uygun fiyatlı öneri. HYROX salonu olmayan spor salonu atletleri için de harika.'},
+   en:{rank:'#7 — Sled Specialist',desc:'4mm drop + low stack = ideal ground closeness for sled push. Full rubber outsole guarantees grip. Most affordable pick. Great for gym athletes without HYROX-specific equipment.'},
+   source:'RunRepeat Lab · Oct 2025'},
+];
   {id:'ep4',brand:'Saucony',name:'Endorphin Pro 4',emoji:'👟',score:88,price:230,weight:'249g',drop:'8mm',cats:['speed'],badges:['speed'],tr:{rank:'#1 Genel',desc:'RunRepeat\'in en yüksek puanlı HYROX ayakkabısı. Karbon plaka + PWRRUN HG köpüğü ile 71.7% enerji geri dönüşü. İstanbul parkurunda hız arayan atletler için.'},en:{rank:'#1 Overall',desc:'RunRepeat\'s highest-rated HYROX shoe. Carbon plate + PWRRUN HG foam with 71.7% energy return. Perfect for Istanbul athletes chasing speed.'},source:'RunRepeat Lab'},
   {id:'dne3',brand:'PUMA',name:'Deviate Nitro Elite 3',emoji:'⚡',score:91,price:230,weight:'204g',drop:'8mm',cats:['speed','grip'],badges:['speed','grip'],tr:{rank:'#1 Tutuş',desc:'Test edilen en iyi tutuş (0.67 skor, ortalamadan %42.6 daha iyi). Terin olduğu zemin şartlarında bile güven verir. 77.1% enerji geri dönüşü. Linda Meier\'in (2025 Dünya Şampiyonu) tercihi.'},en:{rank:'#1 Grip',desc:'Best grip of any HYROX shoe tested (0.67 score, 42.6% better than average). Confident on wet gym floors. 77.1% energy return. Linda Meier\'s (2025 World Champion) choice.'},source:'RunRepeat Lab'},
   {id:'es5',brand:'Saucony',name:'Endorphin Speed 5',emoji:'🏃',score:85,price:165,weight:'241g',drop:'10mm',cats:['speed'],badges:['speed'],tr:{rank:'#1 Enerji Geri Dönüşü',desc:'Test edilen HYROX ayakkabıları içinde en yüksek enerji geri dönüşü. PWRRUN PB köpüğü + naylon plaka. 37.4mm stack yüksekliğine rağmen hafif. Orta seviye atlet için ideal.'},en:{rank:'#1 Energy Return',desc:'Top energy return of all HYROX shoes tested. PWRRUN PB foam + nylon plate. Despite 37.4mm stack, stays lightweight. Ideal for mid-level athletes.'},source:'RunRepeat Lab'},
