@@ -158,6 +158,66 @@ body{background:var(--bg);font-family:var(--f);color:var(--text)}
 .weak-name{font-size:13px;color:var(--text);font-weight:500}
 .weak-tog-btn{width:22px;height:22px;border-radius:6px;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--t2);transition:all .15s}
 .weak-tog-btn.on{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+/* ── MOTIVASYON KARTI ── */
+/* ── ROZETLER ── */
+.badge-block{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.badge-head{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.badge-head-l{display:flex;align-items:center;gap:10px}
+.badge-cnt{font-family:var(--fm);font-size:11px;color:var(--gold);font-weight:700}
+.badge-arr{font-size:14px;color:var(--t2);transition:transform .2s}
+.badge-open .badge-arr{transform:rotate(90deg)}
+.badge-progress-bar{height:3px;background:var(--line2);margin:0 18px 16px;border-radius:2px;overflow:hidden;display:none}
+.badge-open .badge-progress-bar{display:block}
+.badge-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;transition:width .5s ease}
+.badge-section-lbl{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:var(--t2);text-transform:uppercase;padding:10px 16px 6px;border-top:1px solid var(--line)}
+.badge-section-lbl:first-child{border-top:none}
+.badge-grid{padding:0 12px 12px;display:none;grid-template-columns:repeat(4,1fr);gap:8px}
+.bdg{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 6px 10px;border:1px solid var(--line2);border-radius:14px;cursor:pointer;position:relative;overflow:hidden;transition:all .18s;-webkit-tap-highlight-color:transparent}
+.bdg:active{transform:scale(.95)}
+.bdg.earned{border-color:var(--gold-line);background:var(--gold-bg)}
+.bdg.earned::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:70%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent)}
+.bdg.earned::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 60% at 50% 0%,var(--gold-glow),transparent 70%);pointer-events:none}
+.bdg-icon{font-size:24px;line-height:1;filter:grayscale(1) opacity(.22);transition:filter .2s}
+.bdg.earned .bdg-icon{filter:none}
+.bdg-name{font-family:var(--fm);font-size:7.5px;color:var(--t3);letter-spacing:.3px;text-align:center;line-height:1.4;font-weight:500}
+.bdg.earned .bdg-name{color:var(--gold);font-weight:700}
+.bdg-prog{font-family:var(--fm);font-size:7px;color:var(--t3);text-align:center;margin-top:1px;opacity:.7}
+.bdg.earned .bdg-prog{display:none}
+.bdg-new{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--gold);display:none;box-shadow:0 0 6px var(--gold)}
+.bdg.earned.new .bdg-new{display:block}
+/* Badge detay modal */
+.bdg-modal{position:fixed;inset:0;z-index:300;display:flex;align-items:flex-end;pointer-events:none;opacity:0;transition:opacity .2s}
+.bdg-modal.open{opacity:1;pointer-events:all}
+.bdg-modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+.bdg-modal-sheet{position:relative;width:100%;max-width:560px;margin:0 auto;background:var(--card);border-radius:24px 24px 0 0;border:1px solid var(--line);border-bottom:none;padding:0 0 max(env(safe-area-inset-bottom),20px);transform:translateY(40px);transition:transform .25s cubic-bezier(.22,1,.36,1)}
+.bdg-modal.open .bdg-modal-sheet{transform:translateY(0)}
+.bdg-modal-drag{width:36px;height:4px;background:var(--line2);border-radius:2px;margin:12px auto 0}
+.bdg-modal-body{padding:20px 24px 8px;text-align:center}
+.bdg-modal-icon{font-size:52px;margin-bottom:12px;display:block;line-height:1}
+.bdg-modal-title{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.3px;margin-bottom:6px}
+.bdg-modal-cat{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.bdg-modal-desc{font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:16px}
+.bdg-modal-status{padding:12px 16px;background:var(--card2);border:1px solid var(--line);border-radius:12px;font-family:var(--fm);font-size:12px;color:var(--t2);margin-bottom:20px}
+.bdg-modal-status b{color:var(--text)}
+.bdg-modal-close{width:100%;padding:14px;background:var(--card2);border:1px solid var(--line2);border-radius:14px;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;text-align:center;margin-top:4px}
+/* ── TİMER MODAL ── */
+.timer-modal{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.timer-modal.open{opacity:1;pointer-events:all}
+.timer-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--t2);cursor:pointer}
+.timer-ex-name{font-family:var(--fm);font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;text-align:center}
+.timer-ex-sub{font-size:22px;font-weight:700;color:var(--text);letter-spacing:-.5px;text-align:center;margin-bottom:40px}
+.timer-circle{position:relative;width:220px;height:220px;margin-bottom:40px}
+.timer-circle svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.timer-circle-bg{fill:none;stroke:var(--line2);stroke-width:8}
+.timer-circle-prog{fill:none;stroke:var(--gold);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .1s linear}
+.timer-time-wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.timer-time{font-family:var(--fm);font-size:56px;font-weight:700;color:var(--text);letter-spacing:-3px;line-height:1}
+.timer-phase{font-family:var(--fm);font-size:10px;color:var(--t2);letter-spacing:2px;text-transform:uppercase;margin-top:8px}
+.timer-btns{display:flex;gap:14px}
+.timer-btn{width:64px;height:64px;border-radius:50%;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;transition:all .15s}
+.timer-btn.primary{background:var(--gold);border-color:var(--gold);color:#000;width:72px;height:72px}
+.timer-btn:active{transform:scale(.93)}
+.timer-next-lbl{margin-top:20px;font-family:var(--fm);font-size:11px;color:var(--t2);text-align:center}
 /* ── SCREEN 2: ANTRENMAN ── */
 .scr-head{padding:20px var(--pad) 4px;flex-shrink:0}
 .scr-title{font-size:28px;font-weight:700;color:var(--text);letter-spacing:-.5px;line-height:1.15;margin-top:6px}
@@ -189,9 +249,20 @@ body{background:var(--bg);font-family:var(--f);color:var(--text)}
 .yt-title{font-size:13px;color:var(--text);font-weight:500}
 .yt-sub{font-family:var(--fm);font-size:10px;color:var(--t2);margin-top:2px}
 .yt-arr{font-size:16px;color:var(--t3)}
-.done-day-btn{margin:0 var(--pad) 16px;padding:13px 18px;border-radius:var(--r);border:1.5px solid var(--line2);text-align:center;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;transition:all .2s}
+.done-day-btn{margin:0 var(--pad) 8px;padding:13px 18px;border-radius:var(--r);border:1.5px solid var(--line2);text-align:center;font-size:14px;font-weight:600;color:var(--t2);cursor:pointer;transition:all .2s}
 .done-day-btn:hover{border-color:var(--gold);color:var(--gold)}
 .done-day-btn.done{background:var(--gold-bg);border-color:var(--gold);color:var(--gold)}
+.start-timer-btn{margin:0 var(--pad) 16px;padding:14px 18px;border-radius:var(--r);border:none;background:var(--gold);text-align:center;font-size:14px;font-weight:700;color:#000;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.start-timer-btn:active{opacity:.85}
+/* ── ORTAM SEÇİCİ ── */
+.env-tabs{display:flex;gap:0;margin:0 var(--pad) var(--gap);background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:4px;flex-shrink:0}
+.env-tab{flex:1;padding:9px 6px;border-radius:10px;text-align:center;cursor:pointer;transition:all .2s;border:1px solid transparent}
+.env-tab .env-ico{font-size:16px;display:block;line-height:1;margin-bottom:3px}
+.env-tab .env-lbl{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:.5px;font-weight:500;text-transform:uppercase}
+.env-tab.on{background:var(--card);border-color:var(--line2);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.env-tab.on .env-lbl{color:var(--text);font-weight:700}
+.tr-dur-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--fm);font-size:10px;color:var(--t2);padding:3px 9px;border:1px solid var(--line2);border-radius:8px;background:var(--card2);margin-top:6px;letter-spacing:.3px}
+.tr-dur-badge b{color:var(--text);font-weight:700}
 /* ── SCREEN 3: HESAP ── */
 .ca-goal{margin:0 var(--pad) var(--gap);background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
 .ca-goal-row{display:flex;align-items:flex-end;gap:8px;margin:12px 0 0}
@@ -278,7 +349,61 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .comm-empty-icon{font-size:32px;margin-bottom:10px}
 .comm-empty-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
 .comm-empty-sub{font-size:13px;color:var(--t2);line-height:1.6}
-/* REC MODAL FORM */
+/* ── PROFİL HERO ── */
+.profile-hero{margin:0 var(--pad) var(--gap);border-radius:var(--r);overflow:hidden;position:relative}
+.ph-banner{position:relative;padding:20px 18px 0;background:var(--card);border:1px solid var(--line);border-bottom:none;border-radius:var(--r) var(--r) 0 0}
+.ph-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 130% 180% at 0% 0%,rgba(212,168,76,.11),transparent 55%);pointer-events:none;border-radius:inherit}
+.ph-banner::after{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:linear-gradient(90deg,var(--gold),var(--gold2),transparent 65%)}
+.ph-top-row{display:flex;align-items:flex-start;gap:14px;position:relative}
+.ph-avatar{width:64px;height:64px;border-radius:20px;background:linear-gradient(145deg,var(--card2),var(--line));border:1.5px solid var(--gold-line);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0;cursor:pointer;transition:all .18s;position:relative;box-shadow:0 4px 16px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.05)}
+.ph-avatar:active{transform:scale(.91)}
+.ph-avatar-ring{position:absolute;inset:-3px;border-radius:23px;border:1px solid var(--gold-line);pointer-events:none}
+.ph-avatar-edit{position:absolute;bottom:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--gold);border:2px solid var(--card);display:flex;align-items:center;justify-content:center;font-size:9px;color:#000;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.ph-info{flex:1;min-width:0;padding-top:2px}
+.ph-greeting{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px}
+.ph-name{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.5px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph-level-badge{display:inline-flex;align-items:center;gap:5px;margin-top:7px;padding:3px 10px 3px 8px;background:var(--gold-bg);border:1px solid var(--gold-line);border-radius:100px}
+.ph-level-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.ph-level-txt{font-family:var(--fm);font-size:9px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.ph-edit-fab{width:34px;height:34px;border-radius:12px;border:1px solid var(--line2);background:var(--card2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;color:var(--t2);transition:all .15s;margin-top:2px}
+.ph-edit-fab:active{border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
+.ph-edit-fab svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ph-chips{display:flex;gap:6px;padding:14px 0 16px;flex-wrap:wrap}
+.ph-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;background:var(--card2);border:1px solid var(--line2);border-radius:100px;font-family:var(--fm);font-size:10px;color:var(--t2)}
+.ph-chip-ico{font-size:12px}
+.ph-chip b{color:var(--text);font-weight:700}
+.ph-stats{display:grid;grid-template-columns:repeat(3,1fr);background:var(--card2);border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r) var(--r);overflow:hidden}
+.ph-stat{padding:13px 8px;text-align:center;position:relative}
+.ph-stat+.ph-stat::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:1px;background:var(--line)}
+.ph-stat-v{font-family:var(--fm);font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.5px;line-height:1}
+.ph-stat-v.gold{color:var(--gold)}
+.ph-stat-l{font-family:var(--fm);font-size:8px;color:var(--t2);margin-top:4px;text-transform:uppercase;letter-spacing:.6px}
+/* Kurulum modal */
+.profile-setup{position:fixed;inset:0;z-index:400;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .22s}
+.profile-setup.open{opacity:1;pointer-events:all}
+.profile-setup-bg{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}
+.psu-sheet{position:relative;width:100%;max-width:560px;margin:0 auto;background:var(--card);border-radius:28px 28px 0 0;border:1px solid var(--line);border-bottom:none;transform:translateY(80px);transition:transform .35s cubic-bezier(.22,1,.36,1);max-height:93vh;overflow-y:auto}
+.profile-setup.open .psu-sheet{transform:translateY(0)}
+.psu-drag{width:40px;height:4px;background:var(--line2);border-radius:2px;margin:14px auto 0}
+.psu-head{padding:22px 22px 6px}
+.psu-title{font-size:24px;font-weight:800;color:var(--text);letter-spacing:-.4px}
+.psu-sub{font-size:13px;color:var(--t2);margin-top:6px;line-height:1.65}
+.psu-body{padding:16px 22px}
+.psu-field{margin-bottom:20px}
+.psu-lbl{font-family:var(--fm);font-size:9px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px;display:block}
+.psu-input{width:100%;background:var(--card2);border:1.5px solid var(--line2);border-radius:14px;padding:13px 16px;font-size:16px;color:var(--text);font-family:var(--f);outline:none;transition:border-color .15s;box-sizing:border-box}
+.psu-input:focus{border-color:var(--gold)}
+.psu-input::placeholder{color:var(--t3)}
+.psu-emoji-row{display:flex;gap:8px;flex-wrap:wrap}
+.psu-emoji{width:48px;height:48px;border-radius:14px;background:var(--card2);border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;transition:all .15s}
+.psu-emoji.on{border-color:var(--gold);background:var(--gold-bg);box-shadow:0 0 0 3px var(--gold-bg)}
+.psu-emoji:active{transform:scale(.88)}
+.psu-opt-row{display:flex;gap:7px;flex-wrap:wrap}
+.psu-opt{padding:9px 16px;border-radius:100px;border:1.5px solid var(--line2);font-size:13px;color:var(--t2);cursor:pointer;transition:all .15s;font-family:var(--fm);font-weight:500}
+.psu-opt.on{border-color:var(--gold);color:var(--text);background:var(--gold-bg)}
+.psu-save{width:100%;background:var(--gold);border:none;border-radius:16px;padding:16px;font-size:15px;font-family:var(--f);font-weight:800;color:#000;cursor:pointer;margin-bottom:max(env(safe-area-inset-bottom),24px);letter-spacing:.2px;transition:opacity .15s}
+.psu-save:active{opacity:.82}
+</style>
 .modal-form{padding:16px 20px}
 .mf-group{margin-bottom:14px}
 .mf-lbl{font-family:var(--fm);font-size:10px;color:var(--t2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;display:block}
@@ -331,12 +456,66 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
         <div class="cd-cell"><div class="cd-n" id="cd-s">--</div><div class="cd-l" id="cd-ls">sn</div></div>
       </div>
     </div>
+    <!-- PROFİL HERO -->
+    <div class="profile-hero" id="profile-hero">
+      <div class="ph-banner">
+        <div class="ph-top-row">
+          <div class="ph-avatar" id="ph-avatar" onclick="openProfileSetup()">
+            🏃
+            <div class="ph-avatar-ring"></div>
+            <div class="ph-avatar-edit">✎</div>
+          </div>
+          <div class="ph-info">
+            <div class="ph-greeting" id="ph-greeting">Hoş geldin</div>
+            <div class="ph-name" id="ph-name">Profilini Oluştur</div>
+            <div class="ph-level-badge" id="ph-level-badge">
+              <div class="ph-level-dot"></div>
+              <div class="ph-level-txt" id="ph-level-txt">Ayarla →</div>
+            </div>
+          </div>
+          <div class="ph-edit-fab" onclick="openProfileSetup()">
+            <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+        </div>
+        <div class="ph-chips" id="ph-chips">
+          <div class="ph-chip"><span class="ph-chip-ico">🏷️</span><span id="ph-chip-cat"><b>—</b></span></div>
+          <div class="ph-chip"><span class="ph-chip-ico">⚖️</span><span id="ph-chip-weight"><b>—</b></span></div>
+          <div class="ph-chip"><span class="ph-chip-ico">📅</span><span id="ph-chip-days"><b id="ph-days-left">—</b> gün</span></div>
+        </div>
+      </div>
+      <div class="ph-stats">
+        <div class="ph-stat">
+          <div class="ph-stat-v gold" id="ph-total">0</div>
+          <div class="ph-stat-l" id="ph-total-lbl">Antrenman</div>
+        </div>
+        <div class="ph-stat">
+          <div class="ph-stat-v" id="ph-streak">0/7</div>
+          <div class="ph-stat-l" id="ph-streak-lbl">Bu Hafta</div>
+        </div>
+        <div class="ph-stat">
+          <div class="ph-stat-v" id="ph-fav-day">—</div>
+          <div class="ph-stat-l" id="ph-fav-lbl">Fav. Gün</div>
+        </div>
+      </div>
+    </div>
     <div class="week-block">
       <div class="week-top">
         <div class="eyebrow" id="wk-lbl">Bu Hafta</div>
         <div class="week-count" id="week-count">0/7</div>
       </div>
       <div class="week-row" id="week-row"></div>
+    </div>
+    <!-- ROZETLER -->
+    <div class="badge-block" id="badge-block">
+      <div class="badge-head" onclick="toggleBadges()">
+        <div class="badge-head-l">
+          <div class="eyebrow" id="bdg-lbl">Başarılar</div>
+          <div class="badge-cnt" id="badge-cnt">0/16</div>
+        </div>
+        <div class="badge-arr">›</div>
+      </div>
+      <div class="badge-progress-bar"><div class="badge-progress-fill" id="badge-prog-fill" style="width:0%"></div></div>
+      <div id="badge-body"></div>
     </div>
     <div class="pb-block">
       <div class="pb-scores">
@@ -556,6 +735,105 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   </div>
 </div>
 
+<!-- TIMER MODAL -->
+<div class="timer-modal" id="timer-modal">
+  <div class="timer-close" onclick="closeTimer()">✕</div>
+  <div class="timer-ex-name" id="timer-ex-name">EGZERSİZ</div>
+  <div class="timer-ex-sub" id="timer-ex-sub">Hazır ol</div>
+  <div class="timer-circle">
+    <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+      <circle class="timer-circle-bg" cx="110" cy="110" r="100"/>
+      <circle class="timer-circle-prog" id="timer-prog" cx="110" cy="110" r="100" stroke-dasharray="628" stroke-dashoffset="0"/>
+    </svg>
+    <div class="timer-time-wrap">
+      <div class="timer-time" id="timer-time">00:00</div>
+      <div class="timer-phase" id="timer-phase">HAZIR</div>
+    </div>
+  </div>
+  <div class="timer-btns">
+    <div class="timer-btn" id="timer-prev-btn" onclick="timerPrev()">‹</div>
+    <div class="timer-btn primary" id="timer-play-btn" onclick="timerToggle()">▶</div>
+    <div class="timer-btn" id="timer-next-btn" onclick="timerNext()">›</div>
+  </div>
+  <div class="timer-next-lbl" id="timer-next-lbl"></div>
+</div>
+
+<!-- BADGE DETAIL MODAL -->
+<div class="bdg-modal" id="bdg-modal" onclick="closeBdgModal(event)">
+  <div class="bdg-modal-bg"></div>
+  <div class="bdg-modal-sheet">
+    <div class="bdg-modal-drag"></div>
+    <div class="bdg-modal-body">
+      <span class="bdg-modal-icon" id="bdg-m-icon">🏁</span>
+      <div class="bdg-modal-cat" id="bdg-m-cat"></div>
+      <div class="bdg-modal-title" id="bdg-m-title"></div>
+      <div class="bdg-modal-desc" id="bdg-m-desc"></div>
+      <div class="bdg-modal-status" id="bdg-m-status"></div>
+    </div>
+    <div style="padding:0 20px"><div class="bdg-modal-close" onclick="closeBdgModal()" id="bdg-m-close">Kapat</div></div>
+  </div>
+</div>
+
+<!-- PROFİL KURULUM MODAL -->
+<div class="profile-setup" id="profile-setup">
+  <div class="profile-setup-bg" onclick="closeProfileSetup()"></div>
+  <div class="psu-sheet">
+    <div class="psu-drag"></div>
+    <div class="psu-head">
+      <div class="psu-title" id="psu-title">Profilini Oluştur</div>
+      <div class="psu-sub" id="psu-sub">Antrenman ağırlıkları ve istatistiklerin kişiselleşmesi için birkaç bilgi yeterli.</div>
+    </div>
+    <div class="psu-body">
+      <!-- Avatar -->
+      <div class="psu-field">
+        <span class="psu-lbl" id="psu-lbl-avatar">Avatar Seç</span>
+        <div class="psu-emoji-row" id="psu-emoji-row">
+          <div class="psu-emoji on" data-emoji="🏃" onclick="selectEmoji(this)">🏃</div>
+          <div class="psu-emoji" data-emoji="💪" onclick="selectEmoji(this)">💪</div>
+          <div class="psu-emoji" data-emoji="🔥" onclick="selectEmoji(this)">🔥</div>
+          <div class="psu-emoji" data-emoji="⚡" onclick="selectEmoji(this)">⚡</div>
+          <div class="psu-emoji" data-emoji="🦁" onclick="selectEmoji(this)">🦁</div>
+          <div class="psu-emoji" data-emoji="🐺" onclick="selectEmoji(this)">🐺</div>
+          <div class="psu-emoji" data-emoji="🦅" onclick="selectEmoji(this)">🦅</div>
+          <div class="psu-emoji" data-emoji="🧠" onclick="selectEmoji(this)">🧠</div>
+          <div class="psu-emoji" data-emoji="🏅" onclick="selectEmoji(this)">🏅</div>
+          <div class="psu-emoji" data-emoji="🎯" onclick="selectEmoji(this)">🎯</div>
+        </div>
+      </div>
+      <!-- İsim -->
+      <div class="psu-field">
+        <span class="psu-lbl" id="psu-lbl-name">İsim</span>
+        <input class="psu-input" id="psu-name-input" type="text" placeholder="Adın ne?" maxlength="24">
+      </div>
+      <!-- Deneyim -->
+      <div class="psu-field">
+        <span class="psu-lbl" id="psu-lbl-level">HYROX Deneyimi</span>
+        <div class="psu-opt-row" id="psu-level-row">
+          <div class="psu-opt on" data-val="rookie" onclick="selectOpt(this,'psu-level-row')" id="psu-l-rookie">İlk Yarış</div>
+          <div class="psu-opt" data-val="mid" onclick="selectOpt(this,'psu-level-row')" id="psu-l-mid">1–2 Yarış</div>
+          <div class="psu-opt" data-val="veteran" onclick="selectOpt(this,'psu-level-row')" id="psu-l-veteran">Veteran (3+)</div>
+        </div>
+      </div>
+      <!-- Cinsiyet / Kategori -->
+      <div class="psu-field">
+        <span class="psu-lbl" id="psu-lbl-gender">Yarış Kategorisi</span>
+        <div class="psu-opt-row" id="psu-gender-row">
+          <div class="psu-opt on" data-val="M" onclick="selectOpt(this,'psu-gender-row')" id="psu-g-m">Erkek (Open)</div>
+          <div class="psu-opt" data-val="W" onclick="selectOpt(this,'psu-gender-row')" id="psu-g-w">Kadın (Open)</div>
+          <div class="psu-opt" data-val="MP" onclick="selectOpt(this,'psu-gender-row')" id="psu-g-mp">Erkek (Pro)</div>
+          <div class="psu-opt" data-val="WP" onclick="selectOpt(this,'psu-gender-row')" id="psu-g-wp">Kadın (Pro)</div>
+        </div>
+      </div>
+      <!-- Kilo -->
+      <div class="psu-field">
+        <span class="psu-lbl" id="psu-lbl-weight">Vücut Ağırlığı (kg)</span>
+        <input class="psu-input" id="psu-weight-input" type="number" placeholder="75" min="40" max="150">
+      </div>
+      <button class="psu-save" id="psu-save-btn" onclick="saveProfile()">Kaydet</button>
+    </div>
+  </div>
+</div>
+
 </div><!-- .phone -->
 <script>
 var lang='tr', notifOn=false, curDay=0, shoeFilter='all';
@@ -670,6 +948,7 @@ function setLang(l){
   });
   buildWeekRow();buildInfoCards();buildTabs();renderDay(curDay);buildChecklist();
   distributeTime();updateDelta();buildImproveBody();renderGear();buildRecCats();
+  buildProfile();buildBadges();
 }
 
 function toggleNotif(){
@@ -853,17 +1132,393 @@ function toggleWeak(i){
 }
 
 // ── TRAINING ──
-var DAYS=[
-  {tr:{day:'Pazartesi',tag:'Kardiyo',title:'Aerobik Taban',desc:'Düşük yoğunluklu uzun koşu ve makine antrenmanı.',tip:'Zone 2\'de kal. Konuşabiliyorsan doğru tempodayısın.'},en:{day:'Monday',tag:'Cardio',title:'Aerobic Base',desc:'Low-intensity long run and machine training.',tip:'Stay Zone 2. If you can hold a conversation, you\'re on pace.'},yt:'https://www.youtube.com/results?search_query=hyrox+zone2+training',ex:[{tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'Hafif tempo',en:'Easy pace'},v:'10 dk'},{tr:'Tempo koşu',en:'Tempo run',sub:{tr:'5km orta tempo',en:'5km moderate'},v:'5 km'},{tr:'SkiErg',en:'SkiErg',sub:{tr:'90sn aralar',en:'90s rest'},v:'3×500m'},{tr:'Rowing',en:'Rowing',sub:{tr:'90sn aralar',en:'90s rest'},v:'3×500m'},{tr:'Soğuma',en:'Cool-down',sub:{tr:'Tam vücut esneme',en:'Full body stretch'},v:'10 dk'}]},
-  {tr:{day:'Salı',tag:'Güç',title:'Sled & Taşıma',desc:'Sled push/pull ve taşıma egzersizleri.',tip:'Sled push\'ta 45° öne eğil, kısa adımlarla it.'},en:{day:'Tuesday',tag:'Strength',title:'Sled & Carry',desc:'Sled push/pull and carry work.',tip:'Lean 45° forward on sled push, short quick steps.'},yt:'https://www.youtube.com/results?search_query=hyrox+sled+carry+training',ex:[{tr:'Sled Push',en:'Sled Push',sub:{tr:'%50 vücut ağırlığı',en:'50% body weight'},v:'6×30m'},{tr:'Sled Pull',en:'Sled Pull',sub:{tr:'İp ile, dik duruş',en:'Rope pull, upright'},v:'6×30m'},{tr:'Farmers Carry',en:'Farmers Carry',sub:{tr:'Her elde kettlebell',en:'KB each hand'},v:'4×50m'},{tr:'Sandbag Lunges',en:'Sandbag Lunges',sub:{tr:'Omuzda sandbag',en:'Sandbag on shoulder'},v:'4×20'},{tr:'Plank',en:'Plank',sub:{tr:'Ön + yan',en:'Front + side'},v:'3×60sn'}]},
-  {tr:{day:'Çarşamba',tag:'HIIT',title:'Interval Koşu',desc:'Yüksek yoğunluklu interval antrenmanı.',tip:'Her 400m\'yi %85–90 eforda koş. İlk setleri çok hızlı koşarsan son setleri bitiremezsin.'},en:{day:'Wednesday',tag:'HIIT',title:'Interval Run',desc:'High-intensity interval training.',tip:'Run each 400m at 85–90% effort. Go out too fast and you won\'t finish the last sets.'},yt:'https://www.youtube.com/results?search_query=hyrox+interval+training',ex:[{tr:'400m koşu',en:'400m run',sub:{tr:'%85–90, 90sn dinlenme',en:'85–90%, 90s rest'},v:'8×'},{tr:'Wall Balls',en:'Wall Balls',sub:{tr:'9kg, 3m hedef',en:'9kg, 3m target'},v:'4×25'},{tr:'Burpee Broad Jump',en:'Burpee Broad Jump',sub:{tr:'Tam atlayış',en:'Full jump'},v:'4×15'},{tr:'Box Jump',en:'Box Jump',sub:{tr:'60cm, patlayıcı',en:'60cm, explosive'},v:'3×12'}]},
-  {tr:{day:'Perşembe',tag:'Simülasyon',title:'HYROX Protokol',desc:'Yarı yarış simülasyonu. Gerçek koşullarda istasyon geçişi.',tip:'İstasyonlar arası ritim koru — çok hızlı başlamak seni bitirir.'},en:{day:'Thursday',tag:'Simulation',title:'HYROX Protocol',desc:'Half-race simulation. Station transitions under race conditions.',tip:'Maintain rhythm between stations — going out too hard will end your race.'},yt:'https://www.youtube.com/results?search_query=hyrox+race+simulation',ex:[{tr:'1km + SkiErg',en:'1km + SkiErg',sub:{tr:'Tempo: 2:10–2:20/500m',en:'Pace: 2:10–2:20/500m'},v:'1.000m'},{tr:'1km + Sled Push',en:'1km + Sled Push',sub:{tr:'E:102kg / K:56kg',en:'M:102kg / W:56kg'},v:'2×25m'},{tr:'1km + Burpee BJ',en:'1km + Burpee BJ',sub:{tr:'Sabit ritim',en:'Steady rhythm'},v:'40 tekrar'},{tr:'1km + Rowing',en:'1km + Rowing',sub:{tr:'Tempo: 2:00–2:10/500m',en:'Pace: 2:00–2:10/500m'},v:'1.000m'}]},
-  {tr:{day:'Cuma',tag:'Güç',title:'Ağırlık & Fonksiyonel',desc:'Compound hareketler, HYROX\'a özel kas grupları.',tip:'Deadlift\'te sırtı düz tut. Arka zincir sled ve sandbag için kritik.'},en:{day:'Friday',tag:'Strength',title:'Weights & Functional',desc:'Compound movements, HYROX-specific muscle groups.',tip:'Keep your back flat on deadlifts. Posterior chain is critical for sled and sandbag.'},yt:'https://www.youtube.com/results?search_query=hyrox+strength+training',ex:[{tr:'Deadlift',en:'Deadlift',sub:{tr:'%80 1RM',en:'80% 1RM'},v:'4×6'},{tr:'Romanian DL',en:'Romanian DL',sub:{tr:'Hamstring odaklı',en:'Hamstring focused'},v:'3×10'},{tr:'Goblet Squat',en:'Goblet Squat',sub:{tr:'Kettlebell',en:'KB'},v:'4×12'},{tr:'KB Swing',en:'KB Swing',sub:{tr:'Patlayıcı kalça',en:'Explosive hip'},v:'4×20'},{tr:'Farmers Walk',en:'Farmers Walk',sub:{tr:'Maksimum yük',en:'Max load'},v:'3×40m'}]},
-  {tr:{day:'Cumartesi',tag:'Kardiyo',title:'Uzun Koşu',desc:'Uzun mesafe, düşük tempo. Zone 2 aerobik motor.',tip:'Nabız (220–yaş) × 0.65\'i aşmamalı. Çok yavaş geliyorsa endişelenme.'},en:{day:'Saturday',tag:'Cardio',title:'Long Run',desc:'Long distance, low pace. Zone 2 aerobic engine.',tip:'HR should not exceed (220–age) × 0.65. If it feels too slow, you\'re doing it right.'},yt:'https://www.youtube.com/results?search_query=zone2+long+run+hyrox',ex:[{tr:'Uzun koşu',en:'Long run',sub:{tr:'Zone 2, konuşma temposu',en:'Zone 2, conversational'},v:'12–15km'},{tr:'Tempo surge',en:'Tempo surge',sub:{tr:'Ortada 2km hız artışı',en:'2km pace surge mid-run'},v:'2km'},{tr:'Mobility',en:'Mobility',sub:{tr:'Kalça + hamstring',en:'Hip + hamstring'},v:'20dk'}]},
-  {tr:{day:'Pazar',tag:'Dinlenme',title:'Aktif Toparlanma',desc:'Hafif hareket ve zihinsel dinlenme.',tip:'Dinlenme antrenmanın bir parçası. Kaslar büyür ve onarılır.'},en:{day:'Sunday',tag:'Rest',title:'Active Recovery',desc:'Light movement and mental rest.',tip:'Rest is part of training. Muscles grow and repair.'},yt:'https://www.youtube.com/results?search_query=active+recovery+mobility',ex:[{tr:'Yürüyüş',en:'Walk',sub:{tr:'Hafif tempo',en:'Easy pace'},v:'30–45dk'},{tr:'Foam Rolling',en:'Foam Rolling',sub:{tr:'Bacak + sırt',en:'Legs + back'},v:'15dk'},{tr:'Esneme',en:'Stretching',sub:{tr:'Statik, tam vücut',en:'Static, full body'},v:'20dk'},{tr:'Nefes',en:'Breathing',sub:{tr:'Box breathing 4-4-4-4',en:'Box breathing 4-4-4-4'},v:'5dk'}]},
-  {tr:{day:'Salonsuz',tag:'Açık Hava',title:'Ekipmansız HYROX',desc:'HYROX salonu olmadan 8 istasyonun ev/park alternatifi.',tip:'Sled yerine duvara it, SkiErg yerine direnç bandı kullan. Bağlam degil ritim önemli.'},en:{day:'No Gym',tag:'Outdoor',title:'Equipment-Free HYROX',desc:'Home or park alternative for all 8 stations without a HYROX gym.',tip:'Push a wall instead of a sled, use a resistance band instead of SkiErg. Rhythm matters, not equipment.'},yt:'https://www.youtube.com/results?search_query=hyrox+training+at+home+no+equipment',ex:[{tr:'Koşu',en:'Run',sub:{tr:'1km × 8 interval temposu',en:'1km × 8 interval pace'},v:'1 km'},{tr:'Duvar İtiş (Sled Push)',en:'Wall Push (Sled alt.)',sub:{tr:'Duvara 45° eğil, ittir',en:'Lean 45° into wall, drive'},v:'3×30sn'},{tr:'Band Çekiş (Sled Pull)',en:'Band Row (Sled Pull alt.)',sub:{tr:'Otur, direnç bandı çek',en:'Seated resistance band row'},v:'3×20'},{tr:'Burpee Broad Jump',en:'Burpee Broad Jump',sub:{tr:'Tam vücut, ileri atlayış',en:'Full body, forward jump'},v:'4×15'},{tr:'Band Rowing (Ev)',en:'Band Rowing (Home)',sub:{tr:'Uzun çekiş direnç bandı',en:'Long pull resistance band'},v:'3×500m tempo'},{tr:'Yük Taşıma (Farmers Carry)',en:'Loaded Carry (Farmers alt.)',sub:{tr:'Su bidonu / sırt çantası',en:'Water jugs / loaded backpack'},v:'4×50m'},{tr:'Ağırlıklı Lunge (Sandbag)',en:'Weighted Lunge (Sandbag alt.)',sub:{tr:'Sırt çantası / su bidonu',en:'Backpack or water jugs'},v:'4×25'},{tr:'Squat Fırlatma (Wall Ball)',en:'Squat Jump (Wall Ball alt.)',sub:{tr:'Hedefe top fırlat',en:'Throw ball at target height'},v:'4×20'}]}
+// curEnv: 0=gym 1=hyrox 2=outdoor
+var curEnv=0;
+var ENVS=[
+  {tr:'Spor Salonu',en:'Gym',ico:'🏋️'},
+  {tr:'HYROX',en:'HYROX',ico:'🛷'},
+  {tr:'Dışarıda',en:'Outdoors',ico:'🌳'}
 ];
 
+// Helper: calculate total seconds for an exercise list
+function calcExSecs(ex){
+  var total=0;
+  ex.forEach(function(e){
+    var v=e.v; var s=180;
+    var m;
+    m=v.match(/(\d+(?:\.\d+)?)\s*dk/);if(m)s=Math.round(parseFloat(m[1])*60);
+    else{m=v.match(/(\d+)\s*km/);if(m)s=+m[1]*360;}
+    m=v.match(/(\d+)\s*tekrar/);if(m)s=Math.max(s,Math.round(+m[1]*3));
+    m=v.match(/(\d+)\s*sn/);if(m)s=+m[1];
+    m=v.match(/(\d+)\s*tur/);if(m)s=Math.max(s,+m[1]*180);
+    m=v.match(/Blok\s*\d+/i);if(m)s=480;
+    total+=s;
+  });
+  return total;
+}
+function fmtDurMin(secs){
+  var m=Math.round(secs/60);
+  if(m<1)m=1;
+  return '~'+m+' dk';
+}
+
+var DAYS=[
+
+  // PAZARTESİ
+  {tr:{day:'Pazartesi'},en:{day:'Monday'},
+   envs:[
+    // 0 — Spor Salonu
+    {tr:{tag:'🏃 Spor Salonu · EMOM',title:'EMOM Aerobik Motor',
+         desc:'Her dakika başında SkiErg + koşu kombosu. Nefes kontrolü ve ritim.',
+         tip:'EMOM\'da amaç dinlenme süresi kazanmak. Seti hızlı bitirirsen o dakika içinde kalanı dinlenirsin.'},
+     en:{tag:'🏃 Gym · EMOM',title:'EMOM Aerobic Engine',
+         desc:'Every minute on the minute: SkiErg + run combo. Breathing control and rhythm.',
+         tip:'In EMOM, the goal is earning rest. Finish fast and rest within the minute.'},
+     yt:'https://www.youtube.com/results?search_query=hyrox+emom+skierg+aerobic',
+     ex:[
+       {tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'Zone 1, çok rahat',en:'Zone 1, very easy'},v:'8 dk'},
+       {tr:'EMOM × 12 — SkiErg 10 çekiş + 100m koşu',en:'EMOM × 12 — 10 SkiErg pulls + 100m run',sub:{tr:'Her dk başlangıç, kalanı dinlenme',en:'Start each min, rest remaining'},v:'12 dk'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'2 dk nefes',en:'2 min breath'},v:'2 dk'},
+       {tr:'EMOM × 10 — Rowing 250m',en:'EMOM × 10 — Rowing 250m',sub:{tr:'2:15/500m hedef',en:'Target 2:15/500m'},v:'10 dk'},
+       {tr:'Zone 2 koşu',en:'Zone 2 run',sub:{tr:'Sabit nabız, konuşma temposu',en:'Steady HR, conversational'},v:'15 dk'},
+       {tr:'Soğuma + esneme',en:'Cool-down + stretch',sub:{tr:'Kalça fleksörü + omuz',en:'Hip flexor + shoulder'},v:'8 dk'}
+     ]},
+    // 1 — HYROX
+    {tr:{tag:'🛷 HYROX Salonu · Teknik',title:'SkiErg & Rowing Teknik',
+         desc:'İki ana makineyi teknik odakla çalış. Pace değil form önce.',
+         tip:'Bugün saate bakma. Her çekişte kalça öne, kollar tam aşağı. Rowing\'de legs-torso-arms sırasını içselleştir.'},
+     en:{tag:'🛷 HYROX Gym · Technique',title:'SkiErg & Rowing Technique',
+         desc:'Work the two main machines with technique focus. Form before pace.',
+         tip:'Don\'t watch the clock today. Each pull: hips first, arms all the way down. Internalize legs-torso-arms on rowing.'},
+     yt:'https://www.youtube.com/results?search_query=hyrox+skierg+rowing+technique',
+     ex:[
+       {tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'500m rahat',en:'500m easy'},v:'5 dk'},
+       {tr:'SkiErg teknik set — kalça odak',en:'SkiErg tech set — hip focus',sub:{tr:'2:30/500m, kalça önce her çekiş',en:'2:30/500m, hips before arms each pull'},v:'4×500m'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'90 sn tam dinlenme',en:'90s full rest'},v:'6 dk'},
+       {tr:'Rowing teknik set — legs-torso-arms',en:'Rowing tech set — legs-torso-arms',sub:{tr:'2:15/500m, sıra bozulmasın',en:'2:15/500m, sequence must not break'},v:'3×750m'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'2 dk',en:'2 min'},v:'6 dk'},
+       {tr:'EMOM × 8 — SkiErg 8 çekiş + Rowing 8 vuruş',en:'EMOM × 8 — 8 SkiErg pulls + 8 Rowing strokes',sub:{tr:'Makine geçiş pratiği',en:'Machine transition practice'},v:'8 dk'},
+       {tr:'Soğuma esneme',en:'Cool-down stretch',sub:{tr:'Omuz + kalça',en:'Shoulder + hip'},v:'8 dk'}
+     ]},
+    // 2 — Dışarıda
+    {tr:{tag:'🌳 Dışarıda · Zone 2',title:'Zone 2 Uzun Koşu',
+         desc:'Dışarıda uzun, sakin Zone 2 koşusu. Aerobik taban inşası.',
+         tip:'Zone 2: konuşabiliyorsan doğru tempodayısın. Nabzını düşük tut, mesafeye odaklan.'},
+     en:{tag:'🌳 Outdoors · Zone 2',title:'Zone 2 Long Run',
+         desc:'Long, easy Zone 2 run outdoors. Building aerobic base.',
+         tip:'Zone 2: if you can hold a conversation, you\'re on pace. Keep HR low, focus on distance.'},
+     yt:'https://www.youtube.com/results?search_query=zone+2+long+run+aerobic+base',
+     ex:[
+       {tr:'Dinamik ısınma',en:'Dynamic warm-up',sub:{tr:'Leg swing + kalça açma',en:'Leg swings + hip openers'},v:'5 dk'},
+       {tr:'Zone 2 koşu',en:'Zone 2 run',sub:{tr:'Düz zemin, konuşma temposu',en:'Flat ground, conversational pace'},v:'40 dk'},
+       {tr:'Merdiven / Tepe koşusu',en:'Stairs / Hill run',sub:{tr:'3×60sn çık, yürüyerek in',en:'3×60s up, walk down'},v:'9 dk'},
+       {tr:'Soğuma yürüyüş',en:'Cool-down walk',sub:{tr:'Nefes normale dönene dek',en:'Until breath normalizes'},v:'8 dk'}
+     ]}
+   ]},
+
+  // SALİ
+  {tr:{day:'Salı'},en:{day:'Tuesday'},
+   envs:[
+    // 0 — Spor Salonu
+    {tr:{tag:'⚙️ Spor Salonu · Güç',title:'EMOM Güç & Arka Zincir',
+         desc:'Deadlift + goblet squat EMOM formatında. Arka zincir ve core güçlendirme.',
+         tip:'EMOM güç setinde her seti temiz bitir. Ağırlık yerine kontrolü önce öğren.'},
+     en:{tag:'⚙️ Gym · Strength',title:'EMOM Strength & Posterior Chain',
+         desc:'Deadlift + goblet squat in EMOM format. Posterior chain and core strengthening.',
+         tip:'In strength EMOM, finish each set clean. Learn control before adding weight.'},
+     yt:'https://www.youtube.com/results?search_query=emom+deadlift+strength+functional',
+     ex:[
+       {tr:'Isınma + band aktivasyon',en:'Warm-up + band activation',sub:{tr:'Kalça açma + band pull-apart',en:'Hip opener + band pull-apart'},v:'8 dk'},
+       {tr:'EMOM × 8 — Deadlift 3 tekrar',en:'EMOM × 8 — Deadlift 3 reps',sub:{tr:'%75 1RM, 3sn kontrollü iniş',en:'75% 1RM, 3s controlled descent'},v:'8 dk'},
+       {tr:'EMOM × 6 — Goblet Squat 8 + KB Swing 8',en:'EMOM × 6 — 8 Goblet Squat + 8 KB Swing',sub:{tr:'KB 20kg, tam derinlik',en:'KB 20kg, full depth'},v:'6 dk'},
+       {tr:'Farmers Carry',en:'Farmers Carry',sub:{tr:'22kg/el, 4×50m, omuz kilitli',en:'22kg/hand, 4×50m, shoulders locked'},v:'4×50m'},
+       {tr:'Core finisher',en:'Core finisher',sub:{tr:'3×45sn plank + 3×12 dead bug',en:'3×45s plank + 3×12 dead bug'},v:'8 dk'}
+     ]},
+    // 1 — HYROX
+    {tr:{tag:'🛷 HYROX Salonu · AMRAP',title:'AMRAP Sled & Taşıma',
+         desc:'18 dakika içinde mümkün olduğunca çok tur. Sled push/pull + farmers carry.',
+         tip:'Tur sayını kaydet — haftalık gelişimini böyle görürsün. Tur ortasında durma, tur arasında dur.'},
+     en:{tag:'🛷 HYROX Gym · AMRAP',title:'AMRAP Sled & Carry',
+         desc:'As many rounds as possible in 18 minutes. Sled push/pull + farmers carry.',
+         tip:'Record your rounds — that\'s how you see weekly progress. Don\'t stop mid-round, rest between.'},
+     yt:'https://www.youtube.com/results?search_query=hyrox+amrap+sled+farmers+carry',
+     ex:[
+       {tr:'Isınma koşusu + squat',en:'Warm-up run + squat',sub:{tr:'Hafif + 15 goblet squat',en:'Easy + 15 goblet squat'},v:'8 dk'},
+       {tr:'AMRAP 18 dk: Sled Push 25m → Sled Pull 25m → Farmers Carry 40m',en:'AMRAP 18 min: Sled Push 25m → Sled Pull 25m → Farmers Carry 40m',sub:{tr:'Orta ağırlık, kaç tur oldu?',en:'Moderate weight, count your rounds'},v:'18 dk'},
+       {tr:'Aktif dinlenme',en:'Active rest',sub:{tr:'Yavaş yürüyüş',en:'Slow walk'},v:'3 dk'},
+       {tr:'AMRAP 10 dk: 12 Sandbag Lunge + 10 KB Swing + 150m koşu',en:'AMRAP 10 min: 12 Sandbag Lunges + 10 KB Swings + 150m run',sub:{tr:'KB: 20kg, sandbag: 15kg',en:'KB: 20kg, sandbag: 15kg'},v:'10 dk'},
+       {tr:'Soğuma',en:'Cool-down',sub:{tr:'Kalça + hamstring esneme',en:'Hip + hamstring stretch'},v:'5 dk'}
+     ]},
+    // 2 — Dışarıda
+    {tr:{tag:'🌳 Dışarıda · Güç Parkur',title:'Park Güç Devresi',
+         desc:'Parkta doğal ekipmanlarla güç antrenmanı. Merdiven, bank, yük taşıma.',
+         tip:'Merdiven sled push\'un yerini tutar, bank dips omuz güçlendirir. Doğal direnç yeterli.'},
+     en:{tag:'🌳 Outdoors · Strength Circuit',title:'Park Strength Circuit',
+         desc:'Strength training with natural park equipment. Stairs, bench, loaded carry.',
+         tip:'Stairs replace sled push, bench dips strengthen shoulders. Natural resistance is enough.'},
+     yt:'https://www.youtube.com/results?search_query=outdoor+strength+circuit+park+workout',
+     ex:[
+       {tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'1km rahat',en:'1km easy'},v:'6 dk'},
+       {tr:'3 tur devire: merdiven koşu + dips + step-up + yük taşıma',en:'3-round circuit: stair run + dips + step-ups + loaded carry',sub:{tr:'60sn merdiven + 12 dips (bank) + 15 step-up + 60m sırt çantası',en:'60s stairs + 12 dips (bench) + 15 step-ups + 60m backpack carry'},v:'3 tur'},
+       {tr:'Dinlenme tur arası',en:'Rest between rounds',sub:{tr:'2 dk yürüyüş',en:'2 min walk'},v:'6 dk'},
+       {tr:'Lunge yürüyüşü',en:'Lunge walk',sub:{tr:'3×30m alternating lunge',en:'3×30m alternating lunges'},v:'3×30m'},
+       {tr:'Soğuma + esneme',en:'Cool-down + stretch',sub:{tr:'Kalça fleksörü + IT band',en:'Hip flexor + IT band'},v:'8 dk'}
+     ]}
+   ]},
+
+  // ÇARŞAMBA
+  {tr:{day:'Çarşamba'},en:{day:'Wednesday'},
+   envs:[
+    // 0 — Spor Salonu
+    {tr:{tag:'⚡ Spor Salonu · Interval',title:'400m Interval & Fonksiyonel',
+         desc:'Kısa interval koşu + HYROX fonksiyonel hareketleri. Nabzı oynaksın.',
+         tip:'Her interval arasında nabzın biraz düşsün — ama tamamen soğuma. 2 dk yeterli.'},
+     en:{tag:'⚡ Gym · Interval',title:'400m Intervals & Functional',
+         desc:'Short interval runs + HYROX functional movements. Let the HR fluctuate.',
+         tip:'Let HR drop slightly between intervals — but don\'t fully recover. 2 min is enough.'},
+     yt:'https://www.youtube.com/results?search_query=hyrox+interval+treadmill+functional',
+     ex:[
+       {tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'Hafif + dinamik açılma',en:'Easy + dynamic warm-up'},v:'8 dk'},
+       {tr:'400m koşu intervals',en:'400m run intervals',sub:{tr:'%80 efor, 2 dk aralar',en:'80% effort, 2 min rest'},v:'6×400m'},
+       {tr:'Wall Balls',en:'Wall Balls',sub:{tr:'9kg, 3m hedef, ritimli',en:'9kg, 3m target, rhythmic'},v:'4×20 tekrar'},
+       {tr:'Box Step-Up',en:'Box Step-Up',sub:{tr:'50cm, KB ile veya vücut ağırlığı',en:'50cm, KB or bodyweight'},v:'3×12 tekrar'},
+       {tr:'Soğuma koşusu',en:'Cool-down run',sub:{tr:'Zone 1, çok yavaş',en:'Zone 1, very slow'},v:'5 dk'}
+     ]},
+    // 1 — HYROX
+    {tr:{tag:'🏁 HYROX Salonu · Mini Sim',title:'Mini Simülasyon — Teknik',
+         desc:'3 istasyon + koşu, aralarında gerçek dinlenme. Teknik odak, düşük ağırlık.',
+         tip:'Bu simülasyonun amacı yarış değil hafıza. Geçişleri düşün, ağırlığı düşük tut.'},
+     en:{tag:'🏁 HYROX Gym · Mini Sim',title:'Mini Simulation — Technique',
+         desc:'3 stations + run with real rest. Technique focus, low weight.',
+         tip:'This simulation is about muscle memory, not racing. Think transitions, keep weights low.'},
+     yt:'https://www.youtube.com/results?search_query=hyrox+mini+simulation+technique+training',
+     ex:[
+       {tr:'Isınma + mobilite',en:'Warm-up + mobility',sub:{tr:'800m koşu + kalça + omuz açma',en:'800m run + hip + shoulder opener'},v:'10 dk'},
+       {tr:'Blok 1: 800m koşu → SkiErg 500m',en:'Block 1: 800m run → SkiErg 500m',sub:{tr:'Sakin, teknik önce',en:'Easy, technique first'},v:'8 dk'},
+       {tr:'Tam dinlenme',en:'Full rest',sub:{tr:'3 dk yürü ve nefes',en:'3 min walk and breathe'},v:'3 dk'},
+       {tr:'Blok 2: 800m koşu → Farmers Carry 80m',en:'Block 2: 800m run → Farmers Carry 80m',sub:{tr:'16kg/el, omuz sıkı',en:'16kg/hand, tight shoulders'},v:'8 dk'},
+       {tr:'Tam dinlenme',en:'Full rest',sub:{tr:'3 dk',en:'3 min'},v:'3 dk'},
+       {tr:'Blok 3: 800m koşu → Wall Ball 25 tekrar',en:'Block 3: 800m run → Wall Ball 25 reps',sub:{tr:'9kg, ritim bul',en:'9kg, find rhythm'},v:'8 dk'},
+       {tr:'Soğuma esneme',en:'Cool-down stretch',sub:{tr:'Kalça, hamstring, omuz',en:'Hip, hamstring, shoulder'},v:'8 dk'}
+     ]},
+    // 2 — Dışarıda
+    {tr:{tag:'🌳 Dışarıda · Tempo + AMRAP',title:'Tempo Koşu & Park AMRAP',
+         desc:'Tempo koşu + parkta 12 dakika AMRAP. Dışarıda hava al, nabzı oynaksın.',
+         tip:'Tempo: konuşmanın zorlaştığı ama durman gerekmediği hız. AMRAP\'ta tur sayını kaydet.'},
+     en:{tag:'🌳 Outdoors · Tempo + AMRAP',title:'Tempo Run & Park AMRAP',
+         desc:'Tempo run + 12-minute AMRAP in the park. Fresh air, let HR fluctuate.',
+         tip:'Tempo: where talking gets hard but you don\'t need to stop. Record your AMRAP rounds.'},
+     yt:'https://www.youtube.com/results?search_query=tempo+run+outdoor+amrap+circuit',
+     ex:[
+       {tr:'Hafif koşu ısınma',en:'Easy run warm-up',sub:{tr:'Zone 1, 5–6 dk/km',en:'Zone 1, 5–6 min/km'},v:'10 dk'},
+       {tr:'Tempo koşu',en:'Tempo run',sub:{tr:'%75 efor, sürdürülebilir',en:'75% effort, sustainable'},v:'20 dk'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'2 dk yürüyüş',en:'2 min walk'},v:'2 dk'},
+       {tr:'AMRAP 12 dk: 10 burpee + 50m sprint + 15 lunge',en:'AMRAP 12 min: 10 burpees + 50m sprint + 15 lunges',sub:{tr:'Kaç tur tamamlarsın?',en:'Count your rounds'},v:'12 dk'},
+       {tr:'Soğuma yürüyüş',en:'Cool-down walk',sub:{tr:'Nefes normale dönene dek',en:'Until breath normalizes'},v:'6 dk'}
+     ]}
+   ]},
+
+  // PERŞEMBE
+  {tr:{day:'Perşembe'},en:{day:'Thursday'},
+   envs:[
+    // 0 — Spor Salonu
+    {tr:{tag:'🏃 Spor Salonu · Hız',title:'Koşu Bandı Hız Çalışması',
+         desc:'Koşu bandında negatif split + hız intervalleri. Tempo değişimi HYROX\'a özel.',
+         tip:'Negatif split: ikinci yarıyı ilk yarıdan hızlı koş. Beyin bunu çabuk öğrenir.'},
+     en:{tag:'🏃 Gym · Speed',title:'Treadmill Speed Work',
+         desc:'Negative split + speed intervals on treadmill. Pace variation specific to HYROX.',
+         tip:'Negative split: run the second half faster than the first. The brain learns this quickly.'},
+     yt:'https://www.youtube.com/results?search_query=treadmill+negative+split+speed+intervals',
+     ex:[
+       {tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'Zone 1, 6 dk/km',en:'Zone 1, 6 min/km'},v:'8 dk'},
+       {tr:'Negatif split koşu',en:'Negative split run',sub:{tr:'İlk 2km: 5:40 → Son 2km: 5:10',en:'First 2km: 5:40 → Last 2km: 5:10'},v:'4km'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'3 dk yürüyüş',en:'3 min walk'},v:'3 dk'},
+       {tr:'200m hız intervalleri',en:'200m speed intervals',sub:{tr:'%90 efor, 90sn tam dinlenme',en:'90% effort, 90s full rest'},v:'8×200m'},
+       {tr:'Soğuma koşusu',en:'Cool-down run',sub:{tr:'Zone 1, çok yavaş',en:'Zone 1, very slow'},v:'8 dk'}
+     ]},
+    // 1 — HYROX
+    {tr:{tag:'🏁 HYROX Salonu · Kombinasyon',title:'Koşu + İstasyon Kombinasyonu',
+         desc:'5 farklı istasyon, her biri 1km koşuyla ayrılmış. Gerçek yarış ritmi.',
+         tip:'Her istasyona girerken ilk 15 saniye temponu ayarla. Başlangıç hızı sonunu belirler.'},
+     en:{tag:'🏁 HYROX Gym · Combo',title:'Run + Station Combination',
+         desc:'5 different stations, each separated by 1km run. Real race rhythm.',
+         tip:'When entering each station, dial in your pace in the first 15 seconds. Start speed determines your finish.'},
+     yt:'https://www.youtube.com/results?search_query=hyrox+run+station+combination+training',
+     ex:[
+       {tr:'Isınma + hareketlilik',en:'Warm-up + mobility',sub:{tr:'500m koşu + kalça açma',en:'500m run + hip opener'},v:'8 dk'},
+       {tr:'1km koşu → SkiErg 500m',en:'1km run → SkiErg 500m',sub:{tr:'Teknik önce, tempo sonra',en:'Technique first, then pace'},v:'8 dk'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'3 dk',en:'3 min'},v:'3 dk'},
+       {tr:'1km koşu → Sled Push 2×25m',en:'1km run → Sled Push 2×25m',sub:{tr:'E:70kg / K:45kg',en:'M:70kg / W:45kg'},v:'8 dk'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'3 dk',en:'3 min'},v:'3 dk'},
+       {tr:'1km koşu → Rowing 500m',en:'1km run → Rowing 500m',sub:{tr:'2:10/500m hedef',en:'Target 2:10/500m'},v:'8 dk'},
+       {tr:'Soğuma',en:'Cool-down',sub:{tr:'Hafif yürüyüş + esneme',en:'Light walk + stretch'},v:'8 dk'}
+     ]},
+    // 2 — Dışarıda
+    {tr:{tag:'🌳 Dışarıda · Fartlek',title:'Fartlek Koşu',
+         desc:'Serbest tempolu Fartlek: hızı doğal işaretlere göre değiştir. En eğlenceli koşu formatı.',
+         tip:'Fartlek = İsveç\'çe hız oyunu. Önündeki ağaca kadar hızlı, köşeye kadar yavaş. Kuralı yok.'},
+     en:{tag:'🌳 Outdoors · Fartlek',title:'Fartlek Run',
+         desc:'Free-pace Fartlek: change speed based on natural landmarks. Most fun run format.',
+         tip:'Fartlek = Swedish for speed play. Fast to that tree, easy to the corner. No rules.'},
+     yt:'https://www.youtube.com/results?search_query=fartlek+run+training+guide',
+     ex:[
+       {tr:'Hafif koşu ısınma',en:'Easy run warm-up',sub:{tr:'Zone 1, tamamen rahat',en:'Zone 1, completely easy'},v:'10 dk'},
+       {tr:'Fartlek koşu',en:'Fartlek run',sub:{tr:'Doğal işaretlerle hız değiştir, doğaçlama',en:'Change pace at natural landmarks, improvise'},v:'30 dk'},
+       {tr:'Soğuma koşusu',en:'Cool-down run',sub:{tr:'Çok yavaş, dinle bedenini',en:'Very slow, listen to your body'},v:'10 dk'},
+       {tr:'Esneme',en:'Stretch',sub:{tr:'Kalça, quad, hamstring',en:'Hip, quad, hamstring'},v:'8 dk'}
+     ]}
+   ]},
+
+  // CUMA
+  {tr:{day:'Cuma'},en:{day:'Friday'},
+   envs:[
+    // 0 — Spor Salonu
+    {tr:{tag:'⚙️ Spor Salonu · Compound',title:'Compound Güç Günü',
+         desc:'Ağır ama az tekrar. Deadlift, squat, carry. Haftanın en güçlü antrenmanı.',
+         tip:'Deadlift\'te bar vücuda yakın. Romanian DL\'de hamstring gerilmesini hisset. Kontrol önce.'},
+     en:{tag:'⚙️ Gym · Compound',title:'Compound Strength Day',
+         desc:'Heavy but low reps. Deadlift, squat, carry. The strongest session of the week.',
+         tip:'Keep bar close on deadlift. Feel the hamstring stretch on Romanian DL. Control first.'},
+     yt:'https://www.youtube.com/results?search_query=compound+strength+deadlift+squat+hyrox',
+     ex:[
+       {tr:'Isınma + mobilite',en:'Warm-up + mobility',sub:{tr:'Kalça açma + band pull-apart',en:'Hip opener + band pull-apart'},v:'8 dk'},
+       {tr:'Deadlift',en:'Deadlift',sub:{tr:'%80 1RM, 3sn iniş, 4 set',en:'80% 1RM, 3s descent, 4 sets'},v:'4×5 tekrar'},
+       {tr:'Romanian Deadlift',en:'Romanian Deadlift',sub:{tr:'Hamstring odaklı, yavaş',en:'Hamstring focused, slow'},v:'3×10 tekrar'},
+       {tr:'Goblet Squat',en:'Goblet Squat',sub:{tr:'KB, tam derinlik',en:'KB, full depth'},v:'4×12 tekrar'},
+       {tr:'KB Farmers Carry',en:'KB Farmers Carry',sub:{tr:'24kg/el, sallanma yok, 4 tur',en:'24kg/hand, no swaying, 4 rounds'},v:'4×50m'},
+       {tr:'Ab wheel / Plank',en:'Ab wheel / Plank',sub:{tr:'Core finisher',en:'Core finisher'},v:'4×45 sn'}
+     ]},
+    // 1 — HYROX
+    {tr:{tag:'🛷 HYROX Salonu · Taşıma Bloku',title:'Taşıma & Lunge Bloku',
+         desc:'Farmers carry, sandbag lunge ve sled pull kombinasyonu. Bacak ve omuz dayanıklılığı.',
+         tip:'Sandbag lunge\'da diz zemine değmemeli. Adım uzunluğu sabit kalsın, tempo korusun.'},
+     en:{tag:'🛷 HYROX Gym · Carry Block',title:'Carry & Lunge Block',
+         desc:'Farmers carry, sandbag lunge and sled pull combo. Leg and shoulder endurance.',
+         tip:'Knee must not touch floor on sandbag lunge. Keep stride length consistent, maintain tempo.'},
+     yt:'https://www.youtube.com/results?search_query=hyrox+farmers+carry+sandbag+lunges+training',
+     ex:[
+       {tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'800m rahat',en:'800m easy'},v:'5 dk'},
+       {tr:'Farmers Carry',en:'Farmers Carry',sub:{tr:'22kg/el, omuz kilitli',en:'22kg/hand, locked shoulders'},v:'5×60m'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'90 sn',en:'90 sec'},v:'8 dk'},
+       {tr:'Sandbag Lunge',en:'Sandbag Lunge',sub:{tr:'15kg, kontrollü iniş, alternating',en:'15kg, controlled descent, alternating'},v:'4×20 tekrar'},
+       {tr:'Sled Pull — ip',en:'Sled Pull — rope',sub:{tr:'Dik duruş, kalça bağlı',en:'Upright, hip engaged'},v:'4×25m'},
+       {tr:'Core + soğuma',en:'Core + cool-down',sub:{tr:'Plank + IT band esneme',en:'Plank + IT band stretch'},v:'8 dk'}
+     ]},
+    // 2 — Dışarıda
+    {tr:{tag:'🌳 Dışarıda · Güç+Koşu',title:'Hill Sprint & Vücut Ağırlığı',
+         desc:'Tepe sprint + vücut ağırlığı güç devresi. Kısa ve etkili.',
+         tip:'Tepe sprinti sled push\'un doğal alternatifi. Kısa adımlar, yüksek diz, kalça enerji.'},
+     en:{tag:'🌳 Outdoors · Strength+Run',title:'Hill Sprint & Bodyweight',
+         desc:'Hill sprints + bodyweight strength circuit. Short and effective.',
+         tip:'Hill sprint is the natural alternative to sled push. Short steps, high knees, power from hips.'},
+     yt:'https://www.youtube.com/results?search_query=hill+sprint+bodyweight+circuit+outdoor',
+     ex:[
+       {tr:'Isınma koşusu',en:'Warm-up run',sub:{tr:'1km çok rahat',en:'1km very easy'},v:'6 dk'},
+       {tr:'Tepe Sprint',en:'Hill Sprint',sub:{tr:'30–40m, %90 efor, yürüyerek in',en:'30–40m, 90% effort, walk down'},v:'8×40m'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'90 sn aralar',en:'90s rest'},v:'12 dk'},
+       {tr:'Vücut ağırlığı devresi × 3',en:'Bodyweight circuit × 3',sub:{tr:'10 push-up + 15 squat jump + 20 lunge + 30sn plank',en:'10 push-ups + 15 squat jumps + 20 lunges + 30s plank'},v:'3 tur'},
+       {tr:'Soğuma yürüyüş',en:'Cool-down walk',sub:{tr:'Nefes normale dönene dek',en:'Until breath normalizes'},v:'8 dk'}
+     ]}
+   ]},
+
+  // CUMARTESİ
+  {tr:{day:'Cumartesi'},en:{day:'Saturday'},
+   envs:[
+    // 0 — Spor Salonu
+    {tr:{tag:'🏃 Spor Salonu · Uzun',title:'Uzun Koşu Bandı + AMRAP',
+         desc:'Koşu bandında uzun Zone 2, sonunda 12 dakika AMRAP finisher.',
+         tip:'Uzun koşuyu koruma modunda tamamla — finisher için bir şeyler bırak.'},
+     en:{tag:'🏃 Gym · Long',title:'Long Treadmill + AMRAP',
+         desc:'Long Zone 2 on treadmill, finishing with 12-minute AMRAP.',
+         tip:'Complete the long run in conservation mode — save something for the finisher.'},
+     yt:'https://www.youtube.com/results?search_query=treadmill+long+run+zone2+amrap+finisher',
+     ex:[
+       {tr:'Zone 2 koşu bandı',en:'Zone 2 treadmill',sub:{tr:'1° eğim, konuşma temposu',en:'1° incline, conversational'},v:'40 dk'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'2 dk, su iç',en:'2 min, hydrate'},v:'2 dk'},
+       {tr:'AMRAP 12 dk: 12 KB swing + 10 goblet squat + 200m koşu',en:'AMRAP 12 min: 12 KB swings + 10 goblet squats + 200m run',sub:{tr:'Kaç tur tamamlarsın?',en:'How many rounds?'},v:'12 dk'},
+       {tr:'Soğuma + esneme',en:'Cool-down + stretch',sub:{tr:'Tüm büyük kas grupları',en:'All major muscle groups'},v:'10 dk'}
+     ]},
+    // 1 — HYROX
+    {tr:{tag:'🛷 HYROX Salonu · Uzun Sim',title:'Uzun HYROX Simülasyonu',
+         desc:'5 istasyon + koşu, dinlenmeli format. Yarış günü hazırlığı.',
+         tip:'Geçişlerde 20-30 sn max. İlk istasyona yavaş gir, sonuncusunda bırak.'},
+     en:{tag:'🛷 HYROX Gym · Long Sim',title:'Long HYROX Simulation',
+         desc:'5 stations + run, rested format. Race day preparation.',
+         tip:'Max 20-30s transitions. Enter the first station slow, release on the last.'},
+     yt:'https://www.youtube.com/results?search_query=hyrox+long+simulation+race+prep',
+     ex:[
+       {tr:'Isınma + mobilite',en:'Warm-up + mobility',sub:{tr:'800m + dinamik açılma',en:'800m + dynamic warm-up'},v:'10 dk'},
+       {tr:'1km koşu → SkiErg 500m',en:'1km run → SkiErg 500m',sub:{tr:'Sakin giriş',en:'Easy entry'},v:'8 dk'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'3 dk',en:'3 min'},v:'3 dk'},
+       {tr:'1km koşu → Sled Push 2×25m → Sled Pull 2×25m',en:'1km run → Sled Push 2×25m → Sled Pull 2×25m',sub:{tr:'E:70kg / K:45kg, geçiş yakın tut',en:'M:70kg / W:45kg, keep transition tight'},v:'10 dk'},
+       {tr:'Dinlenme',en:'Rest',sub:{tr:'3 dk',en:'3 min'},v:'3 dk'},
+       {tr:'1km koşu → Farmers Carry 100m → Wall Ball 20 tekrar',en:'1km run → Farmers Carry 100m → Wall Ball 20 reps',sub:{tr:'Tempo koruyarak geçiş',en:'Maintain pace through transition'},v:'10 dk'},
+       {tr:'Soğuma',en:'Cool-down',sub:{tr:'Yürüyüş + esneme',en:'Walk + stretch'},v:'10 dk'}
+     ]},
+    // 2 — Dışarıda
+    {tr:{tag:'🌳 Dışarıda · Uzun Koşu',title:'Uzun Koşu & Doğal Engel',
+         desc:'Zone 2 uzun koşu + parkta doğal engel ve taşıma. Hafta kapanışı.',
+         tip:'Merdiven, tepe, kum — doğal direnç sled\'in yerini tutar. Yavaş başla, sonunu koru.'},
+     en:{tag:'🌳 Outdoors · Long Run',title:'Long Run & Natural Obstacles',
+         desc:'Zone 2 long run + natural obstacles and carries in the park. Week closer.',
+         tip:'Stairs, hills, sand — natural resistance replaces the sled. Start slow, protect the finish.'},
+     yt:'https://www.youtube.com/results?search_query=outdoor+long+run+hill+carry+hyrox',
+     ex:[
+       {tr:'Zone 2 koşu',en:'Zone 2 run',sub:{tr:'Düz zemin, konuşma temposu',en:'Flat, conversational'},v:'40 dk'},
+       {tr:'Tepe / Merdiven koşusu',en:'Hill / Stairs',sub:{tr:'5×60sn çık, yürüyerek in',en:'5×60s up, walk down'},v:'10 dk'},
+       {tr:'Yük taşıma — sırt çantası',en:'Loaded carry — backpack',sub:{tr:'5–8kg, 3×100m yürüyüş',en:'5–8kg, 3×100m walk'},v:'3×100m'},
+       {tr:'Soğuma yürüyüş',en:'Cool-down walk',sub:{tr:'Zone 1, çok rahat',en:'Zone 1, very easy'},v:'8 dk'}
+     ]}
+   ]},
+
+  // PAZAR
+  {tr:{day:'Pazar'},en:{day:'Sunday'},
+   envs:[
+    // 0 — Spor Salonu
+    {tr:{tag:'💚 Spor Salonu · Toparlanma',title:'Aktif Toparlanma — Salon',
+         desc:'Eliptik / spin Zone 1 + foam rolling + mobilite. Kaslar bu günde onarılır.',
+         tip:'Bugün antrenman değil — adaptasyon günü. Ter çıkmasın, nefes rahat olsun.'},
+     en:{tag:'💚 Gym · Recovery',title:'Active Recovery — Gym',
+         desc:'Elliptical / spin Zone 1 + foam rolling + mobility. Muscles repair today.',
+         tip:'Today is not training — it\'s adaptation. No sweat, breathing must stay easy.'},
+     yt:'https://www.youtube.com/results?search_query=active+recovery+gym+foam+rolling+mobility',
+     ex:[
+       {tr:'Eliptik veya spin bike',en:'Elliptical or spin bike',sub:{tr:'Zone 1, nabız 100–120',en:'Zone 1, HR 100–120'},v:'20 dk'},
+       {tr:'Foam Rolling',en:'Foam Rolling',sub:{tr:'Quad, IT band, hamstring, sırt',en:'Quad, IT band, hamstring, back'},v:'12 dk'},
+       {tr:'Hip mobility',en:'Hip mobility',sub:{tr:'90/90 stretch + pigeon pose',en:'90/90 stretch + pigeon pose'},v:'8 dk'},
+       {tr:'Omuz mobilite',en:'Shoulder mobility',sub:{tr:'SkiErg için kritik',en:'Critical for SkiErg'},v:'6 dk'},
+       {tr:'Box breathing',en:'Box breathing',sub:{tr:'4-4-4-4, 5 tur',en:'4-4-4-4, 5 rounds'},v:'5 dk'}
+     ]},
+    // 1 — HYROX
+    {tr:{tag:'💚 HYROX Salonu · Toparlanma',title:'Aktif Toparlanma — HYROX',
+         desc:'Çok hafif SkiErg + yürüme bandı + mobilite. Hareketleri sıfırlama günü.',
+         tip:'Bugün makineleri teknik bakış açısıyla gözlemle. Form düzeltme, ağırlık sıfır.'},
+     en:{tag:'💚 HYROX Gym · Recovery',title:'Active Recovery — HYROX',
+         desc:'Very light SkiErg + walking treadmill + mobility. Day to reset the movements.',
+         tip:'Today observe the machines from a technique perspective. Form correction, zero weight.'},
+     yt:'https://www.youtube.com/results?search_query=hyrox+active+recovery+light+skierg',
+     ex:[
+       {tr:'SkiErg çok hafif',en:'SkiErg very light',sub:{tr:'Hiç tempo yok, sadece form',en:'No pace, form only'},v:'10 dk'},
+       {tr:'Yürüyüş bandı',en:'Walking treadmill',sub:{tr:'4 km/h, hafif eğim',en:'4 km/h, slight incline'},v:'15 dk'},
+       {tr:'Foam Rolling',en:'Foam Rolling',sub:{tr:'Tüm alt vücut',en:'Full lower body'},v:'10 dk'},
+       {tr:'Mobilite devresi',en:'Mobility circuit',sub:{tr:'Kalça + omuz + sırt',en:'Hip + shoulder + back'},v:'10 dk'}
+     ]},
+    // 2 — Dışarıda
+    {tr:{tag:'💚 Dışarıda · Yürüyüş',title:'Aktif Toparlanma — Yürüyüş',
+         desc:'Hafif yürüyüş, mümkünse doğada. Zihin ve beden dinleniyor.',
+         tip:'Yürürken teknikleri kafanda tekrar et. Zihin de antrenman yapıyor.'},
+     en:{tag:'💚 Outdoors · Walk',title:'Active Recovery — Walk',
+         desc:'Light walk, outdoors if possible. Mind and body resting.',
+         tip:'While walking, mentally review your techniques. The mind is training too.'},
+     yt:'https://www.youtube.com/results?search_query=active+recovery+outdoor+walk+mobility',
+     ex:[
+       {tr:'Yürüyüş',en:'Walk',sub:{tr:'Rahat, tercihen doğada',en:'Easy, outdoors if possible'},v:'35 dk'},
+       {tr:'Hip mobility',en:'Hip mobility',sub:{tr:'90/90 stretch + pigeon pose',en:'90/90 stretch + pigeon pose'},v:'8 dk'},
+       {tr:'Omuz + sırt mobilite',en:'Shoulder + back mobility',sub:{tr:'SkiErg ve Rowing için',en:'For SkiErg and Rowing'},v:'6 dk'},
+       {tr:'Box breathing',en:'Box breathing',sub:{tr:'4-4-4-4, 5 tur',en:'4-4-4-4, 5 rounds'},v:'5 dk'}
+     ]}
+   ]}
+];
 function buildTabs(){
   var html='';
   DAYS.forEach(function(d,i){
@@ -874,39 +1529,68 @@ function buildTabs(){
   });
   document.getElementById('day-tabs').innerHTML=html;
 }
+function buildEnvTabs(dayIdx){
+  var html='';
+  ENVS.forEach(function(e,ei){
+    var cls='env-tab'+(ei===curEnv?' on':'');
+    html+='<div class="'+cls+'" onclick="switchEnv('+ei+')">';
+    html+='<span class="env-ico">'+e.ico+'</span>';
+    html+='<span class="env-lbl">'+(lang==='tr'?e.tr:e.en)+'</span>';
+    html+='</div>';
+  });
+  return html;
+}
+function switchEnv(ei){
+  curEnv=ei;
+  // Track environments used for badge
+  var used=[];try{var e=lsGet('rx26_envs_used');used=e?JSON.parse(e):[];}catch(er){}
+  if(used.indexOf(ei)<0){used.push(ei);lsSet('rx26_envs_used',JSON.stringify(used));}
+  renderDay(curDay);
+}
 function renderDay(i){
   curDay=i;
-  var d=DAYS[i],t=lang==='tr'?d.tr:d.en;
+  var d=DAYS[i];
+  var env=d.envs[curEnv];
+  var t=lang==='tr'?env.tr:env.en;
+  var dayName=lang==='tr'?d.tr.day:d.en.day;
   var isDone=state.weekDays.indexOf(i)>=0;
   var doneLbl=isDone?(lang==='tr'?'✓ Tamamlandı':'✓ Completed'):(lang==='tr'?'✓ Tamamla':'✓ Mark as Done');
   var doneCls='done-day-btn'+(isDone?' done':'');
+  var startLbl=lang==='tr'?'▶ Antrenmanı Başlat':'▶ Start Workout';
+  // Calc duration
+  var totalSecs=calcExSecs(env.ex);
+  var durStr=fmtDurMin(totalSecs);
   var exHTML='';
-  d.ex.forEach(function(e,j){
+  env.ex.forEach(function(e,j){
     exHTML+='<div class="ex-r">';
     exHTML+='<div class="ex-i">'+String(j+1).padStart(2,'0')+'</div>';
     exHTML+='<div class="ex-body"><div class="ex-name">'+(lang==='tr'?e.tr:e.en)+'</div><div class="ex-sub">'+(lang==='tr'?e.sub.tr:e.sub.en)+'</div></div>';
     exHTML+='<div class="ex-v">'+e.v+'</div>';
     exHTML+='</div>';
   });
+  var durLbl=lang==='tr'?'Tahmini süre':'Est. duration';
   var vidLbl=lang==='tr'?'Antrenman Videosu':'Training Video';
   document.getElementById('tr-body').innerHTML=
     '<div style="height:4px"></div>'+
+    '<div class="env-tabs">'+buildEnvTabs(i)+'</div>'+
     '<div class="tr-card">'+
       '<div class="tr-head">'+
         '<span class="tr-tag">'+t.tag+'</span>'+
+        '<div class="tr-dur-badge" style="margin-left:8px;display:inline-flex">⏱ <b style="margin-left:4px">'+durStr+'</b></div>'+
         '<div class="tr-title">'+t.title+'</div>'+
         '<div class="tr-desc">'+t.desc+'</div>'+
       '</div>'+
       exHTML+
     '</div>'+
     '<div class="tip-b"><div class="tip-ico">—</div><div class="tip-txt">'+t.tip+'</div></div>'+
-    '<a class="yt-b" href="'+d.yt+'" target="_blank" rel="noopener">'+
+    '<a class="yt-b" href="'+env.yt+'" target="_blank" rel="noopener">'+
       '<div class="yt-l">'+
         '<div class="yt-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M19.6 3.2C16 3 12 3 12 3s-4 0-7.6.2C2.5 3.4 1.2 4.7 1 6.6.8 8.2.8 12s0 3.8.2 5.4c.2 1.9 1.5 3.2 3.4 3.4C7.8 21 12 21 12 21s4 0 7.6-.2c1.9-.2 3.2-1.5 3.4-3.4.2-1.6.2-5.4.2-5.4s0-3.8-.2-5.4c-.2-1.9-1.5-3.2-3.4-3.4zM9.8 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg></div>'+
         '<div><div class="yt-title">'+vidLbl+'</div><div class="yt-sub">YouTube →</div></div>'+
       '</div>'+
       '<div class="yt-arr">›</div>'+
     '</a>'+
+    '<div class="start-timer-btn" onclick="openTimer('+i+')">'+startLbl+'</div>'+
     '<div class="'+doneCls+'" id="done-btn-'+i+'" onclick="markDayDone('+i+')">'+doneLbl+'</div>'+
     '<div style="height:4px"></div>';
 }
@@ -915,7 +1599,7 @@ function markDayDone(i){
   var idx=state.weekDays.indexOf(i);
   if(idx>=0)state.weekDays.splice(idx,1);else state.weekDays.push(i);
   lsSet('rx26_week_'+weekId(),JSON.stringify(state.weekDays));
-  buildWeekRow();buildTabs();
+  buildWeekRow();buildTabs();buildBadges();
   document.querySelectorAll('.tab').forEach(function(t,j){t.classList.toggle('on',j===curDay);});
   var btn=document.getElementById('done-btn-'+i);
   if(btn){
@@ -1090,7 +1774,13 @@ function buildShoeFilters(){
   filters.forEach(function(f){html+='<div class="sf'+(f.id===shoeFilter?' on':'')+'" onclick="filterShoes(\''+f.id+'\')">'+f.lbl+'</div>';});
   document.getElementById('shoe-filters').innerHTML=html;
 }
-function filterShoes(id){shoeFilter=id;buildShoeFilters();renderGear();}
+function filterShoes(id){
+  shoeFilter=id;
+  // Track filters used for Explorer badge
+  var used=[];try{var f=lsGet('rx26_filters_used');used=f?JSON.parse(f):[];}catch(er){}
+  if(used.indexOf(id)<0){used.push(id);lsSet('rx26_filters_used',JSON.stringify(used));}
+  buildShoeFilters();renderGear();
+}
 
 function renderGear(){
   buildShoeFilters();
@@ -1183,9 +1873,462 @@ function submitRec(){
 }
 function deleteRec(i){state.recs.splice(i,1);lsSet('rx26_recs',JSON.stringify(state.recs));renderGear();}
 
+// ── ROZETLER ──
+var BADGES=[
+  // ── ANTRENMAN
+  {id:'first',cat:{tr:'Antrenman',en:'Training'},icon:'🏁',
+   tr:'İlk Adım',en:'First Step',
+   desc:{tr:'İlk antrenmanını tamamladın. Her şey buradan başlar.',en:'You completed your first workout. Everything starts here.'},
+   prog:{tr:function(){var t=getTotalWorkouts();return t+'/1 antrenman';},en:function(){var t=getTotalWorkouts();return t+'/1 workout';}},
+   check:function(){return getTotalWorkouts()>0;}},
+  {id:'w3',cat:{tr:'Antrenman',en:'Training'},icon:'💪',
+   tr:'3 Antrenman',en:'3 Workouts',
+   desc:{tr:'3 antrenman tamamladın. Alışkanlık oluşmaya başlıyor.',en:'3 workouts done. A habit is starting to form.'},
+   prog:{tr:function(){return Math.min(getTotalWorkouts(),3)+'/3 antrenman';},en:function(){return Math.min(getTotalWorkouts(),3)+'/3 workouts';}},
+   check:function(){return getTotalWorkouts()>=3;}},
+  {id:'w10',cat:{tr:'Antrenman',en:'Training'},icon:'🔟',
+   tr:'10 Antrenman',en:'10 Workouts',
+   desc:{tr:'10 antrenman tamamladın. Ciddi bir başlangıç.',en:'10 workouts completed. This is serious commitment.'},
+   prog:{tr:function(){return Math.min(getTotalWorkouts(),10)+'/10 antrenman';},en:function(){return Math.min(getTotalWorkouts(),10)+'/10 workouts';}},
+   check:function(){return getTotalWorkouts()>=10;}},
+  {id:'w25',cat:{tr:'Antrenman',en:'Training'},icon:'🏅',
+   tr:'25 Antrenman',en:'25 Workouts',
+   desc:{tr:'25 antrenman. Bu noktaya gelen az kişi gelir.',en:'25 workouts. Few people make it this far.'},
+   prog:{tr:function(){return Math.min(getTotalWorkouts(),25)+'/25 antrenman';},en:function(){return Math.min(getTotalWorkouts(),25)+'/25 workouts';}},
+   check:function(){return getTotalWorkouts()>=25;}},
+  {id:'week1',cat:{tr:'Antrenman',en:'Training'},icon:'🔥',
+   tr:'Tam Hafta',en:'Full Week',
+   desc:{tr:'Haftanın 7 gününü de tamamladın. Dinlenme de dahil.',en:'You completed all 7 days of the week. Rest included.'},
+   prog:{tr:function(){return state.weekDays.length+'/7 gün';},en:function(){return state.weekDays.length+'/7 days';}},
+   check:function(){return state.weekDays.length>=7;}},
+  {id:'env3',cat:{tr:'Antrenman',en:'Training'},icon:'🌍',
+   tr:'3 Ortam',en:'3 Environments',
+   desc:{tr:'Spor salonu, HYROX salonu ve dışarıda antrenman yaptın. Gerçek bir atlet.',en:'Trained at gym, HYROX gym, and outdoors. A true athlete.'},
+   prog:{tr:function(){var e=lsGet('rx26_envs_used');try{return (e?JSON.parse(e):[]).length+'/3 ortam';}catch(er){return '0/3 ortam';}},
+         en:function(){var e=lsGet('rx26_envs_used');try{return (e?JSON.parse(e):[]).length+'/3 environments';}catch(er){return '0/3 environments';}},},
+   check:function(){var e=lsGet('rx26_envs_used');try{return (e?JSON.parse(e):[]).length>=3;}catch(er){return false;}}},
+  // ── YARIŞ HAZIRLIĞI
+  {id:'pb',cat:{tr:'Yarış Hazırlığı',en:'Race Prep'},icon:'🎯',
+   tr:'PB Girişi',en:'PB Entered',
+   desc:{tr:'Kişisel en iyini sisteme girdin. Başlangıç noktanı bilmek önemli.',en:'You entered your personal best. Knowing your starting point matters.'},
+   prog:{tr:function(){return state.pb?'✓ Girildi':'Henüz girilmedi';},en:function(){return state.pb?'✓ Entered':'Not entered yet';}},
+   check:function(){return !!state.pb;}},
+  {id:'goal',cat:{tr:'Yarış Hazırlığı',en:'Race Prep'},icon:'🏆',
+   tr:'Hedef Belirlendi',en:'Goal Set',
+   desc:{tr:'Hedef sürenini belirledin. Bir hedef olmadan performans ölçülmez.',en:'You set a goal time. Without a target, performance can\'t be measured.'},
+   prog:{tr:function(){return state.goal?'✓ Belirlendi':'Henüz belirlenmedi';},en:function(){return state.goal?'✓ Set':'Not set yet';}},
+   check:function(){return !!state.goal;}},
+  {id:'improve',cat:{tr:'Yarış Hazırlığı',en:'Race Prep'},icon:'📈',
+   tr:'Gelişim Var',en:'Improvement',
+   desc:{tr:'PB ile hedef arası fark 5 dakikadan fazla. Büyük hedef, büyük motivasyon.',en:'Gap between PB and goal is over 5 minutes. Big target, big motivation.'},
+   prog:{tr:function(){if(!state.pb||!state.goal)return 'PB ve hedef girilmeli';var d=parseHM(state.pb)-parseHM(state.goal);return d>0?'Fark: '+Math.floor(d/60)+' dk':'PB ve hedef girilmeli';},
+         en:function(){if(!state.pb||!state.goal)return 'Enter PB and goal';var d=parseHM(state.pb)-parseHM(state.goal);return d>0?'Gap: '+Math.floor(d/60)+' min':'Enter PB and goal';}},
+   check:function(){if(!state.pb||!state.goal)return false;return (parseHM(state.pb)-parseHM(state.goal))>=300;}},
+  {id:'half',cat:{tr:'Yarış Hazırlığı',en:'Race Prep'},icon:'⚡',
+   tr:'Yarı Yol',en:'Halfway There',
+   desc:{tr:'Yarışa 70 günden az kaldı. Artık geri sayım ciddi.',en:'Less than 70 days to race. The countdown is getting real.'},
+   prog:{tr:function(){var d=getDaysToRace();return d+' gün kaldı';},en:function(){var d=getDaysToRace();return d+' days left';}},
+   check:function(){return getDaysToRace()<=70;}},
+  {id:'calc',cat:{tr:'Yarış Hazırlığı',en:'Race Prep'},icon:'📊',
+   tr:'Süre Hesapladı',en:'Time Calculated',
+   desc:{tr:'Hesap ekranını kullandın ve yarış sürenini planladın.',en:'You used the calculator and planned your race time.'},
+   prog:{tr:function(){return lsGet('rx26_calc_used')==='1'?'✓ Kullanıldı':'Henüz kullanılmadı';},en:function(){return lsGet('rx26_calc_used')==='1'?'✓ Used':'Not used yet';}},
+   check:function(){return lsGet('rx26_calc_used')==='1';}},
+  {id:'checklist',cat:{tr:'Yarış Hazırlığı',en:'Race Prep'},icon:'✅',
+   tr:'Hazır!',en:'Race Ready!',
+   desc:{tr:'Yarış günü listesini tamamen işaretledin. Ekipman tamam, zihin tamam.',en:'You completed the race day checklist. Gear ready, mind ready.'},
+   prog:{tr:function(){var items=document.querySelectorAll('.cl-item');var done=document.querySelectorAll('.cl-item.done');return (items.length?done.length:0)+'/'+items.length+' madde';},
+         en:function(){var items=document.querySelectorAll('.cl-item');var done=document.querySelectorAll('.cl-item.done');return (items.length?done.length:0)+'/'+items.length+' items';}},
+   check:function(){var items=document.querySelectorAll('.cl-item');var done=document.querySelectorAll('.cl-item.done');return items.length>0&&done.length===items.length;}},
+  {id:'race30',cat:{tr:'Yarış Hazırlığı',en:'Race Prep'},icon:'🚨',
+   tr:'Son 30 Gün',en:'Final 30 Days',
+   desc:{tr:'Yarışa 30 günden az kaldı. Artık taper moduna hazırlan.',en:'Less than 30 days to race. Start thinking about your taper.'},
+   prog:{tr:function(){var d=getDaysToRace();return d+' gün kaldı';},en:function(){var d=getDaysToRace();return d+' days left';}},
+   check:function(){return getDaysToRace()<=30;}},
+  // ── TOPLULUK
+  {id:'community',cat:{tr:'Topluluk',en:'Community'},icon:'💬',
+   tr:'İlk Öneri',en:'First Pick',
+   desc:{tr:'Ekipman önerisi ekledin. Topluluğa katkı sayılır.',en:'You added an equipment recommendation. That counts as community contribution.'},
+   prog:{tr:function(){return state.recs.length+' öneri';},en:function(){return state.recs.length+' recommendation'+(state.recs.length===1?'':'s');}},
+   check:function(){return state.recs.length>0;}},
+  {id:'social3',cat:{tr:'Topluluk',en:'Community'},icon:'🤝',
+   tr:'3 Öneri',en:'3 Picks',
+   desc:{tr:'3 ekipman önerisi ekledin. Sen artık bir kaynak.',en:'3 equipment recommendations added. You\'re now a resource.'},
+   prog:{tr:function(){return Math.min(state.recs.length,3)+'/3 öneri';},en:function(){return Math.min(state.recs.length,3)+'/3 recommendations';}},
+   check:function(){return state.recs.length>=3;}},
+  {id:'explore',cat:{tr:'Topluluk',en:'Community'},icon:'🔭',
+   tr:'Keşfedici',en:'Explorer',
+   desc:{tr:'Ekipman ekranında tüm filtreleri denedin.',en:'You tried all filters on the gear screen.'},
+   prog:{tr:function(){var f=lsGet('rx26_filters_used');try{return (f?JSON.parse(f):[]).length+'/5 filtre';}catch(er){return '0/5 filtre';}},
+         en:function(){var f=lsGet('rx26_filters_used');try{return (f?JSON.parse(f):[]).length+'/5 filters';}catch(er){return '0/5 filters';}},},
+   check:function(){var f=lsGet('rx26_filters_used');try{return (f?JSON.parse(f):[]).length>=5;}catch(er){return false;}}}
+];
+function parseHM(s){if(!s)return 0;var p=s.split(':');return(+p[0]||0)*3600+(+p[1]||0)*60;}
+function getTotalWorkouts(){
+  var total=0;
+  for(var k in localStorage){if(k.indexOf('rx26_week_')===0){try{var a=JSON.parse(localStorage[k]);total+=a.length;}catch(e){}}}
+  return total;
+}
+function getDaysToRace(){return Math.max(0,Math.floor((new Date('2026-08-01')-new Date())/86400000));}
+
+function openBdgModal(id){
+  var b=BADGES.filter(function(x){return x.id===id;})[0];
+  if(!b)return;
+  var ok=false;try{ok=b.check();}catch(e){}
+  var t=lang==='tr';
+  document.getElementById('bdg-m-icon').textContent=b.icon;
+  document.getElementById('bdg-m-cat').textContent=t?b.cat.tr:b.cat.en;
+  document.getElementById('bdg-m-title').textContent=t?b.tr:b.en;
+  document.getElementById('bdg-m-desc').textContent=t?b.desc.tr:b.desc.en;
+  var progTxt='';try{progTxt=t?b.prog.tr():b.prog.en();}catch(e){}
+  var statusEl=document.getElementById('bdg-m-status');
+  if(ok){
+    statusEl.innerHTML='<b style="color:var(--gold)">✓ '+(t?'Kazanıldı':'Earned')+'</b>';
+  }else{
+    statusEl.innerHTML=(t?'<b>İlerleme:</b> ':'<b>Progress:</b> ')+progTxt;
+  }
+  document.getElementById('bdg-m-close').textContent=t?'Kapat':'Close';
+  document.getElementById('bdg-modal').classList.add('open');
+}
+function closeBdgModal(e){
+  if(e&&e.target!==document.getElementById('bdg-modal')&&!e.target.classList.contains('bdg-modal-bg')&&!e.target.classList.contains('bdg-modal-close'))return;
+  document.getElementById('bdg-modal').classList.remove('open');
+}
+
+function buildBadges(){
+  var earned=0;
+  var prevEarned=lsGet('rx26_badges_prev')?JSON.parse(lsGet('rx26_badges_prev')):[];
+  var newEarned=[];
+  var byCategory={};
+  var catOrder=lang==='tr'?['Antrenman','Yarış Hazırlığı','Topluluk']:['Training','Race Prep','Community'];
+  BADGES.forEach(function(b){
+    var ok=false;try{ok=b.check();}catch(e){}
+    if(ok){earned++;if(prevEarned.indexOf(b.id)<0)newEarned.push(b.id);}
+    var catKey=lang==='tr'?b.cat.tr:b.cat.en;
+    if(!byCategory[catKey])byCategory[catKey]=[];
+    byCategory[catKey].push({b:b,ok:ok,isNew:ok&&newEarned.indexOf(b.id)>=0});
+  });
+  if(earned>0)lsSet('rx26_badges_prev',JSON.stringify(BADGES.filter(function(b){try{return b.check();}catch(e){return false;}}).map(function(b){return b.id;})));
+  var html='';
+  var isOpen=document.getElementById('badge-block').classList.contains('badge-open');
+  if(isOpen){
+    catOrder.forEach(function(cat){
+      var items=byCategory[cat];
+      if(!items||!items.length)return;
+      var catLbl=cat;
+      html+='<div class="badge-section-lbl">'+catLbl+'</div>';
+      html+='<div class="badge-grid" style="display:grid">';
+      items.forEach(function(item){
+        var b=item.b,ok=item.ok,isNew=item.isNew;
+        var progTxt='';try{progTxt=lang==='tr'?b.prog.tr():b.prog.en();}catch(e){}
+        html+='<div class="bdg'+(ok?' earned':'')+(isNew?' new':'')+'" onclick="openBdgModal(\''+b.id+'\')">';
+        html+='<div class="bdg-icon">'+b.icon+'</div>';
+        html+='<div class="bdg-name">'+(lang==='tr'?b.tr:b.en)+'</div>';
+        if(!ok&&progTxt)html+='<div class="bdg-prog">'+progTxt+'</div>';
+        html+='<div class="bdg-new"></div>';
+        html+='</div>';
+      });
+      html+='</div>';
+    });
+  }
+  var bodyEl=document.getElementById('badge-body');
+  var cntEl=document.getElementById('badge-cnt');
+  var fillEl=document.getElementById('badge-prog-fill');
+  if(bodyEl)bodyEl.innerHTML=html;
+  if(cntEl)cntEl.textContent=earned+'/'+BADGES.length;
+  if(fillEl)fillEl.style.width=Math.round(earned/BADGES.length*100)+'%';
+  var lblEl=document.getElementById('bdg-lbl');
+  if(lblEl)lblEl.textContent=lang==='tr'?'Başarılar':'Achievements';
+}
+function toggleBadges(){
+  var block=document.getElementById('badge-block');
+  block.classList.toggle('badge-open');
+  buildBadges();
+}
+
+// ── TİMER ──
+var timerDayIdx=0, timerExIdx=0, timerSec=0, timerTotal=0, timerRunning=false, timerInterval=null;
+var timerExList=[];
+// Build exercise list for timer from a day
+function buildTimerExList(dayIdx){
+  var d=DAYS[dayIdx];
+  var env=d.envs[curEnv];
+  var list=[];
+  env.ex.forEach(function(e){
+    // parse duration: "X dk" or "X km" or "X tekrar" etc → estimate seconds
+    var name=lang==='tr'?e.tr:e.en;
+    var sub=lang==='tr'?e.sub.tr:e.sub.en;
+    var v=e.v;
+    var secs=180; // default 3 min
+    var m=v.match(/(\d+)\s*dk/);if(m)secs=+m[1]*60;
+    var m2=v.match(/(\d+)\s*km/);if(m2)secs=+m2[1]*360;
+    var m3=v.match(/(\d+)\s*tekrar/);if(m3)secs=Math.round(+m3[1]*3);
+    var m4=v.match(/(\d+)\s*sn/);if(m4)secs=+m4[1];
+    var m5=v.match(/(\d+)×/);if(m5)secs=+m5[1]*45;
+    list.push({name:name,sub:sub+'  ·  '+v,secs:secs});
+  });
+  return list;
+}
+function openTimer(dayIdx){
+  timerDayIdx=dayIdx;
+  timerExList=buildTimerExList(dayIdx);
+  timerExIdx=0;timerRunning=false;
+  loadTimerEx();
+  document.getElementById('timer-modal').classList.add('open');
+  if(timerInterval)clearInterval(timerInterval);
+}
+function closeTimer(){
+  document.getElementById('timer-modal').classList.remove('open');
+  if(timerInterval)clearInterval(timerInterval);
+  timerRunning=false;
+  updateTimerPlayBtn();
+}
+function loadTimerEx(){
+  if(timerExIdx>=timerExList.length){
+    // Done!
+    document.getElementById('timer-ex-name').textContent=lang==='tr'?'🎉 ANTRENMAN BİTTİ!':'🎉 WORKOUT DONE!';
+    document.getElementById('timer-ex-sub').textContent=lang==='tr'?'Harika iş çıkardın!':'Great work!';
+    document.getElementById('timer-time').textContent='00:00';
+    document.getElementById('timer-phase').textContent='';
+    document.getElementById('timer-next-lbl').textContent='';
+    setTimerProg(0,0);
+    if(timerInterval)clearInterval(timerInterval);
+    timerRunning=false;updateTimerPlayBtn();
+    markDayDone(timerDayIdx);
+    return;
+  }
+  var ex=timerExList[timerExIdx];
+  timerTotal=ex.secs; timerSec=ex.secs;
+  document.getElementById('timer-ex-name').textContent=(timerExIdx+1)+' / '+timerExList.length;
+  document.getElementById('timer-ex-sub').textContent=ex.name;
+  document.getElementById('timer-phase').textContent=lang==='tr'?'HAZIR':'READY';
+  updateTimerDisplay();
+  var next=timerExList[timerExIdx+1];
+  document.getElementById('timer-next-lbl').textContent=next?(lang==='tr'?'Sonraki: ':'Next: ')+next.name:'';
+}
+function updateTimerDisplay(){
+  var m=Math.floor(timerSec/60),s=timerSec%60;
+  document.getElementById('timer-time').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  setTimerProg(timerSec,timerTotal);
+}
+function setTimerProg(cur,total){
+  var circ=628,offset=total>0?circ*(1-cur/total):circ;
+  document.getElementById('timer-prog').style.strokeDashoffset=offset;
+}
+function timerToggle(){
+  if(timerExIdx>=timerExList.length)return;
+  timerRunning=!timerRunning;
+  updateTimerPlayBtn();
+  if(timerRunning){
+    document.getElementById('timer-phase').textContent=lang==='tr'?'DEVAM':'GO';
+    timerInterval=setInterval(function(){
+      if(!timerRunning)return;
+      timerSec--;
+      updateTimerDisplay();
+      if(timerSec<=0){
+        clearInterval(timerInterval);
+        timerRunning=false;
+        updateTimerPlayBtn();
+        // vibrate if available
+        if(navigator.vibrate)navigator.vibrate([100,50,100]);
+        timerExIdx++;
+        setTimeout(function(){loadTimerEx();},400);
+      }
+    },1000);
+  }else{
+    if(timerInterval)clearInterval(timerInterval);
+    document.getElementById('timer-phase').textContent=lang==='tr'?'DURAKLADI':'PAUSED';
+  }
+}
+function updateTimerPlayBtn(){
+  document.getElementById('timer-play-btn').textContent=timerRunning?'⏸':'▶';
+}
+function timerNext(){
+  if(timerInterval)clearInterval(timerInterval);
+  timerRunning=false;updateTimerPlayBtn();
+  timerExIdx=Math.min(timerExIdx+1,timerExList.length);
+  loadTimerEx();
+}
+function timerPrev(){
+  if(timerInterval)clearInterval(timerInterval);
+  timerRunning=false;updateTimerPlayBtn();
+  timerExIdx=Math.max(0,timerExIdx-1);
+  loadTimerEx();
+}
+
+// ── PROFİL ──
+var profile={name:'',emoji:'🏃',level:'rookie',gender:'M',weight:''};
+var LEVEL_LABELS={
+  rookie:{tr:'İlk Yarış',en:'First Race'},
+  mid:{tr:'1–2 Yarış · Orta',en:'1–2 Races · Mid'},
+  veteran:{tr:'Veteran · 3+ Yarış',en:'Veteran · 3+ Races'}
+};
+var GENDER_LABELS={
+  M:{tr:'Erkek Open',en:'Male Open'},
+  W:{tr:'Kadın Open',en:'Female Open'},
+  MP:{tr:'Erkek Pro',en:'Male Pro'},
+  WP:{tr:'Kadın Pro',en:'Female Pro'}
+};
+function loadProfile(){
+  try{var p=lsGet('rx26_profile');if(p){var pp=JSON.parse(p);profile.name=pp.name||'';profile.emoji=pp.emoji||'🏃';profile.level=pp.level||'rookie';profile.gender=pp.gender||'M';profile.weight=pp.weight||'';}}catch(e){}
+}
+function buildProfile(){
+  var hasProfile=!!(profile.name);
+  var t=lang==='tr';
+  var daysLeft=getDaysToRace();
+
+  // Avatar emoji
+  var avEl=document.getElementById('ph-avatar');
+  if(avEl){
+    avEl.childNodes[0].textContent=profile.emoji;
+  }
+
+  // Greeting
+  var greet=document.getElementById('ph-greeting');
+  if(greet){
+    var h=new Date().getHours();
+    var g=h<12?(t?'Günaydın':'Good morning'):h<18?(t?'İyi günler':'Good afternoon'):(t?'İyi akşamlar':'Good evening');
+    greet.textContent=g;
+  }
+
+  // Name
+  var nameEl=document.getElementById('ph-name');
+  if(nameEl)nameEl.textContent=hasProfile?profile.name:(t?'Profilini Oluştur':'Set Up Profile');
+
+  // Level badge
+  var lvlTxt=document.getElementById('ph-level-txt');
+  if(lvlTxt){
+    if(hasProfile){
+      var ll=LEVEL_LABELS[profile.level]||LEVEL_LABELS['rookie'];
+      lvlTxt.textContent=(t?ll.tr:ll.en);
+    }else{
+      lvlTxt.textContent=t?'Profili tamamla →':'Complete profile →';
+    }
+  }
+
+  // Chips
+  var chipCat=document.getElementById('ph-chip-cat');
+  if(chipCat){
+    var gl=hasProfile?(t?GENDER_LABELS[profile.gender].tr:GENDER_LABELS[profile.gender].en):'—';
+    chipCat.innerHTML='<b>'+gl+'</b>';
+  }
+  var chipW=document.getElementById('ph-chip-weight');
+  if(chipW){
+    var wv=hasProfile&&profile.weight?(profile.weight+' kg'):'—';
+    chipW.innerHTML='<b>'+wv+'</b>';
+  }
+  var chipDays=document.getElementById('ph-days-left');
+  if(chipDays)chipDays.textContent=daysLeft;
+  // "gün" label lang
+  var chipDaysSpan=document.getElementById('ph-chip-days');
+  if(chipDaysSpan){
+    var inner=chipDaysSpan.innerHTML;
+    chipDaysSpan.innerHTML='<b id="ph-days-left">'+daysLeft+'</b> '+(t?'gün':'days');
+  }
+
+  // Stats
+  var total=getTotalWorkouts();
+  var streak=state.weekDays.length;
+
+  // Best day
+  var dayCounts={};
+  for(var k in localStorage){
+    if(k.indexOf('rx26_week_')===0){
+      try{var arr=JSON.parse(localStorage[k]);arr.forEach(function(d){dayCounts[d]=(dayCounts[d]||0)+1;});}catch(e){}
+    }
+  }
+  var bestDay=-1,bestCount=0;
+  Object.keys(dayCounts).forEach(function(d){if(dayCounts[d]>bestCount){bestCount=dayCounts[d];bestDay=+d;}});
+  var dayNames=t?['Pzt','Sal','Çar','Per','Cum','Cmt','Paz','Alt']:['Mon','Tue','Wed','Thu','Fri','Sat','Sun','Alt'];
+
+  var phTotal=document.getElementById('ph-total');
+  var phStreak=document.getElementById('ph-streak');
+  var phFavDay=document.getElementById('ph-fav-day');
+  var phTotalLbl=document.getElementById('ph-total-lbl');
+  var phStreakLbl=document.getElementById('ph-streak-lbl');
+  var phFavLbl=document.getElementById('ph-fav-lbl');
+
+  if(phTotal)phTotal.textContent=total;
+  if(phStreak)phStreak.textContent=streak+'/7';
+  if(phFavDay)phFavDay.textContent=bestDay>=0?dayNames[bestDay]:'—';
+  if(phTotalLbl)phTotalLbl.textContent=t?'Antrenman':'Workouts';
+  if(phStreakLbl)phStreakLbl.textContent=t?'Bu Hafta':'This Week';
+  if(phFavLbl)phFavLbl.textContent=t?'Fav. Gün':'Fav. Day';
+}
+function openProfileSetup(){
+  loadProfile();
+  // Fill form with current values
+  var inp=document.getElementById('psu-name-input');if(inp)inp.value=profile.name;
+  var wInp=document.getElementById('psu-weight-input');if(wInp)wInp.value=profile.weight;
+  // Set emoji selection
+  document.querySelectorAll('#psu-emoji-row .psu-emoji').forEach(function(el){
+    el.classList.toggle('on',el.getAttribute('data-emoji')===profile.emoji);
+  });
+  // Set level
+  document.querySelectorAll('#psu-level-row .psu-opt').forEach(function(el){
+    el.classList.toggle('on',el.getAttribute('data-val')===profile.level);
+  });
+  // Set gender
+  document.querySelectorAll('#psu-gender-row .psu-opt').forEach(function(el){
+    el.classList.toggle('on',el.getAttribute('data-val')===profile.gender);
+  });
+  // Localize labels
+  var t=lang==='tr';
+  var titleEl=document.getElementById('psu-title');if(titleEl)titleEl.textContent=t?'Profilini Oluştur':'Set Up Profile';
+  var subEl=document.getElementById('psu-sub');if(subEl)subEl.textContent=t?'Antrenman ağırlıkları ve istatistiklerin kişiselleşmesi için birkaç bilgi yeterli.':'A few details to personalize your workout weights and statistics.';
+  var savEl=document.getElementById('psu-save-btn');if(savEl)savEl.textContent=t?'Kaydet':'Save';
+  document.querySelectorAll('.psu-lbl').forEach(function(el){
+    var id=el.id;
+    if(id==='psu-lbl-avatar')el.textContent=t?'Avatar Seç':'Choose Avatar';
+    if(id==='psu-lbl-name')el.textContent=t?'İsim':'Name';
+    if(id==='psu-lbl-level')el.textContent=t?'HYROX Deneyimi':'HYROX Experience';
+    if(id==='psu-lbl-gender')el.textContent=t?'Yarış Kategorisi':'Race Category';
+    if(id==='psu-lbl-weight')el.textContent=t?'Vücut Ağırlığı (kg)':'Body Weight (kg)';
+  });
+  // Localize level options
+  document.getElementById('psu-l-rookie').textContent=t?'İlk Yarış':'First Race';
+  document.getElementById('psu-l-mid').textContent=t?'1–2 Yarış':'1–2 Races';
+  document.getElementById('psu-l-veteran').textContent=t?'Veteran (3+)':'Veteran (3+)';
+  // Localize gender options
+  document.getElementById('psu-g-m').textContent=t?'Erkek (Open)':'Male (Open)';
+  document.getElementById('psu-g-w').textContent=t?'Kadın (Open)':'Female (Open)';
+  document.getElementById('psu-g-mp').textContent=t?'Erkek (Pro)':'Male (Pro)';
+  document.getElementById('psu-g-wp').textContent=t?'Kadın (Pro)':'Female (Pro)';
+  document.getElementById('profile-setup').classList.add('open');
+}
+function closeProfileSetup(){
+  document.getElementById('profile-setup').classList.remove('open');
+}
+function selectEmoji(el){
+  document.querySelectorAll('#psu-emoji-row .psu-emoji').forEach(function(e){e.classList.remove('on');});
+  el.classList.add('on');
+}
+function selectOpt(el,rowId){
+  document.querySelectorAll('#'+rowId+' .psu-opt').forEach(function(e){e.classList.remove('on');});
+  el.classList.add('on');
+}
+function saveProfile(){
+  var nameInp=document.getElementById('psu-name-input');
+  var weightInp=document.getElementById('psu-weight-input');
+  var emojiEl=document.querySelector('#psu-emoji-row .psu-emoji.on');
+  var levelEl=document.querySelector('#psu-level-row .psu-opt.on');
+  var genderEl=document.querySelector('#psu-gender-row .psu-opt.on');
+  profile.name=(nameInp?nameInp.value.trim():'') || (lang==='tr'?'Atlet':'Athlete');
+  profile.emoji=emojiEl?emojiEl.getAttribute('data-emoji'):'🏃';
+  profile.level=levelEl?levelEl.getAttribute('data-val'):'rookie';
+  profile.gender=genderEl?genderEl.getAttribute('data-val'):'M';
+  profile.weight=weightInp?weightInp.value.trim():'';
+  lsSet('rx26_profile',JSON.stringify(profile));
+  closeProfileSetup();
+  buildProfile();
+  buildBadges();
+}
+
 // ── INIT ──
 loadState();
+loadProfile();
 buildWeekRow();
+buildProfile();
 buildInfoCards();
 buildChecklist();
 buildImproveBody();
@@ -1193,6 +2336,14 @@ if(state.pb)document.getElementById('pb-in').value=state.pb;
 if(state.goal)document.getElementById('goal-in').value=state.goal;
 updateDelta();
 buildTabs();renderDay(0);
+buildBadges();
+// First launch: open profile setup if no name saved
+if(!profile.name){
+  setTimeout(function(){openProfileSetup();},600);
+}
+// mark calc used when user enters a value
+document.getElementById('ca-h').addEventListener('input',function(){lsSet('rx26_calc_used','1');});
+document.getElementById('ca-m').addEventListener('input',function(){lsSet('rx26_calc_used','1');});
 </script>
 </body>
 </html>
